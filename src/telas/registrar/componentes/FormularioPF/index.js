@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Alert } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import styles from "./styles";
+import { mask } from 'remask';
+import numeroCep from 'cep-promise'
 
 export default function FormularioPF(){
     const [secureMode, setSecureMode] = useState(true);
     const [secureMode2, setSecureMode2] = useState(true);
     const [statusError, setStatusError] = useState('');
     const [Mensagem, SetMensagem] = useState('');
+    const [activeLoading, setActiveLoading] = useState(false);
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
+    const [telefone, setTelefone] = useState('');
     const [cpf, setCpf] = useState('');
     const [dataNascimento, setDataNascimento] = useState('');
     const [cep, setCep] = useState('');
@@ -30,6 +34,9 @@ export default function FormularioPF(){
         }else if(sobrenome == ''){
             setStatusError("Sobrenome")
             SetMensagem("Digite o seu sobrenome")
+        }else if(telefone == ''){
+            setStatusError("Telefone")
+            SetMensagem("Digite o seu numero de telefone")
         }else if(cpf == ''){
             setStatusError("CPF")
             SetMensagem("Digite o seu CPF")
@@ -68,6 +75,29 @@ export default function FormularioPF(){
         }
     }
 
+
+    function buscarCEP(){
+        setActiveLoading(true)
+        setCidade('')
+        setEstado('')
+        setRua('')
+        if(cep.length == 9){
+            numeroCep(cep)
+            .then(data => {
+            setCidade(data.city)
+            setEstado(data.state)
+            setRua(data.street)
+            setActiveLoading(false)
+            setStatusError('')
+            SetMensagem('')
+        })
+        }else{
+            setStatusError("CEP")
+            SetMensagem("Digite o CEP da sua região")
+            setActiveLoading(false)
+        }
+        
+    }
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.titulo}>Preencha as informações abaixo</Text>
@@ -94,27 +124,38 @@ export default function FormularioPF(){
             />
             {statusError == "Sobrenome" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
              
-             
             <TextInput
             keyboardType={'numeric'}
-            maxLength={11}
+            maxLength={15}
+            value={telefone}
+            label={"Telefone"}
+            mode='outlined'
+            error={statusError == "Telefone"}
+            onChangeText={telefone => setTelefone(mask(telefone, ["(99)99999-9999"]))}
+            />
+            {statusError == "Telefone" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+
+
+            <TextInput
+            keyboardType={'numeric'}
+            maxLength={14}
             value={cpf}
             label={"CPF"}
             mode='outlined'
             error={statusError == "CPF"}
-            onChangeText={cpf => setCpf(cpf)}
+            onChangeText={cpf => setCpf(mask(cpf, ["999.999.999-99"]))}
             />
             {statusError == "CPF" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
             
             
             <TextInput
-            maxLength={8}
+            maxLength={10}
             keyboardType={'numeric'}
             value={dataNascimento}
             label={"Data de nascimento"}
             mode='outlined'
             error={statusError == "Data"}
-            onChangeText={dataNascimento => setDataNascimento(dataNascimento)}
+            onChangeText={dataNascimento => setDataNascimento(mask(dataNascimento, ["99/99/9999"]))}
             />
             {statusError == "Data" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
             
@@ -125,15 +166,22 @@ export default function FormularioPF(){
 
             <Text style={styles.tituloCategoria}>Endereço residencial</Text>
 
+            <View  style={styles.buscaCPF}>
             <TextInput
+            style={styles.inputCPF}
             keyboardType={'numeric'}
-            maxLength={8}
+            maxLength={9}
             value={cep}
             label={"CEP"}
             mode='outlined'
             error={statusError == "CEP"}
-            onChangeText={cep => setCep(cep)}
+            onChangeText={cep => setCep(mask(cep, ["99999-999"]))}
             />
+            {activeLoading ?  <ActivityIndicator size={'small'} color={'#923CFF'}/> : null}
+            <TouchableOpacity style={styles.buscaCPF__botao} onPress={() => buscarCEP()}>
+                <Text style={styles.buscaCPF__text}>Buscar</Text>
+            </TouchableOpacity>
+            </View>
             {statusError  == "CEP" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
            
@@ -170,7 +218,7 @@ export default function FormularioPF(){
            
            
             <TextInput
-            keyboardType={'numeric'}
+            keyboardType={'number-pad'}
             value={numero}
             label={"Numero"}
             mode='outlined'

@@ -24,6 +24,25 @@ export default StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 10
     },
+    buscaCPF: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    inputCPF: {
+        width: 250
+    },
+    buscaCPF__botao: {
+        width: 80,
+        backgroundColor: 'red',
+        paddingVertical: 10,
+        marginLeft: 10,
+        borderRadius: 5,
+        backgroundColor: '#b25cff'
+    },
+    buscaCPF__text: {
+        alignSelf: 'center'
+    },
     botao: {
         marginTop: 20,
         marginBottom: 50,
@@ -41,5 +60,6 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
         letterSpacing: 1.5
-    }
+    },
+
 })
