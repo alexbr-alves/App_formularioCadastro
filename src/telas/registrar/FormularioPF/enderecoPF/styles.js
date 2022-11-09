@@ -5,6 +5,10 @@ export default StyleSheet.create({
         flex: 3,
         backgroundColor: '#fff'
     },
+    iconeBack:{
+        marginTop: 50,
+        marginLeft: 20
+    },
     titulo: {
         marginTop: 40,
         alignSelf: 'center',
@@ -24,13 +28,18 @@ export default StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 10
     },
+    input: {
+        marginVertical: 5
+    },
     buscaCPF: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginVertical: 5
     },
     inputCPF: {
-        width: 250
+        width: 250,
+
     },
     buscaCPF__botao: {
         width: 80,

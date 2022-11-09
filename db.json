@@ -1,0 +1,40 @@
+{
+  "cadastros": [
+    {
+      "nomeEmpresarial": "Yes LTDA",
+      "nomeFantasia": "Yes company",
+      "telefone": "(22)36528-0966",
+      "cnpj": "23.568.907/0001-00",
+      "dataAbertura": "21/05/2020",
+      "imagem": "file:///var/mobile/Containers/Data/Application/674DF836-FC56-4907-B6CF-5DB1AEC08D7A/Library/Caches/ExponentExperienceData/%2540alexbr%252Fteste_ideia/ImagePicker/87B37B70-AE01-43EB-A17F-51EE81C3CD3E.jpg",
+      "cep": "49040-700",
+      "cidade": "Aracaju",
+      "estado": "SE",
+      "rua": "Rua Quirino",
+      "numero": "205",
+      "complemento": "Bloco 2 Ap 101",
+      "email": "Yes@email.com",
+      "senha": "123456",
+      "tipo": "PJ",
+      "id": 0
+    },
+    {
+      "nome": "Ricardo ",
+      "sobrenome": "Santos ",
+      "telefone": "(21)35680-4580",
+      "cpf": "552.233.669-98",
+      "dataNascimento": "14/05/1996",
+      "imagem": "file:///var/mobile/Containers/Data/Application/674DF836-FC56-4907-B6CF-5DB1AEC08D7A/Library/Caches/ExponentExperienceData/%2540alexbr%252Fteste_ideia/ImagePicker/17FE4A81-A7BC-4271-B557-EA98BD1EB0A3.jpg",
+      "cep": "49040-700",
+      "cidade": "Aracaju",
+      "estado": "SE",
+      "rua": "Rua Quirino",
+      "numero": "200",
+      "complemento": "Bl 2 Ap 201",
+      "email": "Ricardo@email.com",
+      "senha": "123456",
+      "tipo": "PF",
+      "id": 1
+    }
+  ]
+}
