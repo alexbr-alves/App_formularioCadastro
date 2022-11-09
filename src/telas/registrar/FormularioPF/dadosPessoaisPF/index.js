@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import api from '../../../../servicos/api'
 import IconeAnexo from 'react-native-vector-icons/Entypo';
 import IconeGoBack from 'react-native-vector-icons/Ionicons';
+import checkCpf from 'cpf-check'
 
 export default function DadosPessoaisPF({ navigation: { goBack } }){
     const [dados, setDados] = useState([]);
@@ -28,14 +29,13 @@ export default function DadosPessoaisPF({ navigation: { goBack } }){
         })
     }, []);
    
-    function validarCPF(cpf){
+    function JaCadastrado(cpf){
         for(let i = 0; i < dados.length; i++ ){
             if(cpf == dados[i].cpf){
                 return true
             }
         }
     }
-
     function MensagenError(){
         if(nome == ''){
             setStatusError("Nome")
@@ -49,9 +49,12 @@ export default function DadosPessoaisPF({ navigation: { goBack } }){
         }else if(cpf == ''){
             setStatusError("CPF")
             SetMensagem("Digite o seu CPF")
-        }else if(validarCPF(cpf) == true){
+        }else if(JaCadastrado(cpf) == true){
             setStatusError("CPF")
             SetMensagem("O CPF difitado já consta no banco de dados")
+        }else if(checkCpf.validate(cpf) == false){
+            setStatusError("CPF")
+            SetMensagem("O CPF não é valido")
         }else if(dataNascimento == ''){
             setStatusError("Data")
             SetMensagem("Digite o seu data de nascimento")
