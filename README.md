@@ -21,6 +21,7 @@
 <h3> Criação da API: Json Server</h3>
 <h3> Gerador HTTP universal: Ngrok</h3>
 <h3> Requisição de Codigo Postal: cep-promise</h3>
+<h3> Verificação de validade de cpf: cpf-check</h3>
 <h3> UpLoad de arquivo: expo image picker</h3>
 <h3> Kit front-end: React Native Paper</h3>
 
