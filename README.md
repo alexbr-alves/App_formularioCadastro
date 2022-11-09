@@ -11,6 +11,8 @@
 
 
 
+
+
 <h2>PRÉ REQUISITOS:</>
 <h3> Linguagem de programação: JavaScript </h3>
 <h3> Framework: React Native </h3>
@@ -84,6 +86,9 @@ comando => npx ngrok http 3000, pegue o link fornecido e insira no baseURL  em =
 <video src="https://user-images.githubusercontent.com/103543739/200909080-abb64f9a-ec17-46b8-b46e-d287f970c8bb.mp4">
 </p>
 
+<h2>Demostrações complementares</h2>
+
+![modelo simulador (1)](https://user-images.githubusercontent.com/103543739/200930270-c5981aeb-6988-4136-beaf-d2d141a17ca3.jpg)
 
 
 
