@@ -38,6 +38,8 @@ obs: O modo seguro de inserir senha oculta totalmente o campo em caso de gravaç
 <h3>No Back-end simulamos uma API utilizando a biblioteca JSON-SERVER que serve para subir API REST's com muita simplicidade
 e rapidez e posteriormente consulmi-la utilizando a biblioteca AXIOS que serve para realizar requisições HTTP.
 Além de deixar disponivel o Ngrok, caso o usuario queira rodar a aplicação no aplicativo Expo Go.
+A aplicação além de pegar informações do banco de dados, também envia após a criação do cadastro.
+
 </h3>
 <br>
 
