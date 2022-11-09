@@ -63,7 +63,7 @@ para o endereço fornecido pelo JSON-SERVER
 
 <h3>
 OBS 3: Caso queira rodar no App Expo Go, execute em paralelo com o JSON-Server o 
-comando => npx ngrok http 3000 em => src/services/api.js
+comando => npx ngrok http 3000, pegue o link fornecido e insira no baseURL  em => src/services/api.js
 </h3>
 
 
