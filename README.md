@@ -55,6 +55,7 @@ A aplicação além de pegar informações do banco de dados, também envia apó
 <h3>Dentro da pasta criada para receber o novo projeto execute => npm install ou yarn install</h3>
 <h3>Para iniciar o projeto execute => npm start</h3>
 <h3>Para iniciar o emulador android aperte => a </h3>
+<h3>instale a depencia do JSON-SERVER => npm i json-server </h3>
 <h3>Para subri o DATA BASE para o servidos utilize => json-server --watch db.json </h3>
 
 <h3> 
