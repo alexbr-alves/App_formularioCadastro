@@ -51,7 +51,7 @@ A aplicação além de pegar informações do banco de dados, também envia apó
 <h2>RODANDO A APLICAÇÃO</h2>
 <br>
 <h3>Para rodar esta aplicação em sua maquina: </h3>
-<h3>No seu terminal execute => git clone https://github.com/alexbr-alves/teste_ideia.git </h3>
+<h3>No seu terminal execute => git clone https://github.com/alexbr-alves/App_formularioCadastro.git </h3>
 <h3>Dentro da pasta criada para receber o novo projeto execute => npm install ou yarn install</h3>
 <h3>Para iniciar o projeto execute => npm start</h3>
 <h3>Para iniciar o emulador android aperte => a </h3>
