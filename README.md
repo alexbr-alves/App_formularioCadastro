@@ -85,9 +85,8 @@ comando => npx ngrok http 3000, pegue o link fornecido e insira no baseURL  em =
 
 
 
-<p align="center">
-<video src="https://user-images.githubusercontent.com/103543739/200953677-f390ae7f-e940-4a21-b730-abe51fb596fd.mp4">
-</p>
+
+https://user-images.githubusercontent.com/103543739/200953677-f390ae7f-e940-4a21-b730-abe51fb596fd.mp4
 
 
 
