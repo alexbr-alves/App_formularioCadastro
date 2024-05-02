@@ -16,20 +16,19 @@ export default function Welcome(){
     const [senha, setSenha] = useState('');
 
     const usuarioTeste = {
-        nomeEmpresarial: 'Minha Empresa Teste',
-        nomeFantasia: 'Empresa Teste',
-        telefone: '123456789',
-        cnpj: '12345678901234',
-        dataAbertura: '01/01/2022',
-        cep: '12345-678',
-        cidade: 'Cidade Teste',
-        estado: 'Estado Teste',
-        rua: 'Rua Teste',
-        numero: '123',
-        complemento: 'Complemento Teste',
-        email: 'a',
+        CompanyName: 'Empresa Teste',
+        ContactName: 'Contato Teste',
+        phoneNumber: '79 991075815',
+        ContactTitle: 'CEO',
+        PostalCode: '12345-678',
+        City: 'Cidade Teste',
+        Region: 'Estado Teste',
+        Address: 'Rua Teste',
+        Number: '123',
+        email: 'A',
         senha: '1'
     };
+    
 
     cadastrarUsuarioPJ(usuarioTeste);
 
@@ -46,17 +45,15 @@ export default function Welcome(){
                 if (usuario) {
                     navigation.navigate("Home", {
                         email: email,
-                        nomeEmpresarial: usuario.nomeEmpresarial,
-                        nomeFantasia: usuario.nomeFantasia,
-                        telefone: usuario.telefone,
-                        cnpj: usuario.cnpj,
-                        dataAbertura: usuario.dataAbertura,
-                        cep: usuario.cep,
-                        cidade: usuario.cidade,
-                        estado: usuario.estado,
-                        rua: usuario.rua,
-                        numero: usuario.numero,
-                        complemento: usuario.complemento
+                        CompanyName: usuario.CompanyName,
+                        ContactName: usuario.ContactName,
+                        phoneNumber: usuario.phoneNumber,
+                        ContactTitle: usuario.ContactTitle,
+                        PostalCode: usuario.PostalCode,
+                        City: usuario.City,
+                        Region: usuario.Region,
+                        Address: usuario.Address,
+                        Number: usuario.Number
                     });
                     setEmail('');
                     setSenha('');

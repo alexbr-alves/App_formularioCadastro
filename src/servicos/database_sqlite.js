@@ -1,11 +1,12 @@
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('meu_banco_de_dados.db');
+const db = SQLite.openDatabase('company_app.db');
+
 
 export const criarTabelaUsuariosPJ = () => {
     db.transaction(tx => {
         tx.executeSql(
-            'CREATE TABLE IF NOT EXISTS usuarios_pj (id INTEGER PRIMARY KEY AUTOINCREMENT, nomeEmpresarial TEXT, nomeFantasia TEXT, telefone TEXT, cnpj TEXT, dataAbertura TEXT, cep TEXT, cidade TEXT, estado TEXT, rua TEXT, numero TEXT, complemento TEXT, email TEXT, senha TEXT);'
+            'CREATE TABLE IF NOT EXISTS usuarios (CompanyId INTEGER PRIMARY KEY AUTOINCREMENT, CompanyName TEXT, ContactName TEXT, phoneNumber TEXT, ContactTitle TEXT, PostalCode TEXT, City TEXT, Region TEXT, Address TEXT, Number TEXT, email TEXT, senha TEXT);'
         );
     });
 };
@@ -14,8 +15,20 @@ export const cadastrarUsuarioPJ = (usuario) => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'INSERT INTO usuarios_pj (nomeEmpresarial, nomeFantasia, telefone, cnpj, dataAbertura, cep, cidade, estado, rua, numero, complemento, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [usuario.nomeEmpresarial, usuario.nomeFantasia, usuario.telefone, usuario.cnpj, usuario.dataAbertura, usuario.cep, usuario.cidade, usuario.estado, usuario.rua, usuario.numero, usuario.complemento, usuario.email, usuario.senha],
+                'INSERT INTO usuarios (CompanyName, ContactName, phoneNumber, ContactTitle, dataAbertura, PostalCode, City, Region, Address, Number, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [
+                    usuario.CompanyName, 
+                    usuario.ContactName, 
+                    usuario.phoneNumber, 
+                    usuario.ContactTitle, 
+                    usuario.dataAbertura, 
+                    usuario.PostalCode, 
+                    usuario.City, 
+                    usuario.Region, 
+                    usuario.Address, 
+                    usuario.Number, 
+                    usuario.email, 
+                    usuario.senha],
                 (_, { rowsAffected }) => {
                     if (rowsAffected > 0) {
                         console.log('Usuário cadastrado com sucesso!');
@@ -33,7 +46,7 @@ export const fazerLoginPJ = (email, senha, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'SELECT * FROM usuarios_pj WHERE email = ? AND senha = ?',
+                'SELECT * FROM usuarios WHERE email = ? AND senha = ?',
                 [email, senha],
                 (_, { rows }) => {
                     if (rows.length > 0) {

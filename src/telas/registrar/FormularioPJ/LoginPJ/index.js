@@ -6,6 +6,7 @@ import styles from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { cadastrarUsuarioPJ } from "../../../../servicos/database_sqlite";
 
+
 export default function LoginPJ({ navigation: { goBack } }){
     const navigation = useNavigation();
     const route = useRoute()
@@ -32,18 +33,17 @@ export default function LoginPJ({ navigation: { goBack } }){
             setStatusError("ConfirmarSenha")
             SetMensagem("As senhas não correspondem")
         }else{
+
             cadastrarUsuarioPJ({
-                nomeEmpresarial: route.params.registrationData.businessName,
-                nomeFantasia: route.params.registrationData.fantasyName,
-                telefone: route.params.registrationData.phoneNumber,
-                cnpj: route.params.registrationData.cnpj,
-                dataAbertura: route.params.registrationData.openDate,
-                cep: route.params.addressData.cep,
-                cidade: route.params.addressData.cidade,
-                estado: route.params.addressData.estado,
-                rua: route.params.addressData.rua,
-                numero: route.params.addressData.numero,
-                complemento: route.params.addressData.complemento,
+                CompanyName: route.params.registrationData.CompanyName,
+                ContactName: route.params.registrationData.ContactName,
+                phoneNumber: route.params.registrationData.phoneNumber,
+                ContactTitle: route.params.registrationData.ContactTitle,
+                PostalCode: route.params.addressData.PostalCode,
+                City: route.params.addressData.City,
+                Region: route.params.addressData.Region,
+                Address: route.params.addressData.Address,
+                Number: route.params.addressData.Number,
                 email: email,
                 senha: senha  
             });
