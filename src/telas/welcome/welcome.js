@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
-import api from "../../servicos/api";
+import { cadastrarUsuarioPJ, fazerLoginPJ, criarTabelaUsuariosPJ } from "../../servicos/database_sqlite";
 
 import styles from "./styles";
-
 import Topo from "./componenetes/topo";
-
 
 export default function Welcome(){
     const navigation = useNavigation()
@@ -16,47 +14,60 @@ export default function Welcome(){
     const [Mensagem, SetMensagem] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [dados, setDados] = useState([])
+
+    const usuarioTeste = {
+        nomeEmpresarial: 'Minha Empresa Teste',
+        nomeFantasia: 'Empresa Teste',
+        telefone: '123456789',
+        cnpj: '12345678901234',
+        dataAbertura: '01/01/2022',
+        cep: '12345-678',
+        cidade: 'Cidade Teste',
+        estado: 'Estado Teste',
+        rua: 'Rua Teste',
+        numero: '123',
+        complemento: 'Complemento Teste',
+        email: 'a',
+        senha: '1'
+    };
+
+    cadastrarUsuarioPJ(usuarioTeste);
 
     useEffect(() => {
-        api.get("/cadastros")
-        .then(res => {
-            setDados(res.data)
-        })
+        criarTabelaUsuariosPJ();
     }, []);
-   
-    function Logar(){
-        let count = 0;
-        for(let i = 0; i < dados.length; i ++){
-            if(email == dados[i].email && senha == dados[i].senha){
-                navigation.navigate("Home", {
-                    email: email,
-                    nome: dados[i].nome,
-                    sobrenome: dados[i].sobrenome,
-                    telefone: dados[i].telefone,
-                    data_de_aniversario: dados[i].data_de_aniversario,
-                    cpf: dados[i].cpf,
-                    cep: dados[i].cep,
-                    cidade: dados[i].cidade,
-                    estado: dados[i].estado,
-                    rua: dados[i].rua,
-                    numero: dados[i].numero,
-                    complemento: dados[i].complemento,
-                    tipo: dados[i].tipo,
 
-                })
-                setEmail(''),
-                setSenha('')
-            }else if(email != dados[i].email || senha != dados[i].senha){  
-                count++            
-                if(count == dados.length){
-                   setStatusError("error")
-                   SetMensagem("Email ou senha incorretos")
-                   }
-                
-            }
+    function Logar(){
+        if(email == '' || senha == ''){
+            setStatusError("error")
+            SetMensagem("Digite o seu email e senha")
+        } else {
+            fazerLoginPJ(email, senha, (usuario) => {
+                if (usuario) {
+                    navigation.navigate("Home", {
+                        email: email,
+                        nomeEmpresarial: usuario.nomeEmpresarial,
+                        nomeFantasia: usuario.nomeFantasia,
+                        telefone: usuario.telefone,
+                        cnpj: usuario.cnpj,
+                        dataAbertura: usuario.dataAbertura,
+                        cep: usuario.cep,
+                        cidade: usuario.cidade,
+                        estado: usuario.estado,
+                        rua: usuario.rua,
+                        numero: usuario.numero,
+                        complemento: usuario.complemento
+                    });
+                    setEmail('');
+                    setSenha('');
+                } else {
+                    setStatusError("error")
+                    SetMensagem("Email ou senha incorretos")
+                }
+            });
         }
     }
+
     return(
         <View style={styles.container}>
             <Topo/>
@@ -92,13 +103,13 @@ export default function Welcome(){
 
             </View>
            
-            <TouchableOpacity style={styles.botao} onPress={() => Logar(email, senha)}>
+            <TouchableOpacity style={styles.botao} onPress={() => Logar()}>
                 <Text style={styles.botao__text}>Login</Text>
             </TouchableOpacity>
 
             <Text style={styles.semConta}>Ainda não tem conta?</Text>
 
-            <TouchableOpacity style={styles.botao} onPress={() => {navigation.navigate('Registrar')}}>
+            <TouchableOpacity style={styles.botao} onPress={() => {navigation.navigate('DadosPessoaisPJ')}}>
                 <Text style={styles.botao__text}>Registrar</Text>
             </TouchableOpacity>
         </View>

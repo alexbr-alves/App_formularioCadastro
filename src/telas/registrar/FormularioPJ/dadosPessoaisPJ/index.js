@@ -4,69 +4,45 @@ import { TextInput, HelperText } from "react-native-paper";
 import styles from "./styles";
 import { mask } from 'remask';
 import { useNavigation } from "@react-navigation/native";
-import api from "../../../../servicos/api";
 import * as ImagePicker from 'expo-image-picker';
 import IconeAnexo from 'react-native-vector-icons/Entypo';
 import IconeGoBack from 'react-native-vector-icons/Ionicons';
 
 export default function DadosPessoaisPJ({ navigation: { goBack } }){
-    const [dados, setDados] = useState([]);
-    const [image, setImage] = useState(null);
+
     const navigation = useNavigation();
     const [statusError, setStatusError] = useState('');
     const [Mensagem, SetMensagem] = useState('');
-    const [nomeEmpresarial, setNomeEmpresarial] = useState('');
-    const [nomeFantasia, setNomeFantasia] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [cnpj, setCnpj] = useState('');
-    const [dataAbertura, setDataAbertura] = useState('');
-   
-    useEffect(() => {
-        api.get("/cadastros")
-        .then(res => {
-            setDados(res.data)
-        })
-    }, []);
-   
-    function validarCNPJ(cnpj){
-        for(let i = 0; i < dados.length; i++ ){
-            if(cnpj == dados[i].cnpj){
-                return true
-            }
-        }
-    }
+    const [registrationData, setRegistrationData] = useState({
+        businessName: "",
+        fantasyName: "",
+        phoneNumber: "",
+        cnpj: "",
+        openDate: ""
+    })
    
 
     function MensagenError(){
-        if(nomeEmpresarial == ''){
-            setStatusError("nomeEmpresarial")
+        if(registrationData.businessName === ''){
+            setStatusError("businessName")
             SetMensagem("Digite o nome empresarial")
-        }else if(nomeFantasia == ''){
-            setStatusError("nomeFantasia")
+        }else if(registrationData.fantasyName === ''){
+            setStatusError("fantasyName")
             SetMensagem("Digite o nome fantasia")
-        }else if(telefone == ''){
-            setStatusError("Telefone")
-            SetMensagem("Digite o seu numero de telefone")
-        }else if(cnpj == ''){
-            setStatusError("CNPF")
+        }else if(registrationData.phoneNumber === ''){
+            setStatusError("phoneNumber")
+            SetMensagem("Digite o seu número de telefone")
+        }else if(registrationData.cnpj === ''){
+            setStatusError("cnpj")
             SetMensagem("Digite o CNPJ")
-        }else if(validarCNPJ(cnpj) == true){
-                setStatusError("CNPF")
-                SetMensagem("o cnpj digitado já consta no banco de dados")
-        }else if(dataAbertura == ''){
-            setStatusError("Data")
-            SetMensagem("Digite o seu data de abertura")
+        }else if(registrationData.openDate === ''){
+            setStatusError("openDate")
+            SetMensagem("Digite a data de abertura")
         }else{
-           navigation.navigate("EnderecoPJ", {
-            nomeEmpresarial: nomeEmpresarial,
-            nomeFantasia: nomeFantasia,
-            telefone: telefone,
-            cnpj: cnpj,
-            dataAbertura: dataAbertura,
-            imagem: image
-           })
+            navigation.navigate("EnderecoPJ", { registrationData})
         }
     }
+    
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -92,58 +68,58 @@ export default function DadosPessoaisPJ({ navigation: { goBack } }){
             <View style={styles.espaco__input}>
                 <Text style={styles.tituloCategoria}>Dados Pessoais</Text>
                 <TextInput
-                value={nomeEmpresarial}
+                value={registrationData.businessName}
                 label={"Nome empresarial"}
                 mode='outlined'
-                error={statusError == "nomeEmpresarial"}
-                onChangeText={nomeEmpresarial => setNomeEmpresarial(nomeEmpresarial)}
+                error={statusError === "businessName"}
+                onChangeText={businessName => setRegistrationData(prevState => ({ ...prevState, businessName }))}
                 />
-                {statusError == "nomeEmpresarial" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === "businessName" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
                 
                 
                 <TextInput
-                value={nomeFantasia}
+                value={registrationData.fantasyName}
                 label={"Nome fantasia"}
                 mode='outlined'
-                error={statusError == "nomeFantasia"}
-                onChangeText={nomeFantasia => setNomeFantasia(nomeFantasia)}
+                error={statusError === "fantasyName"}
+                onChangeText={fantasyName => setRegistrationData(prevState => ({ ...prevState, fantasyName }))}
                 />
-                {statusError == "nomeFantasia" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === "fantasyName" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
                 
                 <TextInput
                 keyboardType={'numeric'}
                 maxLength={15}
-                value={telefone}
-                label={"Telefone"}
+                value={registrationData.phoneNumber}
+                label={"phoneNumber"}
                 mode='outlined'
-                error={statusError == "Telefone"}
-                onChangeText={telefone => setTelefone(mask(telefone, ["(99)99999-9999"]))}
+                error={statusError === "phoneNumber"}
+                onChangeText={phoneNumber => setRegistrationData(prevState => ({ ...prevState, phoneNumber: mask(phoneNumber, ["(99)99999-9999"]) }))}
                 />
-                {statusError == "Telefone" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === "phoneNumber" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
 
                 <TextInput
                 keyboardType={'numeric'}
                 maxLength={18}
-                value={cnpj}
+                value={registrationData.cnpj}
                 label={"CNPJ"}
                 mode='outlined'
-                error={statusError == "CNPF"}
-                onChangeText={cnpj => setCnpj(mask(cnpj, ["99.999.999/9999-99"]))}
+                error={statusError === "CNPF"}
+                onChangeText={cnpj => setRegistrationData(prevState => ({ ...prevState, cnpj: mask(cnpj, ["99.999.999/9999-99"]) }))}
                 />
-                {statusError == "CNPF" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === "CNPF" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
                 
                 
                 <TextInput
                 maxLength={10}
                 keyboardType={'numeric'}
-                value={dataAbertura}
+                value={registrationData.openDate}
                 label={"Data de abertura"}
                 mode='outlined'
-                error={statusError == "Data"}
-                onChangeText={dataAbertura => setDataAbertura(mask(dataAbertura, ["99/99/9999"]))}
+                error={statusError === "Data"}
+                onChangeText={openDate => setRegistrationData(prevState => ({ ...prevState, openDate: mask(openDate, ["99/99/9999"]) }))}
                 />
-                {statusError == "Data" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === "Data" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
                 <View style={styles.anexarDocumento}>
                     <Text style={styles.anexarDocumento__titulo}>Anexar foto</Text>
                     <TouchableOpacity style={styles.anexarDocumento__botao} onPress={pickImage}>

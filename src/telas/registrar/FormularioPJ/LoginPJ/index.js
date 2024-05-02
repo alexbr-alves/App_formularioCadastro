@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ScrollView, View, Text, TouchableOpacity, Alert } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
-import api from '../../../../servicos/api'
 import IconeGoBack from 'react-native-vector-icons/Ionicons';
 import styles from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { cadastrarUsuarioPJ } from "../../../../servicos/database_sqlite";
 
 export default function LoginPJ({ navigation: { goBack } }){
     const navigation = useNavigation();
@@ -17,55 +17,37 @@ export default function LoginPJ({ navigation: { goBack } }){
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
-   
 
     function MensagenError(){
-        if(email == ''){
+        if(email === ''){
             setStatusError("Email")
             SetMensagem("Digite o seu e-mail")
-        }else if(senha == ''){
+        }else if(senha === ''){
             setStatusError("Senha")
             SetMensagem("Digite a sua senha")
-        }else if(confirmarSenha == ''){
+        }else if(confirmarSenha === ''){
             setStatusError("ConfirmarSenha")
-            SetMensagem("repita a seu senha")
-        }else if(confirmarSenha != senha ){
+            SetMensagem("Repita a sua senha")
+        }else if(confirmarSenha !== senha ){
             setStatusError("ConfirmarSenha")
-            SetMensagem("Senhas não correspondem")
-        } else{
-            api.post("/cadastros", {
-                nomeEmpresarial: route.params.nomeEmpresarial,
-                nomeFantasia: route.params.nomeFantasia,
-                telefone: route.params.telefone,
-                cnpj: route.params.cnpj,
-                dataAbertura: route.params.dataAbertura,
-                imagem: route.params.imagem,
-                cep: route.params.cep,
-                cidade: route.params.cidade,
-                estado: route.params.estado,
-                rua: route.params.rua,
-                numero: route.params.numero,
-                complemento: route.params.complemento,
+            SetMensagem("As senhas não correspondem")
+        }else{
+            cadastrarUsuarioPJ({
+                nomeEmpresarial: route.params.registrationData.businessName,
+                nomeFantasia: route.params.registrationData.fantasyName,
+                telefone: route.params.registrationData.phoneNumber,
+                cnpj: route.params.registrationData.cnpj,
+                dataAbertura: route.params.registrationData.openDate,
+                cep: route.params.addressData.cep,
+                cidade: route.params.addressData.cidade,
+                estado: route.params.addressData.estado,
+                rua: route.params.addressData.rua,
+                numero: route.params.addressData.numero,
+                complemento: route.params.addressData.complemento,
                 email: email,
-                senha: senha,
-                tipo: "PJ"              
-            })
-            navigation.navigate("Home", {
-                nomeEmpresarial: route.params.nomeEmpresarial,
-                nomeFantasia: route.params.nomeFantasia,
-                telefone: route.params.telefone,
-                cnpj: route.params.cnpj,
-                dataAbertura: route.params.dataAbertura,
-                cep: route.params.cep,
-                cidade: route.params.cidade,
-                estado: route.params.estado,
-                rua: route.params.rua,
-                numero: route.params.numero,
-                complemento: route.params.complemento,
-                email: email,
-                senha: senha,
-                tipo: "PJ"    
-            })
+                senha: senha  
+            });
+            navigation.navigate("Welcome")
         }
     }
 
