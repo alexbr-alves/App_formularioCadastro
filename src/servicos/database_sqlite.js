@@ -1,7 +1,8 @@
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('company_app.db');
+const dbName = 'company_app.db';
 
+const db = SQLite.openDatabase(dbName);
 
 export const criarTabelaUsuariosPJ = () => {
     db.transaction(tx => {
@@ -15,13 +16,12 @@ export const cadastrarUsuarioPJ = (usuario) => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'INSERT INTO usuarios (CompanyName, ContactName, phoneNumber, ContactTitle, dataAbertura, PostalCode, City, Region, Address, Number, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                'INSERT INTO usuarios (CompanyName, ContactName, phoneNumber, ContactTitle, PostalCode, City, Region, Address, Number, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [
                     usuario.CompanyName, 
                     usuario.ContactName, 
                     usuario.phoneNumber, 
                     usuario.ContactTitle, 
-                    usuario.dataAbertura, 
                     usuario.PostalCode, 
                     usuario.City, 
                     usuario.Region, 
