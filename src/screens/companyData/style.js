@@ -33,5 +33,21 @@ export default StyleSheet.create({
         lineHeight: 26,
         marginLeft: 20,
         
-    }
+    },
+    botao: {
+        height: 50,
+        width: 300,
+        backgroundColor: '#923CFF',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderRadius: 6,
+        marginTop: 10
+    },
+    botao__text: {
+        alignSelf: 'center',
+        color: '#fff',
+        fontSize: 16,
+        lineHeight: 24,
+        fontWeight: '700'
+    },
 })

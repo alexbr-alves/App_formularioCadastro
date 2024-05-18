@@ -5,6 +5,7 @@ import styles from "./styles";
 import { mask } from 'remask';
 import { useNavigation } from "@react-navigation/native";
 import IconeGoBack from 'react-native-vector-icons/Ionicons';
+import { routeName } from "../../../routes/route_name";
 
 export default function DadosPessoaisPJ({ navigation: { goBack } }){
 
@@ -33,7 +34,7 @@ export default function DadosPessoaisPJ({ navigation: { goBack } }){
             setStatusError("ContactTitle")
             SetMensagem("Enter Contact title")
         }else{
-            navigation.navigate("EnderecoPJ", { registrationData})
+            navigation.navigate(routeName.company_address, { registrationData})
         }
     }
     

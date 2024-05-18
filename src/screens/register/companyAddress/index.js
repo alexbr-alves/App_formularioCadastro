@@ -6,6 +6,7 @@ import { mask } from 'remask';
 import numeroCep from 'cep-promise';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import IconeGoBack from 'react-native-vector-icons/Ionicons';
+import { routeName } from "../../../routes/route_name";
 
 export default function EnderecoPJ({ navigation: { goBack } }){
     const route = useRoute();
@@ -39,7 +40,7 @@ export default function EnderecoPJ({ navigation: { goBack } }){
             setStatusError("Number")
             SetMensagem("Enter Number")
         }else{
-            navigation.navigate('LoginPJ', {
+            navigation.navigate(routeName.create_login, {
                 registrationData: route.params.registrationData,
                 addressData
             })

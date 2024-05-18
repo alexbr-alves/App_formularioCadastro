@@ -4,7 +4,7 @@ import { TextInput, HelperText } from "react-native-paper";
 import IconeGoBack from 'react-native-vector-icons/Ionicons';
 import styles from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { cadastrarUsuarioPJ } from "../../../../servicos/database_sqlite";
+import { registerCompany } from "../../../services/database_sqlite";
 
 
 export default function LoginPJ({ navigation: { goBack } }){
@@ -34,7 +34,7 @@ export default function LoginPJ({ navigation: { goBack } }){
             SetMensagem("As senhas não correspondem")
         }else{
 
-            cadastrarUsuarioPJ({
+            registerCompany({
                 CompanyName: route.params.registrationData.CompanyName,
                 ContactName: route.params.registrationData.ContactName,
                 phoneNumber: route.params.registrationData.phoneNumber,

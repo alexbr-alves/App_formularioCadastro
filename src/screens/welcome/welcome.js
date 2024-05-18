@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
-import { cadastrarUsuarioPJ, fazerLoginPJ, criarTabelaUsuariosPJ } from "../../servicos/database_sqlite";
+import { registerCompany, login, createTable } from "../../services/database_sqlite";
+
+import { routeName } from "../../routes/route_name";
 
 import styles from "./styles";
 import Topo from "./componenetes/topo";
@@ -30,10 +32,10 @@ export default function Welcome(){
     };
     
 
-    cadastrarUsuarioPJ(usuarioTeste);
+    registerCompany(usuarioTeste);
 
     useEffect(() => {
-        criarTabelaUsuariosPJ();
+        createTable();
     }, []);
 
     function Logar(){
@@ -41,9 +43,9 @@ export default function Welcome(){
             setStatusError("error")
             SetMensagem("Digite o seu email e senha")
         } else {
-            fazerLoginPJ(email, senha, (usuario) => {
+            login(email, senha, (usuario) => {
                 if (usuario) {
-                    navigation.navigate("Home", {
+                    navigation.navigate(routeName.home_logged, {
                         email: email,
                         CompanyName: usuario.CompanyName,
                         ContactName: usuario.ContactName,
@@ -106,7 +108,7 @@ export default function Welcome(){
 
             <Text style={styles.semConta}>Ainda não tem conta?</Text>
 
-            <TouchableOpacity style={styles.botao} onPress={() => {navigation.navigate('DadosPessoaisPJ')}}>
+            <TouchableOpacity style={styles.botao} onPress={() => {navigation.navigate(routeName.register_company_info)}}>
                 <Text style={styles.botao__text}>Registrar</Text>
             </TouchableOpacity>
         </View>

@@ -4,7 +4,7 @@ const dbName = 'company_app.db';
 
 const db = SQLite.openDatabase(dbName);
 
-export const criarTabelaUsuariosPJ = () => {
+export const createTable = () => {
     db.transaction(tx => {
         tx.executeSql(
             'CREATE TABLE IF NOT EXISTS usuarios (CompanyId INTEGER PRIMARY KEY AUTOINCREMENT, CompanyName TEXT, ContactName TEXT, phoneNumber TEXT, ContactTitle TEXT, PostalCode TEXT, City TEXT, Region TEXT, Address TEXT, Number TEXT, email TEXT, senha TEXT);'
@@ -12,7 +12,7 @@ export const criarTabelaUsuariosPJ = () => {
     });
 };
 
-export const cadastrarUsuarioPJ = (usuario) => {
+export const registerCompany = (usuario) => {
     db.transaction(
         tx => {
             tx.executeSql(
@@ -42,7 +42,7 @@ export const cadastrarUsuarioPJ = (usuario) => {
     );
 };
 
-export const fazerLoginPJ = (email, senha, callback) => {
+export const login = (email, senha, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(

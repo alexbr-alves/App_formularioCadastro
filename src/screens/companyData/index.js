@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, TouchableOpacity} from "react-native";
-import styles from './styles'
+import { View, Text} from "react-native";
+import styles from "./style";
+
 
 export default function Home(){
     const route = useRoute();
@@ -9,9 +10,6 @@ export default function Home(){
     
     return(
         <View style={styles.container}>
-            <TouchableOpacity style={styles.botaoSair} onPress={() => navigation.navigate("Welcome")}>
-                <Text style={styles.botaoSair__text}>Sair</Text>
-            </TouchableOpacity>
             <View>
                 <Text style={styles.tituloCategoria}>Company Data</Text>
                 <Text style={styles.itens}>Company Name: {route.params.CompanyName}</Text>
