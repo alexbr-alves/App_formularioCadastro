@@ -4,6 +4,10 @@ export default StyleSheet.create({
     container: {
         flex: 3,
         marginTop: 50,
+        alignItems: "center",
+    },
+    container_botao: {
+        marginTop: 100
     },
     botaoSair: {
         alignSelf: 'flex-end',
@@ -16,8 +20,6 @@ export default StyleSheet.create({
         color: '#FFF',
         fontSize: 15,
         fontWeight: '600'
-        
-        
     },
     tituloCategoria:{
         marginTop: 20,
@@ -41,7 +43,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 6,
-        marginTop: 10
+        marginTop: 20
     },
     botao__text: {
         alignSelf: 'center',

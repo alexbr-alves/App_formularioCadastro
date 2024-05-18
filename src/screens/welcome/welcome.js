@@ -7,7 +7,7 @@ import { registerCompany, login, createTable } from "../../services/database_sql
 import { routeName } from "../../routes/route_name";
 
 import styles from "./styles";
-import Topo from "./componenetes/topo";
+import Topo from "../componenetes/topo/index"
 
 export default function Welcome(){
     const navigation = useNavigation()
@@ -27,8 +27,8 @@ export default function Welcome(){
         Region: 'Estado Teste',
         Address: 'Rua Teste',
         Number: '123',
-        email: 'A',
-        senha: '1'
+        email: 'Q',
+        senha: 'Q'
     };
     
 
@@ -47,15 +47,6 @@ export default function Welcome(){
                 if (usuario) {
                     navigation.navigate(routeName.home_logged, {
                         email: email,
-                        CompanyName: usuario.CompanyName,
-                        ContactName: usuario.ContactName,
-                        phoneNumber: usuario.phoneNumber,
-                        ContactTitle: usuario.ContactTitle,
-                        PostalCode: usuario.PostalCode,
-                        City: usuario.City,
-                        Region: usuario.Region,
-                        Address: usuario.Address,
-                        Number: usuario.Number
                     });
                     setEmail('');
                     setSenha('');

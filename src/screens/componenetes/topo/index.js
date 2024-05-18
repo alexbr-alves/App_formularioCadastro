@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import styles from './styles';
 
-import imagemTopo from '../../../../../assets/imagens/imagemTopo.png';
+import imagemTopo from '../../../../assets/imagens/imagemTopo.png';
 
 export default function Topo(){
     return(

@@ -61,3 +61,30 @@ export const login = (email, senha, callback) => {
         error => console.error('Erro ao fazer login:', error)
     );
 };
+
+export const getUser = (email, callback) => {
+    if (!email) {
+        console.error('Erro ao fazer login: email é nulo ou indefinido');
+        callback(null);
+        return;
+    }
+
+    db.transaction(
+        tx => {
+            tx.executeSql(
+                'SELECT * FROM usuarios WHERE email = ?',
+                [email],
+                (_, { rows }) => {
+                    if (rows.length > 0) {
+                        const usuario = rows.item(0);
+                        callback(usuario);
+                    } else {
+                        callback(null);
+                    }
+                }
+            );
+        },
+        error => console.error('Erro ao fazer login:', error)
+    );
+};
+
