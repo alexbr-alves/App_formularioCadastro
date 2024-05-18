@@ -5,4 +5,7 @@ export const routeName = {
     create_login: "create_login",
     home_logged: "home_logged",
     company_data: "company_data",
+    // employee
+    employee_list: "employee_list",
+    employee_register: "employee_register"
 }

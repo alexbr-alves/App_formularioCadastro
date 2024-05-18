@@ -10,6 +10,7 @@ import registerCompanyAddress from '../screens/register/companyAddress';
 import createLogin from '../screens/register/companyLogin';
 import homeLogged from '../screens/homeLogged';
 import companyData from '../screens/companyData/index'
+import employeeList from '../screens/employee/employeeList/index'
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,11 @@ export default function AppRotas(){
             }} />
 
             <Stack.Screen name={routeName.company_data} component={companyData} options={{
+            title: '',
+            headerShown: false,
+            }} />
+
+            <Stack.Screen name={routeName.employee_list} component={employeeList} options={{
             title: '',
             headerShown: false,
             }} />
