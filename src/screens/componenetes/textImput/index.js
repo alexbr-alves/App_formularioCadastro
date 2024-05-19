@@ -4,7 +4,7 @@ import { TextInput, HelperText } from "react-native-paper";
 
 class CustomTextInput extends React.Component {
   render() {
-    const { value, label, mode, error, onChangeText, keyboardType, maxLength } = this.props;
+    const { value, label, mode, error, onChangeText, keyboardType, maxLength, mensagem, editable, style } = this.props;
 
     return (
       <View>
@@ -13,12 +13,14 @@ class CustomTextInput extends React.Component {
           label={label}
           mode={mode}
           error={error}
+          style={style}
+          editable={editable}
           onChangeText={onChangeText}
           keyboardType={keyboardType}
           maxLength={maxLength}
-          {...this.props} // Passando outras props diretamente para o componente TextInput
+          {...this.props} 
         />
-        {error && <HelperText type="error" visible={error}>{Mensagem}</HelperText>}
+        {error && <HelperText type="error" visible={error}>{mensagem}</HelperText>}
       </View>
     );
   }

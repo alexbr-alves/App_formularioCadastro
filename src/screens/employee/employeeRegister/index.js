@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
-import { TextInput, HelperText } from "react-native-paper";
 import Toolbar from "../../componenetes/toolbar";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { mask } from 'remask';
 import numeroCep from 'cep-promise';
 import styles from "./styles"
 import { registerEmployee } from "../../../services/database_sqlite";
+import CustomTextInput from "../../componenetes/textImput";
 
 export default function EmployeeRegister() {
     const navigation = useNavigation();
@@ -105,35 +105,32 @@ export default function EmployeeRegister() {
             <Toolbar titulo={"Employee Register"} />
             <ScrollView contentContainerStyle={styles.imputs}>
 
-                <TextInput
+                <CustomTextInput
                     value={employee.FirstName}
                     label={tags.FirstName}
                     mode='outlined'
                     error={statusError === tags.FirstName}
+                    mensagem={Mensagem}
                     onChangeText={FirstName => setEmployee(prevState => ({ ...prevState, FirstName }))}
                 />
-                {statusError === tags.FirstName && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-
-                <TextInput
+                <CustomTextInput
                     value={employee.LastName}
                     label={tags.LastName}
                     mode='outlined'
                     error={statusError === tags.LastName}
                     onChangeText={LastName => setEmployee(prevState => ({ ...prevState, LastName }))}
                 />
-                {statusError === tags.LastName && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     value={employee.Title}
                     label={tags.Title}
                     mode='outlined'
                     error={statusError === tags.Title}
                     onChangeText={Title => setEmployee(prevState => ({ ...prevState, Title }))}
                 />
-                {statusError === tags.Title && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     keyboardType={'numeric'}
                     maxLength={10}
                     value={employee.BirthDate}
@@ -142,9 +139,8 @@ export default function EmployeeRegister() {
                     error={statusError === tags.BirthDate}
                     onChangeText={BirthDate => setEmployee(prevState => ({ ...prevState, BirthDate: mask(BirthDate, ["99/99/9999"]) }))}
                 />
-                {statusError === tags.BirthDate && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     keyboardType={'numeric'}
                     maxLength={10}
                     value={employee.HireDate}
@@ -153,19 +149,17 @@ export default function EmployeeRegister() {
                     error={statusError === tags.HireDate}
                     onChangeText={HireDate => setEmployee(prevState => ({ ...prevState, HireDate: mask(HireDate, ["99/99/9999"]) }))}
                 />
-                {statusError === tags.HireDate && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
                 <View style={styles.buscaCEP}>
-                    <TextInput
+                    <CustomTextInput
                         textColor='#923CFF'
                         style={styles.inputCep}
                         keyboardType={'numeric'}
                         maxLength={9}
                         value={employee.PostalCode}
-                        label={"Postal code"}
+                        label={tags.PostalCode}
                         mode='outlined'
-                        editable={true}
-                        error={statusError === "PostalCode"}
+                        error={statusError === tags.PostalCode}
                         onChangeText={PostalCode => setEmployee({ ...employee, PostalCode: mask(PostalCode, ["99999-999"]) })}
                     />
                     {activeLoading ? <ActivityIndicator size={'small'} color={'#923CFF'} /> : null}
@@ -173,45 +167,44 @@ export default function EmployeeRegister() {
                         <Text style={styles.buscaCep__text}>Buscar</Text>
                     </TouchableOpacity>
                 </View>
-                {statusError === "PostalCode" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     value={employee.Address}
                     label={tags.Address}
                     mode='outlined'
+                    editable={false}
                     error={statusError === tags.Address}
                     onChangeText={Address => setEmployee(prevState => ({ ...prevState, Address }))}
                 />
-                {statusError === tags.Address && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     value={employee.City}
                     label={tags.City}
                     mode='outlined'
+                    editable={false}
                     error={statusError === tags.City}
                     onChangeText={City => setEmployee(prevState => ({ ...prevState, City }))}
                 />
-                {statusError === tags.City && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     value={employee.Region}
                     label={tags.Region}
                     mode='outlined'
+                    editable={false}
                     error={statusError === tags.Region}
                     onChangeText={Region => setEmployee(prevState => ({ ...prevState, Region }))}
                 />
-                {statusError === tags.Region && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     value={employee.Country}
                     label={tags.Country}
                     mode='outlined'
+                    editable={false}
                     error={statusError === tags.Country}
                     onChangeText={Country => setEmployee(prevState => ({ ...prevState, Country }))}
                 />
-                {statusError === tags.Region && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     keyboardType={'numeric'}
                     maxLength={15}
                     value={employee.HomePhone}
@@ -220,9 +213,8 @@ export default function EmployeeRegister() {
                     error={statusError === "HomePhone"}
                     onChangeText={HomePhone => setEmployee(prevState => ({ ...prevState, HomePhone: mask(HomePhone, ["(99)99999-9999"]) }))}
                 />
-                {statusError === "HomePhone" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
+                <CustomTextInput
                     keyboardType={'numeric'}
                     value={employee.Extension}
                     label={"Extension"}
@@ -230,7 +222,6 @@ export default function EmployeeRegister() {
                     error={statusError === "Extension"}
                     onChangeText={Extension => setEmployee(prevState => ({ ...prevState, Extension }))}
                 />
-                {statusError === "Extension" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
                 <TouchableOpacity style={styles.botao} onPress={checkError}>
                     <Text style={styles.botao__text}>Próximo</Text>
