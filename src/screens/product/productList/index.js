@@ -3,48 +3,52 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
-import { getSuppliers, createTableSuppliers } from "../../../services/database_sqlite";
-import SupplierMock from "../../../mock/SupplierMock";
+import { getProducts, createTableProducts } from "../../../services/database_sqlite";
+import ProductMock from "../../../mock/ProductMock";
 import LimitText from "../../../utils/limitText";
 import Toolbar from "../../componenetes/toolbar";
 import arrowDown from "../../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../../assets/imagens/arrow_right.png";
 import { routeName } from "../../../routes/route_name";
 
-export default function SupplierList() {
-    const [fornecedores, setFornecedores] = useState([]);
+export default function ProductList() {
+    const [products, setProducts] = useState([]);
     const navigation = useNavigation();
     const route = useRoute();
 
-    const loadSuppliers = useCallback(() => {
-        getSuppliers(route.params.email, (fornecedores) => {
-            setFornecedores(fornecedores);
+    const loadProducts = useCallback(() => {
+        getProducts(route.params.email, (products) => {
+            setProducts(products);
         });
     }, [route.params.email]);
 
     useEffect(() => {
-        createTableSuppliers();
-        SupplierMock();
-        loadSuppliers();
-    }, [loadSuppliers]);
+        createTableProducts();
+        ProductMock();
+        loadProducts();
+    }, [loadProducts]);
 
     useFocusEffect(
         useCallback(() => {
-            loadSuppliers();
-        }, [loadSuppliers])
+            loadProducts();
+        }, [loadProducts])
     );
 
     return (
         <View style={styles.container}>
-            <Toolbar titulo={"Supplier List"} />
-            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.supplier_register, { email: route.params.email })}>
+            <Toolbar titulo={"Product List"} />
+            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(
+                routeName.product_register, {
+                    email: route.params.email
+            })}>
                 <Text style={styles.botao__text}>New</Text>
             </TouchableOpacity>
 
             <FlatList
                 style={styles.flatlist}
-                data={fornecedores}
-                keyExtractor={(item) => item.SupplierID.toString()}
+                data={products}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.ProductID.toString()}
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} />
                 )}
@@ -63,16 +67,16 @@ export default function SupplierList() {
             <>
                 <TouchableOpacity
                     style={styles.container_flatlist}
-                    key={item.SupplierID.toString()}
-                    onPress={() => handlePress(item.SupplierID)}
+                    key={item.ProductID.toString()}
+                    onPress={() => handlePress(item.ProductID)}
                 >
-                    <Image style={styles.container_flatlist_icon} source={expandedItemId === item.SupplierID ? arrowDown : arrowRight} />
-                    <Text style={styles.container_flatlist_name}>{item.CompanyName}</Text>
+                    <Image style={styles.container_flatlist_icon} source={expandedItemId === item.ProductID ? arrowDown : arrowRight} />
+                    <Text style={styles.container_flatlist_name}>{item.ProductName}</Text>
                     {expandedItemId === null && (
-                        <Text style={styles.container_flatlist_title}>{LimitText(item.ContactTitle, 15)}</Text>
+                        <Text style={styles.container_flatlist_title}>{LimitText(item.QuantityPerUnit.toString() + " /boxer", 15)}</Text>
                     )}
                 </TouchableOpacity>
-                {expandedItemId === item.SupplierID && (
+                {expandedItemId === item.ProductID && (
                     <ExpandedComponent item={item} />
                 )}
             </>
@@ -82,14 +86,13 @@ export default function SupplierList() {
     function ExpandedComponent({ item }) {
         return (
             <View style={styles.expandedContainer}>
-                <TextoNegrito texto={"Contact name"} variavel={item.ContactName} />
-                <TextoNegrito texto={"Contact title"} variavel={item.ContactTitle} />
-                <TextoNegrito texto={"Address"} variavel={item.Address} />
-                <TextoNegrito texto={"City"} variavel={item.City} />
-                <TextoNegrito texto={"Region"} variavel={item.Region} />
-                <TextoNegrito texto={"Postal code"} variavel={item.PostalCode} />
-                <TextoNegrito texto={"Country"} variavel={item.Country} />
-                <TextoNegrito texto={"Phone"} variavel={item.Phone} />
+                <TextoNegrito texto={"Product Name"} variavel={item.ProductName} />
+                <TextoNegrito texto={"Supplier ID"} variavel={item.SupplierID} />
+                <TextoNegrito texto={"Category ID"} variavel={item.CategoryID} />
+                <TextoNegrito texto={"Quantity Per Unit"} variavel={item.QuantityPerUnit + " /boxer"} />
+                <TextoNegrito texto={"Unit Price"} variavel={item.UnitPrice} />
+                <TextoNegrito texto={"Units In Stock"} variavel={item.UnitsInStock} />
+                <TextoNegrito texto={"Units On Order"} variavel={item.UnitsOnOrder} />
             </View>
         );
     }

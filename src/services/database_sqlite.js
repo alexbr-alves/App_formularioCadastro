@@ -4,6 +4,8 @@ const dbName = 'company_app.db';
 
 const db = SQLite.openDatabase(dbName);
 
+// COMPANY
+
 export const createTable = () => {
     db.transaction(tx => {
         tx.executeSql(
@@ -11,23 +13,6 @@ export const createTable = () => {
         );
     });
 };
-
-export const createTableEmployees = () => {
-    db.transaction(tx => {
-        tx.executeSql(
-            'CREATE TABLE IF NOT EXISTS employees (EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT, CompanyId INTEGER, LastName TEXT, FirstName TEXT, Title TEXT, BirthDate TEXT, HireDate TEXT, Address TEXT, City TEXT, Region TEXT, PostalCode TEXT, Country TEXT, HomePhone TEXT, Extension TEXT);'
-        );
-    });
-};
-
-export const createTableSuppliers = () => {
-    db.transaction(tx => {
-        tx.executeSql(
-            'CREATE TABLE IF NOT EXISTS suppliers (SupplierID INTEGER PRIMARY KEY AUTOINCREMENT, CompanyName TEXT, ContactName TEXT, ContactTitle TEXT, Address TEXT, City TEXT, Region TEXT, PostalCode TEXT, Country TEXT, Phone TEXT, CompanyId INTEGER);'
-        );
-    });
-};
-
 
 export const registerCompany = (usuario) => {
     // Verifica se o usuário já existe antes de cadastrar
@@ -71,6 +56,7 @@ export const registerCompany = (usuario) => {
         error => console.error(error)
     );
 };
+
 export const login = (email, senha, callback) => {
     db.transaction(
         tx => {
@@ -117,6 +103,16 @@ export const getUser = (email, callback) => {
     );
 };
 
+// EMPLOYEES
+
+export const createTableEmployees = () => {
+    db.transaction(tx => {
+        tx.executeSql(
+            'CREATE TABLE IF NOT EXISTS employees (EmployeeId INTEGER PRIMARY KEY AUTOINCREMENT, CompanyId INTEGER, LastName TEXT, FirstName TEXT, Title TEXT, BirthDate TEXT, HireDate TEXT, Address TEXT, City TEXT, Region TEXT, PostalCode TEXT, Country TEXT, HomePhone TEXT, Extension TEXT);'
+        );
+    });
+};
+
 export const registerEmployee = (employee) => {
     db.transaction(
         tx => {
@@ -160,7 +156,6 @@ export const registerEmployee = (employee) => {
     );
 };
 
-
 export const getEmployees = (companyId, callback) => {
     db.transaction(
         tx => {
@@ -178,6 +173,16 @@ export const getEmployees = (companyId, callback) => {
         },
         error => console.error('Erro ao obter funcionários da empresa:', error)
     );
+};
+
+// SUPPLIERS
+
+export const createTableSuppliers = () => {
+    db.transaction(tx => {
+        tx.executeSql(
+            'CREATE TABLE IF NOT EXISTS suppliers (SupplierID INTEGER PRIMARY KEY AUTOINCREMENT, CompanyName TEXT, ContactName TEXT, ContactTitle TEXT, Address TEXT, City TEXT, Region TEXT, PostalCode TEXT, Country TEXT, Phone TEXT, CompanyId INTEGER);'
+        );
+    });
 };
 
 export const registerSupplier = (supplier) => {
@@ -239,5 +244,83 @@ export const getSuppliers = (companyId, callback) => {
         error => console.error('Erro ao obter fornecedores da empresa:', error)
     );
 };
+
+//PRODUCTS
+
+export const createTableProducts = () => {
+    db.transaction(tx => {
+        tx.executeSql(
+            `CREATE TABLE IF NOT EXISTS products (
+                ProductID INTEGER PRIMARY KEY AUTOINCREMENT,
+                ProductName TEXT,
+                SupplierID INTEGER,
+                CategoryID INTEGER,
+                QuantityPerUnit INTEGER,
+                UnitPrice REAL,
+                UnitsInStock INTEGER,
+                UnitsOnOrder INTEGER,
+                CompanyId TEXT
+            );`
+        );
+    });
+};
+
+export const registerProduct = (product) => {
+    db.transaction(
+        tx => {
+            tx.executeSql(
+                'SELECT * FROM products WHERE ProductName = ? AND SupplierID = ? AND CompanyId = ?',
+                [product.ProductName, product.SupplierID, product.CompanyId],
+                (_, { rows }) => {
+                    if (rows.length > 0) {
+                        console.log('Produto já cadastrado!');
+                    } else {
+                        tx.executeSql(
+                            'INSERT INTO products (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, CompanyId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                            [
+                                product.ProductName,
+                                product.SupplierID,
+                                product.CategoryID,
+                                product.QuantityPerUnit,
+                                product.UnitPrice,
+                                product.UnitsInStock,
+                                product.UnitsOnOrder,
+                                product.CompanyId
+                            ],
+                            (_, { rowsAffected }) => {
+                                if (rowsAffected > 0) {
+                                    console.log('Produto cadastrado com sucesso!');
+                                } else {
+                                    console.log('Erro ao cadastrar o produto.');
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+        },
+        error => console.error('Erro ao cadastrar o produto:', error, product)
+    );
+};
+
+export const getProducts = (companyId, callback) => {
+    db.transaction(
+        tx => {
+            tx.executeSql(
+                'SELECT * FROM products WHERE CompanyId = ?',
+                [companyId],
+                (_, { rows }) => {
+                    const products = [];
+                    for (let i = 0; i < rows.length; ++i) {
+                        products.push(rows.item(i));
+                    }
+                    callback(products);
+                }
+            );
+        },
+        error => console.error('Erro ao obter produtos do fornecedor:', error)
+    );
+};
+
 
 

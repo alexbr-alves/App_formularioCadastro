@@ -14,6 +14,9 @@ import employeeList from '../screens/employee/employeeList/index'
 import employee_register from '../screens/employee/employeeRegister/index';
 import supplierList from '../screens/supplier/supplier_list';
 import supplierRegister from '../screens/supplier/supplier_register';
+import productList from '../screens/product/productList';
+import productRegister from '../screens/product/productRegister';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -69,6 +72,16 @@ export default function AppRotas() {
         }} />
 
         <Stack.Screen name={routeName.supplier_register} component={supplierRegister} options={{
+          title: '',
+          headerShown: false,
+        }} />
+
+        <Stack.Screen name={routeName.product_list} component={productList} options={{
+          title: '',
+          headerShown: false,
+        }} />
+
+        <Stack.Screen name={routeName.product_register} component={productRegister} options={{
           title: '',
           headerShown: false,
         }} />

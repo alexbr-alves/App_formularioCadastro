@@ -5,25 +5,36 @@ export default StyleSheet.create({
         flex: 3,
         marginTop: 50,
         alignItems: "center",
+        justifyContent: 'flex-end'
     },
     container_botao: {
         marginTop: 100
     },
+    image: {
+        height: 250,
+        width: 300,
+    },
     botaoSair: {
-        alignSelf: 'flex-end',
-        marginRight: 20,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        backgroundColor: '#000000'
+        height: 50,
+        width: 200,
+        backgroundColor: '#923CFF',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        borderRadius: 6,
+        marginTop: 20,
+        marginBottom: 30,
+        marginTop: 100
     },
     botaoSair__text:{
-        color: '#FFF',
-        fontSize: 15,
-        fontWeight: '600'
+        alignSelf: 'center',
+        color: '#fff',
+        fontSize: 16,
+        lineHeight: 24,
+        fontWeight: '700'
     },
     tituloCategoria:{
         marginTop: 20,
-        backgroundColor: '#b25cff',
+        backgroundColor: '#923CFF',
         fontSize: 16,
         paddingLeft: 30,
         paddingVertical: 5,
