@@ -28,7 +28,9 @@ export default function Home(){
                 <Text style={styles.botao__text}>Employee</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.botao}>
+            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.supplier_list, {
+                email: route.params.email
+            })}>
                 <Text style={styles.botao__text}>Supplier</Text>
             </TouchableOpacity>
 

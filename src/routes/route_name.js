@@ -7,5 +7,8 @@ export const routeName = {
     company_data: "company_data",
     // employee
     employee_list: "employee_list",
-    employee_register: "employee_register"
+    employee_register: "employee_register",
+    // Supplier
+    supplier_list: "supplier_list",
+    supplier_register: "supplier_register"
 }
