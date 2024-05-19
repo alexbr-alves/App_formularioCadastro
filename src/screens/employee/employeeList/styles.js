@@ -33,7 +33,7 @@ export default StyleSheet.create({
         marginVertical: 5
     },
     container_flatlist_name: {
-        fontSize: 30,
+        fontSize: 25,
         marginLeft: 5
     },
     container_flatlist_title: {

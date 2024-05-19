@@ -23,7 +23,7 @@ export default function EmployeeList() {
     }, [route.params.email]);
 
     useEffect(() => {
-        EmployeeMock();
+        EmployeeMock()
         loadEmployees();
     }, [loadEmployees]);
 
@@ -47,6 +47,7 @@ export default function EmployeeList() {
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} />
                 )}
+                ListFooterComponent={<View style={{height: 100}}/>}
             />
         </View>
     );
@@ -67,9 +68,6 @@ export default function EmployeeList() {
                 >
                     <Image style={styles.container_flatlist_icon} source={expandedItemId === item.EmployeeId ? arrowDown : arrowRight} />
                     <Text style={styles.container_flatlist_name}>{item.FirstName}</Text>
-                    {expandedItemId === null && (
-                        <Text style={styles.container_flatlist_title}>{LimitText(item.Title, 15)}</Text>
-                    )}
 
                 </TouchableOpacity>
                 {expandedItemId === item.EmployeeId && (

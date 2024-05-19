@@ -1,7 +1,7 @@
 import { registerProduct } from "../services/database/products";
 
 const product1 = {
-    ProductName: 'Product A',
+    ProductName: 'Smartphone X',
     SupplierID: 1,
     CategoryID: 1,
     QuantityPerUnit: 10,
@@ -12,7 +12,7 @@ const product1 = {
 };
 
 const product2 = {
-    ProductName: 'Product B',
+    ProductName: 'Laptop Y',
     SupplierID: 2,
     CategoryID: 2,
     QuantityPerUnit: 20,
@@ -23,7 +23,7 @@ const product2 = {
 };
 
 const product3 = {
-    ProductName: 'Product C',
+    ProductName: 'Headphones Z',
     SupplierID: 3,
     CategoryID: 1,
     QuantityPerUnit: 5,
@@ -34,7 +34,7 @@ const product3 = {
 };
 
 const product4 = {
-    ProductName: 'Product D',
+    ProductName: 'Tablet W',
     SupplierID: 4,
     CategoryID: 3,
     QuantityPerUnit: 8,
@@ -45,7 +45,7 @@ const product4 = {
 };
 
 const product5 = {
-    ProductName: 'Product E',
+    ProductName: 'Smartwatch V',
     SupplierID: 5,
     CategoryID: 1,
     QuantityPerUnit: 12,
@@ -56,7 +56,7 @@ const product5 = {
 };
 
 const product6 = {
-    ProductName: 'Product F',
+    ProductName: 'Camera U',
     SupplierID: 6,
     CategoryID: 2,
     QuantityPerUnit: 7,
@@ -67,7 +67,7 @@ const product6 = {
 };
 
 const product7 = {
-    ProductName: 'Product G',
+    ProductName: 'Wireless Speaker T',
     SupplierID: 7,
     CategoryID: 3,
     QuantityPerUnit: 15,
@@ -78,7 +78,7 @@ const product7 = {
 };
 
 const product8 = {
-    ProductName: 'Product H',
+    ProductName: 'External Hard Drive S',
     SupplierID: 8,
     CategoryID: 1,
     QuantityPerUnit: 6,
@@ -89,7 +89,7 @@ const product8 = {
 };
 
 const product9 = {
-    ProductName: 'Product I',
+    ProductName: 'Gaming Console R',
     SupplierID: 9,
     CategoryID: 2,
     QuantityPerUnit: 11,
@@ -100,7 +100,7 @@ const product9 = {
 };
 
 const product10 = {
-    ProductName: 'Product J',
+    ProductName: 'Fitness Tracker Q',
     SupplierID: 10,
     CategoryID: 3,
     QuantityPerUnit: 9,
@@ -109,6 +109,7 @@ const product10 = {
     UnitsOnOrder: 45,
     CompanyId: 'Q'
 };
+
 
 export default function ProductMock() {
     registerProduct(product1);

@@ -3,6 +3,10 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import { registerCompany, login} from "../../services/database/company";
+import ProductMock from "../../mock/ProductMock";
+import CategoryMock from "../../mock/CategoryMock";
+import EmployeeMock from "../../mock/EmployeeMock";
+import SupplierMock from "../../mock/SupplierMock";
 
 import { routeName } from "../../routes/route_name";
 
@@ -32,6 +36,10 @@ export default function Welcome(){
     };
 
     useEffect(() => {
+        ProductMock()
+        SupplierMock()
+        CategoryMock()
+        EmployeeMock()
         registerCompany(usuarioTeste);
     }, []);
 

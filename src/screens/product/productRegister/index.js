@@ -10,6 +10,7 @@ import CustonModal from "./newCategory";
 import CategoryMock from "../../../mock/CategoryMock";
 import { getCategories } from "../../../services/database/category";
 import { registerProduct } from "../../../services/database/products";
+import { getSuppliers } from "../../../services/database/suppliers";
 import styles from "./styles";
 import Toolbar from "../../componenetes/toolbar";
 
@@ -19,6 +20,7 @@ export default function ProductRegister() {
     const [mensagem, setMensagem] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const route = useRoute();
+    const [supplier, setSupplier] = useState([])
     const [category, setCategory] = useState([])
     const [product, setProduct] = useState({
         ProductName: '',
@@ -37,15 +39,23 @@ export default function ProductRegister() {
         })
     }, [route.params.email]);
 
+    const loadSupplier = useCallback(() => {
+        getSuppliers(route.params.email, (supplier) => {
+            setSupplier(supplier)
+        })
+    }, [route.params.email])
+
     useEffect(() => {
         CategoryMock()
         loadCategory()
-    }, [loadCategory]);
+        loadSupplier()
+    }, [loadCategory, loadSupplier]);
 
     useFocusEffect(
         useCallback(() => {
             loadCategory()
-        }, [loadCategory])
+            loadSupplier()
+        }, [loadCategory, loadSupplier])
     )
 
     function checkError() {
@@ -89,7 +99,6 @@ export default function ProductRegister() {
                 <Toolbar titulo={"Product Register"} />
                 <ScrollView contentContainerStyle={styles.inputs}>
 
-
                     <CustomTextInput
                         value={product.ProductName}
                         label={tags.ProductName}
@@ -99,15 +108,15 @@ export default function ProductRegister() {
                         onChangeText={ProductName => setProduct(prevState => ({ ...prevState, ProductName }))}
                     />
 
-                    <CustomTextInput
-                        value={product.SupplierID}
-                        keyboardType={'numeric'}
-                        label={tags.SupplierID}
-                        mode='outlined'
-                        error={statusError === tags.SupplierID}
-                        onChangeText={SupplierID => setProduct(prevState => ({ ...prevState, SupplierID }))}
-                    />
-
+                        <View style={styles.pickerInput_supplier}>
+                            <Picker
+                                selectedValue={product.SupplierID}
+                                onValueChange={SupplierID => setProduct(prevState => ({ ...prevState, SupplierID }))}>
+                                {supplier.map((item, index) => (
+                                    <Picker.Item key={index} label={item.CompanyName} value={item.SupplierID} />
+                                ))}
+                            </Picker>
+                        </View>
 
                     <CustomTextInput
                         value={product.QuantityPerUnit}

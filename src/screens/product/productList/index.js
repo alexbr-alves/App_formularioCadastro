@@ -5,15 +5,19 @@ import styles from "./styles";
 
 import { getProducts } from "../../../services/database/products";
 import ProductMock from "../../../mock/ProductMock";
-import LimitText from "../../../utils/limitText";
-import Toolbar from "../../componenetes/toolbar";
+import Toolbar from "../../componenetes/toolbar"; 
 import arrowDown from "../../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../../assets/imagens/arrow_right.png";
 import { routeName } from "../../../routes/route_name";
+import { getSuppliers } from "../../../services/database/suppliers";
+import { getCategories } from "../../../services/database/category";
+import LimitText from "../../../utils/limitText";
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
     const navigation = useNavigation();
+    const [supplier, setSupplier] = useState([])
+    const [categories, setCategories] = useState([])
     const route = useRoute();
 
     const loadProducts = useCallback(() => {
@@ -22,14 +26,30 @@ export default function ProductList() {
         });
     }, [route.params.email]);
 
+    const loadSupplier = useCallback(() => {
+        getSuppliers(route.params.email, (supplier) => {
+            setSupplier(supplier);
+        });
+    }, [route.params.email]);
+
+    const loadCategory = useCallback(() => {
+        getCategories(route.params.email, (categories) => {
+            setCategories(categories)
+        }, [route.params.email])
+    })
+
     useEffect(() => {
-        ProductMock();
+        ProductMock()
+        loadCategory()
+        loadSupplier()
         loadProducts();
     }, [loadProducts]);
 
     useFocusEffect(
         useCallback(() => {
-            loadProducts();
+            loadSupplier()
+            loadCategory()
+            loadProducts()
         }, [loadProducts])
     );
 
@@ -38,7 +58,7 @@ export default function ProductList() {
             <Toolbar titulo={"Product List"} />
             <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(
                 routeName.product_register, {
-                    email: route.params.email
+                email: route.params.email
             })}>
                 <Text style={styles.botao__text}>New</Text>
             </TouchableOpacity>
@@ -51,6 +71,7 @@ export default function ProductList() {
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} />
                 )}
+                ListFooterComponent={<View style={{ height: 100 }} />}
             />
         </View>
     );
@@ -71,30 +92,45 @@ export default function ProductList() {
                 >
                     <Image style={styles.container_flatlist_icon} source={expandedItemId === item.ProductID ? arrowDown : arrowRight} />
                     <Text style={styles.container_flatlist_name}>{item.ProductName}</Text>
-                    {expandedItemId === null && (
-                        <Text style={styles.container_flatlist_title}>{LimitText(item.QuantityPerUnit.toString() + " /boxer", 15)}</Text>
-                    )}
                 </TouchableOpacity>
                 {expandedItemId === item.ProductID && (
-                    <ExpandedComponent item={item} />
+                    <ExpandedComponent item={item} supplier={supplier} categories={categories}/>
                 )}
             </>
         );
     }
 
-    function ExpandedComponent({ item }) {
+    function ExpandedComponent({ item, supplier, categories }) {
+        function getName(id) {
+            for (let i = 0; i < supplier.length; i++) {
+                if (supplier[i].SupplierID === id) {
+                    return supplier[i].CompanyName;
+                }
+            }
+            return null;
+        }
+
+        function getCategoryName(id) {
+            for (let i = 0; i < categories.length; i++) {
+                if (categories[i].CategoryID === id) {
+                    return categories[i].CategoryName;
+                }
+            }
+            return null;
+        }
         return (
             <View style={styles.expandedContainer}>
                 <TextoNegrito texto={"Product Name"} variavel={item.ProductName} />
-                <TextoNegrito texto={"Supplier ID"} variavel={item.SupplierID} />
-                <TextoNegrito texto={"Category ID"} variavel={item.CategoryID} />
-                <TextoNegrito texto={"Quantity Per Unit"} variavel={item.QuantityPerUnit + " /boxer"} />
-                <TextoNegrito texto={"Unit Price"} variavel={item.UnitPrice} />
+                <TextoNegrito texto={"Supplier"} variavel={getName(item.SupplierID)} />
+                <TextoNegrito texto={"Category"} variavel={getCategoryName(item.CategoryID)} />
+                <TextoNegrito texto={"Quantity Per Unit"} variavel={item.QuantityPerUnit} />
+                <TextoNegrito texto={"Unit Price"} variavel={"R$ " + item.UnitPrice} />
                 <TextoNegrito texto={"Units In Stock"} variavel={item.UnitsInStock} />
                 <TextoNegrito texto={"Units On Order"} variavel={item.UnitsOnOrder} />
             </View>
         );
     }
+    
 
     function TextoNegrito({ texto, variavel }) {
         return (

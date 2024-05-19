@@ -1,7 +1,7 @@
 import { registerSupplier } from "../services/database/suppliers";
 
 const fornecedor1 = {
-    CompanyName: 'Supplier A',
+    CompanyName: 'ElectroTech Solutions',
     ContactName: 'João Silva',
     ContactTitle: 'Manager',
     Address: 'Rua A, 100',
@@ -14,7 +14,7 @@ const fornecedor1 = {
 };
 
 const fornecedor2 = {
-    CompanyName: 'Supplier B',
+    CompanyName: 'MegaTech Electronics',
     ContactName: 'Maria Souza',
     ContactTitle: 'Director',
     Address: 'Avenida B, 200',
@@ -27,7 +27,7 @@ const fornecedor2 = {
 };
 
 const fornecedor3 = {
-    CompanyName: 'Supplier C',
+    CompanyName: 'TechPro Distribuidora',
     ContactName: 'Carlos Pereira',
     ContactTitle: 'Sales Representative',
     Address: 'Rua C, 300',
@@ -40,7 +40,7 @@ const fornecedor3 = {
 };
 
 const fornecedor4 = {
-    CompanyName: 'Supplier D',
+    CompanyName: 'Alliance Tech Solutions',
     ContactName: 'Ana Clara',
     ContactTitle: 'HR Manager',
     Address: 'Avenida D, 400',
@@ -53,7 +53,7 @@ const fornecedor4 = {
 };
 
 const fornecedor5 = {
-    CompanyName: 'Supplier E',
+    CompanyName: 'Global Electronics',
     ContactName: 'Lucas Martins',
     ContactTitle: 'CEO',
     Address: 'Rua E, 500',
@@ -66,7 +66,7 @@ const fornecedor5 = {
 };
 
 const fornecedor6 = {
-    CompanyName: 'Supplier F',
+    CompanyName: 'MarketPro Tecnologia',
     ContactName: 'Juliana Oliveira',
     ContactTitle: 'Marketing Manager',
     Address: 'Avenida F, 600',
@@ -79,7 +79,7 @@ const fornecedor6 = {
 };
 
 const fornecedor7 = {
-    CompanyName: 'Supplier G',
+    CompanyName: 'Solutions Tech Group',
     ContactName: 'Pedro Almeida',
     ContactTitle: 'CTO',
     Address: 'Rua G, 700',
@@ -92,7 +92,7 @@ const fornecedor7 = {
 };
 
 const fornecedor8 = {
-    CompanyName: 'Supplier H',
+    CompanyName: 'Prime Electronics',
     ContactName: 'Mariana Lima',
     ContactTitle: 'CFO',
     Address: 'Avenida H, 800',
@@ -105,7 +105,7 @@ const fornecedor8 = {
 };
 
 const fornecedor9 = {
-    CompanyName: 'Supplier I',
+    CompanyName: 'Tech Innovations',
     ContactName: 'Carlos Rodrigues',
     ContactTitle: 'COO',
     Address: 'Rua I, 900',
@@ -118,7 +118,7 @@ const fornecedor9 = {
 };
 
 const fornecedor10 = {
-    CompanyName: 'Supplier J',
+    CompanyName: 'Smart Solutions',
     ContactName: 'Fernando Lima',
     ContactTitle: 'Coordinator',
     Address: 'Praça J, 1000',
@@ -129,6 +129,7 @@ const fornecedor10 = {
     Phone: '(81) 3456-7890',
     CompanyId: 'Q'
 };
+
 
 export default function SupplierMock() {
     registerSupplier(fornecedor1);

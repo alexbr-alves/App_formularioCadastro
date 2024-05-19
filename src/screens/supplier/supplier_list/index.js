@@ -23,7 +23,7 @@ export default function SupplierList() {
     }, [route.params.email]);
 
     useEffect(() => {
-        SupplierMock();
+        SupplierMock()
         loadSuppliers();
     }, [loadSuppliers]);
 
@@ -47,6 +47,7 @@ export default function SupplierList() {
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} />
                 )}
+                ListFooterComponent={<View style={{height: 100}}/>}
             />
         </View>
     );
@@ -66,10 +67,7 @@ export default function SupplierList() {
                     onPress={() => handlePress(item.SupplierID)}
                 >
                     <Image style={styles.container_flatlist_icon} source={expandedItemId === item.SupplierID ? arrowDown : arrowRight} />
-                    <Text style={styles.container_flatlist_name}>{item.CompanyName}</Text>
-                    {expandedItemId === null && (
-                        <Text style={styles.container_flatlist_title}>{LimitText(item.ContactTitle, 15)}</Text>
-                    )}
+                    <Text style={styles.container_flatlist_name}>{LimitText(item.CompanyName, 22)}</Text>
                 </TouchableOpacity>
                 {expandedItemId === item.SupplierID && (
                     <ExpandedComponent item={item} />

@@ -11,7 +11,7 @@ export default StyleSheet.create({
         marginTop: 100
     },
     image: {
-        height: 250,
+        height: 320,
         width: 300,
     },
     botaoSair: {

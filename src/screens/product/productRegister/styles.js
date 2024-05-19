@@ -48,7 +48,7 @@ export default StyleSheet.create({
     },
     pickerInput: {
         borderWidth: 1,
-        marginTop: 10,
+        marginTop: 5,
         height: 50,
         width: 200,
         backgroundColor: "white",
@@ -75,4 +75,11 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         marginVertical: 5
     },
+    pickerInput_supplier: {
+        borderWidth: 1,
+        marginTop: 5,
+        height: 50,
+        backgroundColor: "white",
+        borderColor: "gray"
+    }
 });
