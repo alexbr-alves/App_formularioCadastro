@@ -62,8 +62,6 @@ export const registerCompany = (usuario) => {
         error => console.error(error)
     );
 };
-
-
 export const login = (email, senha, callback) => {
     db.transaction(
         tx => {

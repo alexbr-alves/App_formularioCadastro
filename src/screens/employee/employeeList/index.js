@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import Toolbar from "../../componenetes/toolbar";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import styles from "./styles";
+
 import { getEmployees, createTableEmployees } from "../../../services/database_sqlite";
 import EmployeeMock from "../../../mock/EmployeeMock";
 import LimitText from "../../../utils/limitText";
-
+import Toolbar from "../../componenetes/toolbar";
 import arrowDown from "../../../../assets/imagens/arrow_down.png"
 import arrowRight from "../../../../assets/imagens/arrow_right.png"
+import {routeName} from "../../../routes/route_name"
 
 
 
 
 export default function EmployeeList() {
     const [funcionarios, setFuncionarios] = useState([]);
-    const [clicked, setClicked] = useState(false);
     const navigation = useNavigation()
+    const route = useRoute();
 
     useEffect(() => {
         createTableEmployees()
         EmployeeMock()
 
-        getEmployees("Q", (funcionarios) => {
+        getEmployees(route.params.email, (funcionarios) => {
             setFuncionarios(funcionarios);
         });
     }, []);
     return (
         <View style={styles.container}>
             <Toolbar titulo={"Employee List"}/>
-            <TouchableOpacity style={styles.botao}>
+            <TouchableOpacity style={styles.botao}  onPress={() => navigation.navigate(routeName.employee_register, {email: route.params.email})}>
                 <Text style={styles.botao__text}>New</Text>
             </TouchableOpacity>
 

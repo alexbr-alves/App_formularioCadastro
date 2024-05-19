@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, Text} from "react-native";
 import styles from "./style";
@@ -12,9 +12,12 @@ export default function Home(){
     const navigation = useNavigation();
     
 
-    getUser(route.params.email, (user) => {
-        setCompany(user)
-    })
+    useEffect(() => {
+        // Chamada para getUser quando a tela é montada
+        getUser(route.params.email, (user) => {
+            setCompany(user);
+        });
+    }, [route.params.email]);
     
     return(
         <View style={styles.container}>
