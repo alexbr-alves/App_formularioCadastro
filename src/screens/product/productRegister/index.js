@@ -5,11 +5,11 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import { mask } from 'remask';
 
-import { registerProduct } from "../../../services/database/products";
 import CustomTextInput from "../../componenetes/textImput";
 import CustonModal from "./newCategory";
 import CategoryMock from "../../../mock/CategoryMock";
-import { getCategories, createTableCategories } from "../../../services/database/category";
+import { getCategories } from "../../../services/database/category";
+import { registerProduct } from "../../../services/database/products";
 import styles from "./styles";
 import Toolbar from "../../componenetes/toolbar";
 
@@ -38,7 +38,6 @@ export default function ProductRegister() {
     }, [route.params.email]);
 
     useEffect(() => {
-        createTableCategories()
         CategoryMock()
         loadCategory()
     }, [loadCategory]);

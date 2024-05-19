@@ -4,7 +4,7 @@ const dbName = 'company_app.db';
 
 const db = SQLite.openDatabase(dbName);
 
-export const createTableProducts = () => {
+const createTableProducts = () => {
     db.transaction(tx => {
         tx.executeSql(
             `CREATE TABLE IF NOT EXISTS products (
@@ -23,6 +23,7 @@ export const createTableProducts = () => {
 };
 
 export const registerProduct = (product) => {
+    createTableProducts()
     db.transaction(
         tx => {
             tx.executeSql(

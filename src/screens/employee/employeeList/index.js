@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
-import { getEmployees, createTableEmployees } from "../../../services/database/employee";
+import { getEmployees } from "../../../services/database/employee";
 import EmployeeMock from "../../../mock/EmployeeMock";
 import LimitText from "../../../utils/limitText";
 import Toolbar from "../../componenetes/toolbar";
@@ -23,7 +23,6 @@ export default function EmployeeList() {
     }, [route.params.email]);
 
     useEffect(() => {
-        createTableEmployees();
         EmployeeMock();
         loadEmployees();
     }, [loadEmployees]);

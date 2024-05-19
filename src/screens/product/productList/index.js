@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
-import { getProducts, createTableProducts } from "../../../services/database/products";
+import { getProducts } from "../../../services/database/products";
 import ProductMock from "../../../mock/ProductMock";
 import LimitText from "../../../utils/limitText";
 import Toolbar from "../../componenetes/toolbar";
@@ -23,7 +23,6 @@ export default function ProductList() {
     }, [route.params.email]);
 
     useEffect(() => {
-        createTableProducts();
         ProductMock();
         loadProducts();
     }, [loadProducts]);

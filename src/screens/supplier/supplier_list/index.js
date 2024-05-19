@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
-import { getSuppliers, createTableSuppliers } from "../../../services/database/suppliers";
+import { getSuppliers } from "../../../services/database/suppliers";
 import SupplierMock from "../../../mock/SupplierMock";
 import LimitText from "../../../utils/limitText";
 import Toolbar from "../../componenetes/toolbar";
@@ -23,7 +23,6 @@ export default function SupplierList() {
     }, [route.params.email]);
 
     useEffect(() => {
-        createTableSuppliers();
         SupplierMock();
         loadSuppliers();
     }, [loadSuppliers]);
