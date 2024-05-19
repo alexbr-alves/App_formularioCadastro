@@ -1,4 +1,4 @@
-import { registerProduct } from "../services/database_sqlite";
+import { registerProduct } from "../services/database/products";
 
 const product1 = {
     ProductName: 'Product A',

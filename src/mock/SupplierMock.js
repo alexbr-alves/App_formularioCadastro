@@ -1,4 +1,4 @@
-import { registerSupplier } from "../services/database_sqlite";
+import { registerSupplier } from "../services/database/suppliers";
 
 const fornecedor1 = {
     CompanyName: 'Supplier A',

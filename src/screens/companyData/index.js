@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, Text} from "react-native";
 import styles from "./style";
-import { getUser } from "../../services/database_sqlite";
+import { getUser } from "../../services/database/company";
 import Toolbar from "../componenetes/toolbar";
 
 

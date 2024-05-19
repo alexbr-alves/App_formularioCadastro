@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { Picker } from '@react-native-picker/picker';
-import Toolbar from "../../componenetes/toolbar";
-import { useNavigation, useRoute } from "@react-navigation/native";
+
+import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import { mask } from 'remask';
-import styles from "./styles";
-import { registerProduct } from "../../../services/database_sqlite";
+
+import { registerProduct } from "../../../services/database/products";
 import CustomTextInput from "../../componenetes/textImput";
 import CustonModal from "./newCategory";
 import CategoryMock from "../../../mock/CategoryMock";
-import { getCategories, createTableCategories } from "../../../services/category_database";
+import { getCategories, createTableCategories } from "../../../services/database/category";
+import styles from "./styles";
+import Toolbar from "../../componenetes/toolbar";
 
 export default function ProductRegister() {
     const navigation = useNavigation();
@@ -29,13 +31,23 @@ export default function ProductRegister() {
         CompanyId: ''
     });
 
+    const loadCategory = useCallback(() => {
+        getCategories(route.params.email, (category) => {
+            setCategory(category)
+        })
+    }, [route.params.email]);
+
     useEffect(() => {
         createTableCategories()
         CategoryMock()
-        getCategories(route.params.email, (category) => {
-            setCategory(category);
-        });
-    }, []);
+        loadCategory()
+    }, [loadCategory]);
+
+    useFocusEffect(
+        useCallback(() => {
+            loadCategory()
+        }, [loadCategory])
+    )
 
     function checkError() {
         if (product.ProductName === '') {
@@ -70,99 +82,97 @@ export default function ProductRegister() {
 
     return (
         <>
-        <KeyboardAvoidingView
-            style={styles.container}
-            keyboardVerticalOffset={30}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-            <Toolbar titulo={"Product Register"} />
-            <ScrollView contentContainerStyle={styles.inputs}>
+            <KeyboardAvoidingView
+                style={styles.container}
+                keyboardVerticalOffset={30}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+                <Toolbar titulo={"Product Register"} />
+                <ScrollView contentContainerStyle={styles.inputs}>
 
 
-                <CustomTextInput
-                    value={product.ProductName}
-                    label={tags.ProductName}
-                    mode='outlined'
-                    error={statusError === tags.ProductName}
-                    mensagem={mensagem}
-                    onChangeText={ProductName => setProduct(prevState => ({ ...prevState, ProductName }))}
-                />
+                    <CustomTextInput
+                        value={product.ProductName}
+                        label={tags.ProductName}
+                        mode='outlined'
+                        error={statusError === tags.ProductName}
+                        mensagem={mensagem}
+                        onChangeText={ProductName => setProduct(prevState => ({ ...prevState, ProductName }))}
+                    />
 
-                <CustomTextInput
-                    value={product.SupplierID}
-                    keyboardType={'numeric'}
-                    label={tags.SupplierID}
-                    mode='outlined'
-                    error={statusError === tags.SupplierID}
-                    onChangeText={SupplierID => setProduct(prevState => ({ ...prevState, SupplierID }))}
-                />
+                    <CustomTextInput
+                        value={product.SupplierID}
+                        keyboardType={'numeric'}
+                        label={tags.SupplierID}
+                        mode='outlined'
+                        error={statusError === tags.SupplierID}
+                        onChangeText={SupplierID => setProduct(prevState => ({ ...prevState, SupplierID }))}
+                    />
 
 
-                <CustomTextInput
-                    value={product.QuantityPerUnit}
-                    label={tags.QuantityPerUnit}
-                    mode='outlined'
-                    error={statusError === tags.QuantityPerUnit}
-                    onChangeText={QuantityPerUnit => setProduct(prevState => ({ ...prevState, QuantityPerUnit }))}
-                />
+                    <CustomTextInput
+                        value={product.QuantityPerUnit}
+                        label={tags.QuantityPerUnit}
+                        mode='outlined'
+                        error={statusError === tags.QuantityPerUnit}
+                        onChangeText={QuantityPerUnit => setProduct(prevState => ({ ...prevState, QuantityPerUnit }))}
+                    />
 
-                <CustomTextInput
-                    keyboardType={'numeric'}
-                    value={product.UnitPrice}
-                    label={tags.UnitPrice}
-                    mode='outlined'
-                    error={statusError === tags.UnitPrice}
-                    onChangeText={UnitPrice => setProduct(prevState => ({ ...prevState, UnitPrice: mask(UnitPrice, "99999.99") }))}
-                />
+                    <CustomTextInput
+                        keyboardType={'numeric'}
+                        value={product.UnitPrice}
+                        label={tags.UnitPrice}
+                        mode='outlined'
+                        error={statusError === tags.UnitPrice}
+                        onChangeText={UnitPrice => setProduct(prevState => ({ ...prevState, UnitPrice: mask(UnitPrice, "99999.99") }))}
+                    />
 
-                <CustomTextInput
-                    keyboardType={'numeric'}
-                    value={product.UnitsInStock}
-                    label={tags.UnitsInStock}
-                    mode='outlined'
-                    error={statusError === tags.UnitsInStock}
-                    onChangeText={UnitsInStock => setProduct(prevState => ({ ...prevState, UnitsInStock }))}
-                />
+                    <CustomTextInput
+                        keyboardType={'numeric'}
+                        value={product.UnitsInStock}
+                        label={tags.UnitsInStock}
+                        mode='outlined'
+                        error={statusError === tags.UnitsInStock}
+                        onChangeText={UnitsInStock => setProduct(prevState => ({ ...prevState, UnitsInStock }))}
+                    />
 
-                <CustomTextInput
-                    keyboardType={'numeric'}
-                    value={product.UnitsOnOrder}
-                    label={tags.UnitsOnOrder}
-                    mode='outlined'
-                    error={statusError === tags.UnitsOnOrder}
-                    onChangeText={UnitsOnOrder => setProduct(prevState => ({ ...prevState, UnitsOnOrder }))}
-                />
+                    <CustomTextInput
+                        keyboardType={'numeric'}
+                        value={product.UnitsOnOrder}
+                        label={tags.UnitsOnOrder}
+                        mode='outlined'
+                        error={statusError === tags.UnitsOnOrder}
+                        onChangeText={UnitsOnOrder => setProduct(prevState => ({ ...prevState, UnitsOnOrder }))}
+                    />
 
-                <View style={styles.category}>
-                    <View style={styles.pickerInput}>
-                        <Picker
-                            selectedValue={product.CategoryID}
-                            onValueChange={CategoryID => setProduct(prevState => ({ ...prevState, CategoryID }))}>
-                            {category.map((item, index) => (
-                                <Picker.Item key={index} label={item.CategoryName} value={item.CategoryID} />
-                            ))}
-                        </Picker>
+                    <View style={styles.category}>
+                        <View style={styles.pickerInput}>
+                            <Picker
+                                selectedValue={product.CategoryID}
+                                onValueChange={CategoryID => setProduct(prevState => ({ ...prevState, CategoryID }))}>
+                                {category.map((item, index) => (
+                                    <Picker.Item key={index} label={item.CategoryName} value={item.CategoryID} />
+                                ))}
+                            </Picker>
+                        </View>
+                        <TouchableOpacity style={styles.newCategory__botao} onPress={() => setModalVisible(true)}>
+                            <Text style={styles.newCategory__text}>Add</Text>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.newCategory__botao} onPress={() => setModalVisible(true)}>
-                        <Text style={styles.newCategory__text}>Add</Text>
-                    </TouchableOpacity>
-                </View>
 
-               
-                <TouchableOpacity style={styles.botao} onPress={checkError}>
-                    <Text style={styles.botao__text}>Register</Text>
-                </TouchableOpacity>
-            </ScrollView>
-        </KeyboardAvoidingView>
-        
-        <CustonModal
-        id={route.params.email}
-        state={modalVisible} 
-        onLoading={getCategories(route.params.email, (category) => {
-            setCategory(category);
-        })}
-        setState={setModalVisible} />
-</>
+
+                    <TouchableOpacity style={styles.botao} onPress={checkError}>
+                        <Text style={styles.botao__text}>Register</Text>
+                    </TouchableOpacity>
+                </ScrollView>
+            </KeyboardAvoidingView>
+
+            <CustonModal
+                onLoad={loadCategory}
+                id={route.params.email}
+                state={modalVisible}
+                setState={setModalVisible} />
+        </>
     )
 }
 
@@ -175,7 +185,3 @@ const tags = {
     UnitsInStock: "Units In Stock",
     UnitsOnOrder: "Units On Order"
 }
-
-
-
-

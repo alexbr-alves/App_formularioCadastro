@@ -1,4 +1,4 @@
-import { registerCategory } from "../services/category_database";
+import { registerCategory } from "../services/database/category";
 
 const categoria1 = {
     CompanyId: 'Q',

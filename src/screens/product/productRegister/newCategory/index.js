@@ -3,9 +3,9 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { Modal } from 'react-native-paper';
 import CustomTextInput from "../../../componenetes/textImput";
 import styles from "./styles";
-import { registerCategory } from "../../../../services/category_database";
+import { registerCategory } from "../../../../services/database/category";
 
-export default function CustonModal({ state, setState, id, onLoading }) {
+export default function CustonModal({ state, setState, id, onLoad }) {
     const [statusError, setStatusError] = useState('');
     const [mensagem, setMensagem] = useState('');
     const [category, setCategory] = useState({
@@ -28,7 +28,7 @@ export default function CustonModal({ state, setState, id, onLoading }) {
                 CompanyId: id
             })
             setState(false)
-            onLoading()
+            onLoad()
         }
     }
     return (

@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
-import { getEmployees, createTableEmployees } from "../../../services/database_sqlite";
+import { getEmployees, createTableEmployees } from "../../../services/database/employee";
 import EmployeeMock from "../../../mock/EmployeeMock";
 import LimitText from "../../../utils/limitText";
 import Toolbar from "../../componenetes/toolbar";
@@ -16,7 +16,6 @@ export default function EmployeeList() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    // Função para carregar funcionários
     const loadEmployees = useCallback(() => {
         getEmployees(route.params.email, (funcionarios) => {
             setFuncionarios(funcionarios);
@@ -26,12 +25,12 @@ export default function EmployeeList() {
     useEffect(() => {
         createTableEmployees();
         EmployeeMock();
-        loadEmployees(); // Carregar funcionários na montagem inicial
+        loadEmployees();
     }, [loadEmployees]);
 
     useFocusEffect(
         useCallback(() => {
-            loadEmployees(); // Carregar funcionários toda vez que a tela ganha foco
+            loadEmployees();
         }, [loadEmployees])
     );
 

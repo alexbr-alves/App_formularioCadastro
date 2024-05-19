@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
-import { registerCompany, login, createTable } from "../../services/database_sqlite";
+import { registerCompany, login, createTable } from "../../services/database/company";
 
 import { routeName } from "../../routes/route_name";
 
@@ -32,10 +32,11 @@ export default function Welcome(){
     };
     
 
-    registerCompany(usuarioTeste);
+    
 
     useEffect(() => {
         createTable();
+        registerCompany(usuarioTeste);
     }, []);
 
     function Logar(){

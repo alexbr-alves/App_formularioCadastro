@@ -4,7 +4,7 @@ import { TextInput, HelperText } from "react-native-paper";
 import IconeGoBack from 'react-native-vector-icons/Ionicons';
 import styles from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { registerCompany } from "../../../services/database_sqlite";
+import { registerCompany } from "../../../services/database/category";
 
 
 export default function LoginPJ({ navigation: { goBack } }){

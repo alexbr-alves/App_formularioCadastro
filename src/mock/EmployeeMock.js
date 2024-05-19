@@ -1,4 +1,4 @@
-import { registerEmployee } from "../services/database_sqlite";
+import { registerEmployee } from "../services/database/employee";
 
 
 const funcionario1 = {
