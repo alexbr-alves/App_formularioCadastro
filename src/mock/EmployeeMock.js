@@ -1,4 +1,4 @@
-import { registerEmployee } from "../services/database/employee";
+import { registerEmployee } from "../screens/repository/databaseRepository";
 
 
 const funcionario1 = {

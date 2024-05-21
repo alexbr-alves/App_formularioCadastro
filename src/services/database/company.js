@@ -14,7 +14,7 @@ const createTable = () => {
     });
 };
 
-export const registerCompany = (usuario) => {
+export const registerCompanyDB = (usuario) => {
     createTable()
     db.transaction(
         tx => {
@@ -57,7 +57,7 @@ export const registerCompany = (usuario) => {
     );
 };
 
-export const login = (email, senha, callback) => {
+export const loginDB = (email, senha, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(
@@ -77,7 +77,7 @@ export const login = (email, senha, callback) => {
     );
 };
 
-export const getUser = (email, callback) => {
+export const getUserDB = (email, callback) => {
     if (!email) {
         console.error('Erro ao fazer login: email é nulo ou indefinido');
         callback(null);

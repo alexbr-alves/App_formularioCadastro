@@ -8,9 +8,11 @@ import { mask } from 'remask';
 import CustomTextInput from "../../componenetes/textImput";
 import CustonModal from "./newCategory";
 import CategoryMock from "../../../mock/CategoryMock";
-import { getCategories } from "../../../services/database/category";
-import { registerProduct } from "../../../services/database/products";
-import { getSuppliers } from "../../../services/database/suppliers";
+import {
+    getCategories,
+    registerProduct,
+    getSuppliers
+} from "../../repository/databaseRepository";
 import styles from "./styles";
 import Toolbar from "../../componenetes/toolbar";
 
@@ -108,15 +110,15 @@ export default function ProductRegister() {
                         onChangeText={ProductName => setProduct(prevState => ({ ...prevState, ProductName }))}
                     />
 
-                        <View style={styles.pickerInput_supplier}>
-                            <Picker
-                                selectedValue={product.SupplierID}
-                                onValueChange={SupplierID => setProduct(prevState => ({ ...prevState, SupplierID }))}>
-                                {supplier.map((item, index) => (
-                                    <Picker.Item key={index} label={item.CompanyName} value={item.SupplierID} />
-                                ))}
-                            </Picker>
-                        </View>
+                    <View style={styles.pickerInput_supplier}>
+                        <Picker
+                            selectedValue={product.SupplierID}
+                            onValueChange={SupplierID => setProduct(prevState => ({ ...prevState, SupplierID }))}>
+                            {supplier.map((item, index) => (
+                                <Picker.Item key={index} label={item.CompanyName} value={item.SupplierID} />
+                            ))}
+                        </Picker>
+                    </View>
 
                     <CustomTextInput
                         value={product.QuantityPerUnit}

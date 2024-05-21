@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
-import { registerCompany, login} from "../../services/database/company";
 import ProductMock from "../../mock/ProductMock";
 import CategoryMock from "../../mock/CategoryMock";
 import EmployeeMock from "../../mock/EmployeeMock";
 import SupplierMock from "../../mock/SupplierMock";
+
+import { registerCompany, login } from "../repository/databaseRepository";
 
 import { routeName } from "../../routes/route_name";
 

@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { mask } from 'remask';
 import numeroCep from 'cep-promise';
 import styles from "./styles"
-import { registerEmployee } from "../../../services/database/employee";
+import { registerEmployee } from "../../repository/databaseRepository";
 import CustomTextInput from "../../componenetes/textImput";
 
 export default function EmployeeRegister() {

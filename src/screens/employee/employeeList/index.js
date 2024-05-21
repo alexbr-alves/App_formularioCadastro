@@ -3,9 +3,8 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
-import { getEmployees } from "../../../services/database/employee";
+import { getEmployees } from "../../repository/databaseRepository";
 import EmployeeMock from "../../../mock/EmployeeMock";
-import LimitText from "../../../utils/limitText";
 import Toolbar from "../../componenetes/toolbar";
 import arrowDown from "../../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../../assets/imagens/arrow_right.png";

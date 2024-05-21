@@ -1,4 +1,4 @@
-import { registerProduct } from "../services/database/products";
+import { registerProduct } from "../screens/repository/databaseRepository";
 
 const product1 = {
     ProductName: 'Smartphone X',

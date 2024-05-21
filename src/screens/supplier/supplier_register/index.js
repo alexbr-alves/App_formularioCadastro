@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { mask } from 'remask';
 import numeroCep from 'cep-promise';
 import styles from "./styles";
-import { registerSupplier } from "../../../services/database/suppliers";
+import { registerSupplier } from "../../repository/databaseRepository";
 import CustomTextInput from "../../componenetes/textImput";
 
 export default function SupplierRegister() {

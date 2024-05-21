@@ -12,7 +12,7 @@ const createTableEmployees = () => {
     });
 };
 
-export const registerEmployee = (employee) => {
+export const registerEmployeeDB = (employee) => {
     createTableEmployees()
     db.transaction(
         tx => {
@@ -56,7 +56,7 @@ export const registerEmployee = (employee) => {
     );
 };
 
-export const getEmployees = (companyId, callback) => {
+export const getEmployeesDB = (companyId, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(

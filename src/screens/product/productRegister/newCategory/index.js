@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { Modal } from 'react-native-paper';
 import CustomTextInput from "../../../componenetes/textImput";
 import styles from "./styles";
-import { registerCategory } from "../../../../services/database/category";
+import { registerCategory } from "../../../repository/databaseRepository";
 
 export default function CustonModal({ state, setState, id, onLoad }) {
     const [statusError, setStatusError] = useState('');

@@ -1,4 +1,4 @@
-import { registerSupplier } from "../services/database/suppliers";
+import { registerSupplier } from "../screens/repository/databaseRepository";
 
 const fornecedor1 = {
     CompanyName: 'ElectroTech Solutions',

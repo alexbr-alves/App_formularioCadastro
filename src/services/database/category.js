@@ -17,7 +17,7 @@ const createTableCattegories = () => {
     });
 };
 
-export const registerCategory = (category) => {
+export const registerCategoryDB = (category) => {
     createTableCattegories()
     db.transaction(
         tx => {
@@ -51,7 +51,7 @@ export const registerCategory = (category) => {
     );
 };
 
-export const getCategories = (companyId, callback) => {
+export const getCategoriesDB = (companyId, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(

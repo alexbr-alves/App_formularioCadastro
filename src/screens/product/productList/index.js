@@ -3,15 +3,13 @@ import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
-import { getProducts } from "../../../services/database/products";
+import { getProducts } from "../../repository/databaseRepository";
 import ProductMock from "../../../mock/ProductMock";
 import Toolbar from "../../componenetes/toolbar"; 
 import arrowDown from "../../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../../assets/imagens/arrow_right.png";
 import { routeName } from "../../../routes/route_name";
-import { getSuppliers } from "../../../services/database/suppliers";
-import { getCategories } from "../../../services/database/category";
-import LimitText from "../../../utils/limitText";
+import { getCategories, getSuppliers } from "../../repository/databaseRepository";
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);

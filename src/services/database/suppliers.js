@@ -12,7 +12,7 @@ const createTableSuppliers = () => {
     });
 };
 
-export const registerSupplier = (supplier) => {
+export const registerSupplierDB = (supplier) => {
     createTableSuppliers()
     db.transaction(
         tx => {
@@ -54,7 +54,7 @@ export const registerSupplier = (supplier) => {
     );
 };
 
-export const getSuppliers = (companyId, callback) => {
+export const getSuppliersDB = (companyId, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(
