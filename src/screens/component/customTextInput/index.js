@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { TextInput, HelperText } from "react-native-paper";
+import { HelperText, TextInput } from "react-native-paper";
 
 class CustomTextInput extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class CustomTextInput extends React.Component {
           onChangeText={onChangeText}
           keyboardType={keyboardType}
           maxLength={maxLength}
-          {...this.props} 
+          {...this.props}
         />
         {error && <HelperText type="error" visible={error}>{mensagem}</HelperText>}
       </View>

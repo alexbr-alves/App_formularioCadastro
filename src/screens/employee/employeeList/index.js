@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
-import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
-import styles from "./styles";
-
-import { getEmployees } from "../../repository/databaseRepository";
-import EmployeeMock from "../../../mock/EmployeeMock";
-import Toolbar from "../../componenetes/toolbar";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import arrowDown from "../../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../../assets/imagens/arrow_right.png";
+import EmployeeMock from "../../../mock/EmployeeMock";
 import { routeName } from "../../../routes/route_name";
+import CustomButton from "../../component/customButton";
+import CustomToolbar from "../../component/customToolbar";
+import { getEmployees } from "../../repository/databaseRepository";
+import styles from "./styles";
 
 export default function EmployeeList() {
     const [funcionarios, setFuncionarios] = useState([]);
@@ -34,10 +34,13 @@ export default function EmployeeList() {
 
     return (
         <View style={styles.container}>
-            <Toolbar titulo={"Employee List"} />
-            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.employee_register, { email: route.params.email })}>
-                <Text style={styles.botao__text}>New</Text>
-            </TouchableOpacity>
+            <CustomToolbar titulo={"Employee List"} />
+            <CustomButton
+                styleButton={styles.botao}
+                styleText={styles.botao__text}
+                onPress={() => navigation.navigate(routeName.employee_register, { email: route.params.email })}
+                text={"New"}
+            />
 
             <FlatList
                 style={styles.flatlist}
@@ -46,7 +49,7 @@ export default function EmployeeList() {
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} />
                 )}
-                ListFooterComponent={<View style={{height: 100}}/>}
+                ListFooterComponent={<View style={{ height: 100 }} />}
             />
         </View>
     );
@@ -79,22 +82,22 @@ export default function EmployeeList() {
     function ExpandedComponent({ item }) {
         return (
             <View style={styles.expandedContainer}>
-                <TextoNegrito texto={"Last name"} variavel={item.LastName} />
-                <TextoNegrito texto={"Title"} variavel={item.Title} />
-                <TextoNegrito texto={"Birth date"} variavel={item.BirthDate} />
-                <TextoNegrito texto={"Hire date"} variavel={item.HireDate} />
-                <TextoNegrito texto={"Address"} variavel={item.Address} />
-                <TextoNegrito texto={"City"} variavel={item.City} />
-                <TextoNegrito texto={"Region"} variavel={item.Region} />
-                <TextoNegrito texto={"Postal code"} variavel={item.PostalCode} />
-                <TextoNegrito texto={"Country"} variavel={item.Country} />
-                <TextoNegrito texto={"Home phone"} variavel={item.HomePhone} />
-                <TextoNegrito texto={"Extension"} variavel={item.Extension} />
+                <CustomBoldText texto={"Last name"} variavel={item.LastName} />
+                <CustomBoldText texto={"Title"} variavel={item.Title} />
+                <CustomBoldText texto={"Birth date"} variavel={item.BirthDate} />
+                <CustomBoldText texto={"Hire date"} variavel={item.HireDate} />
+                <CustomBoldText texto={"Address"} variavel={item.Address} />
+                <CustomBoldText texto={"City"} variavel={item.City} />
+                <CustomBoldText texto={"Region"} variavel={item.Region} />
+                <CustomBoldText texto={"Postal code"} variavel={item.PostalCode} />
+                <CustomBoldText texto={"Country"} variavel={item.Country} />
+                <CustomBoldText texto={"Home phone"} variavel={item.HomePhone} />
+                <CustomBoldText texto={"Extension"} variavel={item.Extension} />
             </View>
         );
     }
 
-    function TextoNegrito({ texto, variavel }) {
+    function CustomBoldText({ texto, variavel }) {
         return (
             <Text style={{ fontSize: 20 }}>
                 <Text style={{ fontWeight: 'bold' }}>{texto}</Text>: {' '}

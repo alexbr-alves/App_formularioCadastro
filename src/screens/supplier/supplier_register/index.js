@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
-import Toolbar from "../../componenetes/toolbar";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { mask } from 'remask';
 import numeroCep from 'cep-promise';
-import styles from "./styles";
+import React, { useState } from "react";
+import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { mask } from 'remask';
+import CustomButton from "../../component/customButton";
+import CustomTextInput from "../../component/customTextInput";
+import CustomToolbar from "../../component/customToolbar";
 import { registerSupplier } from "../../repository/databaseRepository";
-import CustomTextInput from "../../componenetes/textImput";
+import styles from "./styles";
 
 export default function SupplierRegister() {
     const navigation = useNavigation();
@@ -92,7 +93,7 @@ export default function SupplierRegister() {
             keyboardVerticalOffset={30}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-            <Toolbar titulo={"Supplier Register"} />
+            <CustomToolbar titulo={"Supplier Register"} />
             <ScrollView contentContainerStyle={styles.inputs}>
                 <CustomTextInput
                     value={supplier.CompanyName}
@@ -132,9 +133,14 @@ export default function SupplierRegister() {
                         onChangeText={PostalCode => setSupplier({ ...supplier, PostalCode: mask(PostalCode, ["99999-999"]) })}
                     />
                     {activeLoading ? <ActivityIndicator size={'small'} color={'#923CFF'} /> : null}
-                    <TouchableOpacity style={styles.buscaCep__botao} onPress={() => buscarCEP()}>
-                        <Text style={styles.buscaCep__text}>Buscar</Text>
-                    </TouchableOpacity>
+
+                    <CustomButton
+                        styleButton={styles.buscaCep__botao}
+                        styleText={styles.buscaCep__text}
+                        onPress={() => buscarCEP()}
+                        text={"Buscar"}
+                    />
+
                 </View>
 
                 <CustomTextInput
@@ -183,9 +189,13 @@ export default function SupplierRegister() {
                     onChangeText={Phone => setSupplier(prevState => ({ ...prevState, Phone: mask(Phone, ["(99)99999-9999"]) }))}
                 />
 
-                <TouchableOpacity style={styles.botao} onPress={checkError}>
-                    <Text style={styles.botao__text}>Registrar</Text>
-                </TouchableOpacity>
+                <CustomButton
+                    styleButton={styles.botao}
+                    styleText={styles.botao__text}
+                    onPress={checkError}
+                    text={"Registrar"}
+                />
+
             </ScrollView>
         </KeyboardAvoidingView>
     )

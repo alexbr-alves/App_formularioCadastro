@@ -1,11 +1,11 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import styles from "./styles";
 
 import arrowBack from '../../../../assets/imagens/arrowBack.png';
 
-export default function Toolbar({titulo}) {
+export default function CustomToolbar({ titulo }) {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
@@ -13,7 +13,7 @@ export default function Toolbar({titulo}) {
                 <Image source={arrowBack} style={styles.image} />
             </TouchableOpacity>
             <Text style={styles.titulo}>{titulo}</Text>
-            <View style={styles.equilibrio}/>
+            <View style={styles.equilibrio} />
         </View>
     )
 }

@@ -1,27 +1,25 @@
-import React, {useState, useEffect} from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text} from "react-native";
-import styles from "./style";
+import { useRoute } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+import Toolbar from "../component/customToolbar";
 import { getUser } from "../repository/databaseRepository";
-import Toolbar from "../componenetes/toolbar";
+import styles from "./style";
 
 
-export default function Home(){
+export default function Home() {
     const [company, setCompany] = useState('');
     const route = useRoute();
-    const navigation = useNavigation();
-    
+
 
     useEffect(() => {
-        // Chamada para getUser quando a tela é montada
         getUser(route.params.email, (user) => {
             setCompany(user);
         });
     }, [route.params.email]);
-    
-    return(
+
+    return (
         <View style={styles.container}>
-            <Toolbar titulo="Company informations"/>
+            <Toolbar titulo="Company informations" />
             <View>
                 <Text style={styles.tituloCategoria}>Company Data</Text>
                 <Text style={styles.itens}>Company Name: {company.CompanyName}</Text>

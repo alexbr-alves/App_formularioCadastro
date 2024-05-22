@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
-import Toolbar from "../../componenetes/toolbar";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { mask } from 'remask';
 import numeroCep from 'cep-promise';
-import styles from "./styles"
+import React, { useState } from "react";
+import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { mask } from 'remask';
+import CustomButton from "../../component/customButton";
+import CustomTextInput from "../../component/customTextInput";
+import CustomToolbar from "../../component/customToolbar";
 import { registerEmployee } from "../../repository/databaseRepository";
-import CustomTextInput from "../../componenetes/textImput";
+import styles from "./styles";
 
 export default function EmployeeRegister() {
     const navigation = useNavigation();
@@ -102,7 +103,7 @@ export default function EmployeeRegister() {
             keyboardVerticalOffset={30}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-            <Toolbar titulo={"Employee Register"} />
+            <CustomToolbar titulo={"Employee Register"} />
             <ScrollView contentContainerStyle={styles.imputs}>
 
                 <CustomTextInput
@@ -163,9 +164,12 @@ export default function EmployeeRegister() {
                         onChangeText={PostalCode => setEmployee({ ...employee, PostalCode: mask(PostalCode, ["99999-999"]) })}
                     />
                     {activeLoading ? <ActivityIndicator size={'small'} color={'#923CFF'} /> : null}
-                    <TouchableOpacity style={styles.buscaCep__botao} onPress={() => buscarCEP()}>
-                        <Text style={styles.buscaCep__text}>Buscar</Text>
-                    </TouchableOpacity>
+                    <CustomButton
+                        styleButton={styles.buscaCep__botao}
+                        onPress={() => buscarCEP()}
+                        styleText={styles.buscaCep__text}
+                        text={"Buscar"}
+                    />
                 </View>
 
                 <CustomTextInput
@@ -223,9 +227,12 @@ export default function EmployeeRegister() {
                     onChangeText={Extension => setEmployee(prevState => ({ ...prevState, Extension }))}
                 />
 
-                <TouchableOpacity style={styles.botao} onPress={checkError}>
-                    <Text style={styles.botao__text}>Próximo</Text>
-                </TouchableOpacity>
+                <CustomButton
+                    styleButton={styles.botao}
+                    onPress={checkError}
+                    styleText={styles.botao__text}
+                    text={"Próximo"}
+                />
             </ScrollView>
         </KeyboardAvoidingView>
     )

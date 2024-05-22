@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, TouchableOpacity } from "react-native";
-import { TextInput, HelperText } from "react-native-paper";
-import ProductMock from "../../mock/ProductMock";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+import { HelperText, TextInput } from "react-native-paper";
 import CategoryMock from "../../mock/CategoryMock";
 import EmployeeMock from "../../mock/EmployeeMock";
+import ProductMock from "../../mock/ProductMock";
 import SupplierMock from "../../mock/SupplierMock";
 
-import { registerCompany, login } from "../repository/databaseRepository";
+import { login, registerCompany } from "../repository/databaseRepository";
 
 import { routeName } from "../../routes/route_name";
 
+import CustomButton from "../component/customButton";
+import CustomTopoWelcome from "../component/customTopoWelcome/index";
 import styles from "./styles";
-import Topo from "../componenetes/topo/index"
 
-export default function Welcome(){
+export default function Welcome() {
     const navigation = useNavigation()
     const [secureMode, setSecureMode] = useState(true);
     const [statusError, setStatusError] = useState('');
@@ -44,8 +45,8 @@ export default function Welcome(){
         registerCompany(usuarioTeste);
     }, []);
 
-    function Logar(){
-        if(email == '' || senha == ''){
+    function Logar() {
+        if (email == '' || senha == '') {
             setStatusError("error")
             SetMensagem("Digite o seu email e senha")
         } else {
@@ -64,50 +65,60 @@ export default function Welcome(){
         }
     }
 
-    return(
+    return (
         <View style={styles.container}>
-            <Topo/>
+            <CustomTopoWelcome />
             <View style={styles.areaInput}>
 
                 <TextInput
-                style={styles.input_email}
-                label={'Email'}
-                mode="outlined"
-                value={email}
-                onChangeText={email => setEmail(email)}
-                error={statusError == "error"}
+                    style={styles.input_email}
+                    label={'Email'}
+                    mode="outlined"
+                    value={email}
+                    onChangeText={email => setEmail(email)}
+                    error={statusError == "error"}
                 />
 
                 <TextInput
-                style={styles.input_senha}
-                label={"Senha"}
-                mode="outlined"
-                secureTextEntry={secureMode}
-                right={<TextInput.Icon 
-                    icon={secureMode? "eye-off" : "eye"}
-                    onPress={() => setSecureMode(!secureMode)}
+                    style={styles.input_senha}
+                    label={"Senha"}
+                    mode="outlined"
+                    secureTextEntry={secureMode}
+                    right={<TextInput.Icon
+                        icon={secureMode ? "eye-off" : "eye"}
+                        onPress={() => setSecureMode(!secureMode)}
                     />}
-                value={senha}
-                onChangeText={senha => setSenha(senha)}
-                error={statusError == "error"}
-                
+                    value={senha}
+                    onChangeText={senha => setSenha(senha)}
+                    error={statusError == "error"}
+
                 />
                 {statusError == "error" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
-                <TouchableOpacity style={styles.esqueceuSenha}>
-                    <Text style={styles.esqueceuSenha__text}>Esqueceu sua senha?</Text>
-                </TouchableOpacity>
+
+                <CustomButton
+                    styleButton={styles.esqueceuSenha}
+                    styleText={styles.esqueceuSenha__text}
+                    text={"Esqueceu sua senha?"}
+                />
 
             </View>
-           
-            <TouchableOpacity style={styles.botao} onPress={() => Logar()}>
-                <Text style={styles.botao__text}>Login</Text>
-            </TouchableOpacity>
+
+            <CustomButton
+                styleButton={styles.botao}
+                styleText={styles.botao__text}
+                onPress={() => Logar()}
+                text={"Login"}
+            />
 
             <Text style={styles.semConta}>Ainda não tem conta?</Text>
 
-            <TouchableOpacity style={styles.botao} onPress={() => {navigation.navigate(routeName.register_company_info)}}>
-                <Text style={styles.botao__text}>Registrar</Text>
-            </TouchableOpacity>
+            <CustomButton
+                styleButton={styles.botao}
+                styleText={styles.botao__text}
+                onPress={() => { navigation.navigate(routeName.register_company_info) }}
+                text={"Register"}
+            />
+
         </View>
     )
 }

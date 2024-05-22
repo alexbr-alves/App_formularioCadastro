@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View } from "react-native";
 import { Modal } from 'react-native-paper';
-import CustomTextInput from "../../../componenetes/textImput";
-import styles from "./styles";
+import CustomButton from "../../../component/customButton";
+import CustomTextInput from "../../../component/customTextInput";
 import { registerCategory } from "../../../repository/databaseRepository";
+import styles from "./styles";
 
 export default function CustonModal({ state, setState, id, onLoad }) {
     const [statusError, setStatusError] = useState('');
@@ -53,9 +54,13 @@ export default function CustonModal({ state, setState, id, onLoad }) {
                     onChangeText={Description => setCategory(prevState => ({ ...prevState, Description }))}
                 />
 
-                <TouchableOpacity style={styles.botao} onPress={checkError}>
-                    <Text style={styles.botao__text}>Register</Text>
-                </TouchableOpacity>
+                <CustomButton
+                    styleButton={styles.botao}
+                    styleText={styles.botao__text}
+                    onPress={checkError}
+                    text={"Register"}
+                />
+
             </View>
         </Modal>
     )

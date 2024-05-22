@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { Picker } from '@react-native-picker/picker';
+import React, { useCallback, useEffect, useState } from "react";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 
-import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { mask } from 'remask';
 
-import CustomTextInput from "../../componenetes/textImput";
-import CustonModal from "./newCategory";
 import CategoryMock from "../../../mock/CategoryMock";
+import CustomButton from '../../component/customButton';
+import CustomTextInput from "../../component/customTextInput";
+import CustomToolbar from "../../component/customToolbar";
 import {
     getCategories,
-    registerProduct,
-    getSuppliers
+    getSuppliers,
+    registerProduct
 } from "../../repository/databaseRepository";
+import CustonModal from "./newCategory";
 import styles from "./styles";
-import Toolbar from "../../componenetes/toolbar";
 
 export default function ProductRegister() {
     const navigation = useNavigation();
@@ -98,7 +99,7 @@ export default function ProductRegister() {
                 keyboardVerticalOffset={30}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
             >
-                <Toolbar titulo={"Product Register"} />
+                <CustomToolbar titulo={"Product Register"} />
                 <ScrollView contentContainerStyle={styles.inputs}>
 
                     <CustomTextInput
@@ -165,15 +166,23 @@ export default function ProductRegister() {
                                 ))}
                             </Picker>
                         </View>
-                        <TouchableOpacity style={styles.newCategory__botao} onPress={() => setModalVisible(true)}>
-                            <Text style={styles.newCategory__text}>Add</Text>
-                        </TouchableOpacity>
+                        <CustomButton
+                            styleButton={styles.newCategory__botao}
+                            styleText={styles.newCategory__text}
+                            onPress={() => setModalVisible(true)}
+                            text={"Add"}
+                        />
+
                     </View>
 
 
-                    <TouchableOpacity style={styles.botao} onPress={checkError}>
-                        <Text style={styles.botao__text}>Register</Text>
-                    </TouchableOpacity>
+                    <CustomButton
+                        styleButton={styles.botao}
+                        styleText={styles.botao__text}
+                        onPress={checkError}
+                        text={"Register"}
+                    />
+
                 </ScrollView>
             </KeyboardAvoidingView>
 

@@ -1,10 +1,11 @@
-import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import styles from './styles'
+import React from "react";
+import { Image, View } from "react-native";
+import styles from './styles';
 
+import image from "../../../assets/imagens/image_team.png";
 import { routeName } from "../../routes/route_name";
-import image from "../../../assets/imagens/image_team.png"
+import CustomButton from "../component/customButton";
 
 export default function Home() {
     const route = useRoute();
@@ -13,35 +14,41 @@ export default function Home() {
     return (
         <View style={styles.container}>
             <View style={styles.container_botao}>
-                <Image style={styles.image} source={image}/>
+                <Image style={styles.image} source={image} />
 
-                <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.company_data, {
-                    email: route.params.email
-                })}>
-                    <Text style={styles.botao__text}>My data</Text>
-                </TouchableOpacity>
+                <CustomButton
+                    styleButton={styles.botao}
+                    styleText={styles.botao__text}
+                    onPress={() => navigation.navigate(routeName.company_data, { email: route.params.email })}
+                    text={"My data"}
+                />
+                <CustomButton
+                    styleButton={styles.botao}
+                    styleText={styles.botao__text}
+                    onPress={() => navigation.navigate(routeName.employee_list, { email: route.params.email })}
+                    text={"Employee"}
+                />
 
-                <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.employee_list, {
-                    email: route.params.email
-                })}>
-                    <Text style={styles.botao__text}>Employee</Text>
-                </TouchableOpacity>
+                <CustomButton
+                    styleButton={styles.botao}
+                    styleText={styles.botao__text}
+                    onPress={() => navigation.navigate(routeName.supplier_list, { email: route.params.email })}
+                    text={"Supplier"}
+                />
 
-                <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.supplier_list, {
-                    email: route.params.email
-                })}>
-                    <Text style={styles.botao__text}>Supplier</Text>
-                </TouchableOpacity>
+                <CustomButton
+                    styleButton={styles.botao}
+                    styleText={styles.botao__text}
+                    onPress={() => navigation.navigate(routeName.product_list, { email: route.params.email })}
+                    text={"Product"}
+                />
 
-                <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.product_list, {
-                    email: route.params.email
-                })}>
-                    <Text style={styles.botao__text}>Product</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.botaoSair} onPress={() => navigation.navigate(routeName.wellcome)}>
-                    <Text style={styles.botaoSair__text}>Sair</Text>
-                </TouchableOpacity>
+                <CustomButton
+                    styleButton={styles.botaoSair}
+                    styleText={styles.botaoSair__text}
+                    onPress={() => navigation.navigate(routeName.wellcome)}
+                    text={"Logout"}
+                />
 
             </View>
         </View>

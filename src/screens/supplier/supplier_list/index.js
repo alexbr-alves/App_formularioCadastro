@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
-import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 
-import { getSuppliers } from "../../repository/databaseRepository";
-import SupplierMock from "../../../mock/SupplierMock";
-import LimitText from "../../../utils/limitText";
-import Toolbar from "../../componenetes/toolbar";
 import arrowDown from "../../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../../assets/imagens/arrow_right.png";
+import SupplierMock from "../../../mock/SupplierMock";
 import { routeName } from "../../../routes/route_name";
+import LimitText from "../../../utils/limitText";
+import CustomButton from "../../component/customButton";
+import CustomToolbar from "../../component/customToolbar";
+import { getSuppliers } from "../../repository/databaseRepository";
 
 export default function SupplierList() {
     const [fornecedores, setFornecedores] = useState([]);
@@ -35,10 +36,14 @@ export default function SupplierList() {
 
     return (
         <View style={styles.container}>
-            <Toolbar titulo={"Supplier List"} />
-            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(routeName.supplier_register, { email: route.params.email })}>
-                <Text style={styles.botao__text}>New</Text>
-            </TouchableOpacity>
+            <CustomToolbar titulo={"Supplier List"} />
+            <CustomButton
+                styleButton={styles.botao}
+                styleText={styles.botao__text}
+                onPress={() => navigation.navigate(routeName.supplier_register, { email: route.params.email })}
+                text={"New"}
+            />
+
 
             <FlatList
                 style={styles.flatlist}
@@ -47,7 +52,7 @@ export default function SupplierList() {
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} />
                 )}
-                ListFooterComponent={<View style={{height: 100}}/>}
+                ListFooterComponent={<View style={{ height: 100 }} />}
             />
         </View>
     );
@@ -79,19 +84,19 @@ export default function SupplierList() {
     function ExpandedComponent({ item }) {
         return (
             <View style={styles.expandedContainer}>
-                <TextoNegrito texto={"Contact name"} variavel={item.ContactName} />
-                <TextoNegrito texto={"Contact title"} variavel={item.ContactTitle} />
-                <TextoNegrito texto={"Address"} variavel={item.Address} />
-                <TextoNegrito texto={"City"} variavel={item.City} />
-                <TextoNegrito texto={"Region"} variavel={item.Region} />
-                <TextoNegrito texto={"Postal code"} variavel={item.PostalCode} />
-                <TextoNegrito texto={"Country"} variavel={item.Country} />
-                <TextoNegrito texto={"Phone"} variavel={item.Phone} />
+                <CustomBoldText texto={"Contact name"} variavel={item.ContactName} />
+                <CustomBoldText texto={"Contact title"} variavel={item.ContactTitle} />
+                <CustomBoldText texto={"Address"} variavel={item.Address} />
+                <CustomBoldText texto={"City"} variavel={item.City} />
+                <CustomBoldText texto={"Region"} variavel={item.Region} />
+                <CustomBoldText texto={"Postal code"} variavel={item.PostalCode} />
+                <CustomBoldText texto={"Country"} variavel={item.Country} />
+                <CustomBoldText texto={"Phone"} variavel={item.Phone} />
             </View>
         );
     }
 
-    function TextoNegrito({ texto, variavel }) {
+    function CustomBoldText({ texto, variavel }) {
         return (
             <Text style={{ fontSize: 20 }}>
                 <Text style={{ fontWeight: 'bold' }}>{texto}</Text>: {' '}

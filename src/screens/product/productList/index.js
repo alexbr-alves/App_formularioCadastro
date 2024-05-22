@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, TouchableOpacity, Text, FlatList, Image } from "react-native";
-import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 
-import { getProducts } from "../../repository/databaseRepository";
-import ProductMock from "../../../mock/ProductMock";
-import Toolbar from "../../componenetes/toolbar"; 
 import arrowDown from "../../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../../assets/imagens/arrow_right.png";
+import ProductMock from "../../../mock/ProductMock";
 import { routeName } from "../../../routes/route_name";
-import { getCategories, getSuppliers } from "../../repository/databaseRepository";
+import CustomButton from "../../component/customButton";
+import CustomToolbar from "../../component/customToolbar";
+import CustomBoldText from "../../component/custonBoldText";
+import { getCategories, getProducts, getSuppliers } from "../../repository/databaseRepository";
 
 export default function ProductList() {
     const [products, setProducts] = useState([]);
@@ -53,13 +54,18 @@ export default function ProductList() {
 
     return (
         <View style={styles.container}>
-            <Toolbar titulo={"Product List"} />
-            <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate(
-                routeName.product_register, {
-                email: route.params.email
-            })}>
-                <Text style={styles.botao__text}>New</Text>
-            </TouchableOpacity>
+            <CustomToolbar titulo={"Product List"} />
+            <CustomButton
+                styleButton={styles.botao}
+                styleText={styles.botao__text}
+                onPress={() => navigation.navigate(
+                    routeName.product_register, {
+                    email: route.params.email
+                }
+                )}
+                text={"New"}
+            />
+
 
             <FlatList
                 style={styles.flatlist}
@@ -92,7 +98,11 @@ export default function ProductList() {
                     <Text style={styles.container_flatlist_name}>{item.ProductName}</Text>
                 </TouchableOpacity>
                 {expandedItemId === item.ProductID && (
-                    <ExpandedComponent item={item} supplier={supplier} categories={categories}/>
+                    <ExpandedComponent
+                        item={item}
+                        supplier={supplier}
+                        categories={categories}
+                    />
                 )}
             </>
         );
@@ -118,24 +128,15 @@ export default function ProductList() {
         }
         return (
             <View style={styles.expandedContainer}>
-                <TextoNegrito texto={"Product Name"} variavel={item.ProductName} />
-                <TextoNegrito texto={"Supplier"} variavel={getName(item.SupplierID)} />
-                <TextoNegrito texto={"Category"} variavel={getCategoryName(item.CategoryID)} />
-                <TextoNegrito texto={"Quantity Per Unit"} variavel={item.QuantityPerUnit} />
-                <TextoNegrito texto={"Unit Price"} variavel={"R$ " + item.UnitPrice} />
-                <TextoNegrito texto={"Units In Stock"} variavel={item.UnitsInStock} />
-                <TextoNegrito texto={"Units On Order"} variavel={item.UnitsOnOrder} />
+                <CustomBoldText texto={"Product Name"} variavel={item.ProductName} />
+                <CustomBoldText texto={"Supplier"} variavel={getName(item.SupplierID)} />
+                <CustomBoldText texto={"Category"} variavel={getCategoryName(item.CategoryID)} />
+                <CustomBoldText texto={"Quantity Per Unit"} variavel={item.QuantityPerUnit} />
+                <CustomBoldText texto={"Unit Price"} variavel={"R$ " + item.UnitPrice} />
+                <CustomBoldText texto={"Units In Stock"} variavel={item.UnitsInStock} />
+                <CustomBoldText texto={"Units On Order"} variavel={item.UnitsOnOrder} />
             </View>
         );
     }
-    
 
-    function TextoNegrito({ texto, variavel }) {
-        return (
-            <Text style={{ fontSize: 20 }}>
-                <Text style={{ fontWeight: 'bold' }}>{texto}</Text>: {' '}
-                <Text>{variavel}</Text>
-            </Text>
-        );
-    }
 }

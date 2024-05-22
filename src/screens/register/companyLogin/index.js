@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity, Alert } from "react-native";
-import { TextInput, HelperText } from "react-native-paper";
-import IconeGoBack from 'react-native-vector-icons/Ionicons';
-import styles from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { HelperText, TextInput } from "react-native-paper";
+import IconeGoBack from 'react-native-vector-icons/Ionicons';
+import CustomButton from "../../component/customButton";
 import { registerCompany } from "../../repository/databaseRepository";
+import styles from "./styles";
 
 
-export default function LoginPJ({ navigation: { goBack } }){
+export default function LoginPJ({ navigation: { goBack } }) {
     const navigation = useNavigation();
     const route = useRoute()
     const [secureMode, setSecureMode] = useState(true);
@@ -19,20 +20,20 @@ export default function LoginPJ({ navigation: { goBack } }){
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
 
-    function MensagenError(){
-        if(email === ''){
+    function MensagenError() {
+        if (email === '') {
             setStatusError("Email")
             SetMensagem("Digite o seu e-mail")
-        }else if(senha === ''){
+        } else if (senha === '') {
             setStatusError("Senha")
             SetMensagem("Digite a sua senha")
-        }else if(confirmarSenha === ''){
+        } else if (confirmarSenha === '') {
             setStatusError("ConfirmarSenha")
             SetMensagem("Repita a sua senha")
-        }else if(confirmarSenha !== senha ){
+        } else if (confirmarSenha !== senha) {
             setStatusError("ConfirmarSenha")
             SetMensagem("As senhas não correspondem")
-        }else{
+        } else {
 
             registerCompany({
                 CompanyName: route.params.registrationData.CompanyName,
@@ -45,24 +46,24 @@ export default function LoginPJ({ navigation: { goBack } }){
                 Address: route.params.addressData.Address,
                 Number: route.params.addressData.Number,
                 email: email,
-                senha: senha  
+                senha: senha
             });
             navigation.navigate("Welcome")
         }
     }
 
 
-   
+
     return (
         <ScrollView style={styles.container}>
 
             <TouchableOpacity style={styles.iconeBack} onPress={() => goBack()}>
                 <IconeGoBack name="arrow-back" size={35} />
-           </TouchableOpacity>
+            </TouchableOpacity>
             <Text style={styles.titulo}>Preencha as informações abaixo</Text>
-            
-           <View style={styles.espaco__input}>
-            <Text style={styles.tituloCategoria}>Dados para login</Text>
+
+            <View style={styles.espaco__input}>
+                <Text style={styles.tituloCategoria}>Dados para login</Text>
                 <TextInput
                     value={email}
                     textColor='#923CFF'
@@ -81,12 +82,12 @@ export default function LoginPJ({ navigation: { goBack } }){
                     label={"Senha"}
                     mode="outlined"
                     secureTextEntry={secureMode}
-                    right={<TextInput.Icon 
-                    icon={secureMode? "eye-off" : "eye"}
-                    onPress={() => setSecureMode(!secureMode)}
-                        />}            
+                    right={<TextInput.Icon
+                        icon={secureMode ? "eye-off" : "eye"}
+                        onPress={() => setSecureMode(!secureMode)}
+                    />}
                     onChangeText={senha => setSenha(senha)}
-                    error={statusError == "Senha"}   
+                    error={statusError == "Senha"}
                 />
                 {statusError == "Senha" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
@@ -99,21 +100,24 @@ export default function LoginPJ({ navigation: { goBack } }){
                     label={"Confirmar senha"}
                     mode="outlined"
                     secureTextEntry={secureMode2}
-                    right={<TextInput.Icon 
-                    icon={secureMode2? "eye-off" : "eye"}
-                    onPress={() => setSecureMode2(!secureMode2)}
-                    />}                    
-                    onChangeText={confirmarSenha => setConfirmarSenha(confirmarSenha)}  
+                    right={<TextInput.Icon
+                        icon={secureMode2 ? "eye-off" : "eye"}
+                        onPress={() => setSecureMode2(!secureMode2)}
+                    />}
+                    onChangeText={confirmarSenha => setConfirmarSenha(confirmarSenha)}
                     error={statusError == "ConfirmarSenha"}
                 />
                 {statusError == "ConfirmarSenha" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
             </View>
 
-           <TouchableOpacity style={styles.botao} onPress={MensagenError}>
-                <Text style={styles.botao__text}>Finalizar</Text>
-           </TouchableOpacity>
-           
+            <CustomButton
+                styleButton={styles.botao}
+                styleText={styles.botao__text}
+                onPress={MensagenError}
+                text={"Finalizar"}
+            />
+
         </ScrollView>
     )
 }
