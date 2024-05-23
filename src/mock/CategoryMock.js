@@ -1,4 +1,4 @@
-import { registerCategory } from "../screens/repository/databaseRepository";
+import { registerCategory } from "../Repository/databaseRepository";
 
 const categoria1 = {
     CompanyId: 'Q',
