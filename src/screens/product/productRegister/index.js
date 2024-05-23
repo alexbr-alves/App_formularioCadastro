@@ -9,11 +9,14 @@ import CategoryMock from "../../../mock/CategoryMock";
 import CustomButton from '../../component/customButton';
 import CustomTextInput from "../../component/customTextInput";
 import CustomToolbar from "../../component/customToolbar";
+
 import {
     getCategories,
     getSuppliers,
     registerProduct
 } from "../../repository/databaseRepository";
+
+import { ProductModel } from '../../../model/productModel';
 import CustonModal from "./newCategory";
 import styles from "./styles";
 
@@ -25,16 +28,7 @@ export default function ProductRegister() {
     const route = useRoute();
     const [supplier, setSupplier] = useState([])
     const [category, setCategory] = useState([])
-    const [product, setProduct] = useState({
-        ProductName: '',
-        SupplierID: '',
-        CategoryID: '',
-        QuantityPerUnit: '',
-        UnitPrice: '',
-        UnitsInStock: '',
-        UnitsOnOrder: '',
-        CompanyId: ''
-    });
+    const [product, setProduct] = useState(ProductModel);
 
     const loadCategory = useCallback(() => {
         getCategories(route.params.email, (category) => {
@@ -79,13 +73,7 @@ export default function ProductRegister() {
             setMensagem("Enter the Unit Price");
         } else {
             registerProduct({
-                ProductName: product.ProductName,
-                SupplierID: product.SupplierID,
-                CategoryID: product.CategoryID,
-                QuantityPerUnit: product.QuantityPerUnit,
-                UnitPrice: product.UnitPrice,
-                UnitsInStock: product.UnitsInStock,
-                UnitsOnOrder: product.UnitsOnOrder,
+                ...product,
                 CompanyId: route.params.email
             });
             navigation.goBack();

@@ -34,7 +34,6 @@ export default function LoginPJ({ navigation: { goBack } }) {
             setStatusError("ConfirmarSenha")
             SetMensagem("As senhas não correspondem")
         } else {
-
             registerCompany({
                 CompanyName: route.params.registrationData.CompanyName,
                 ContactName: route.params.registrationData.ContactName,

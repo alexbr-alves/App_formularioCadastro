@@ -3,6 +3,7 @@ import numeroCep from 'cep-promise';
 import React, { useState } from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { mask } from 'remask';
+import EmployeeModel from "../../../model/EmployeeModel";
 import CustomButton from "../../component/customButton";
 import CustomTextInput from "../../component/customTextInput";
 import CustomToolbar from "../../component/customToolbar";
@@ -15,21 +16,7 @@ export default function EmployeeRegister() {
     const [Mensagem, SetMensagem] = useState('');
     const [activeLoading, setActiveLoading] = useState(false);
     const route = useRoute();
-    const [employee, setEmployee] = useState({
-        CompanyId: '',
-        LastName: '',
-        FirstName: '',
-        Title: '',
-        BirthDate: '',
-        HireDate: '',
-        Address: '',
-        City: '',
-        Region: '',
-        PostalCode: '',
-        Country: '',
-        HomePhone: '',
-        Extension: ''
-    });
+    const [employee, setEmployee] = useState(EmployeeModel);
 
     function buscarCEP() {
         setActiveLoading(true)
@@ -80,18 +67,7 @@ export default function EmployeeRegister() {
         } else {
             registerEmployee({
                 CompanyId: route.params.email,
-                LastName: employee.LastName,
-                FirstName: employee.FirstName,
-                Title: employee.Title,
-                BirthDate: employee.BirthDate,
-                HireDate: employee.HireDate,
-                Address: employee.Address,
-                City: employee.City,
-                Region: employee.Region,
-                PostalCode: employee.PostalCode,
-                Country: employee.Country,
-                HomePhone: employee.HomePhone,
-                Extension: employee.Extension
+                ...employee
             });
             navigation.goBack()
         }

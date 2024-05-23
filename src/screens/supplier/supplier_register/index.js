@@ -3,6 +3,7 @@ import numeroCep from 'cep-promise';
 import React, { useState } from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { mask } from 'remask';
+import { SupplierModel } from "../../../model/SupplierModel";
 import CustomButton from "../../component/customButton";
 import CustomTextInput from "../../component/customTextInput";
 import CustomToolbar from "../../component/customToolbar";
@@ -15,18 +16,7 @@ export default function SupplierRegister() {
     const [mensagem, setMensagem] = useState('');
     const [activeLoading, setActiveLoading] = useState(false);
     const route = useRoute();
-    const [supplier, setSupplier] = useState({
-        CompanyName: '',
-        ContactName: '',
-        ContactTitle: '',
-        Address: '',
-        City: '',
-        Region: '',
-        PostalCode: '',
-        Country: '',
-        Phone: '',
-        CompanyId: '',
-    });
+    const [supplier, setSupplier] = useState(SupplierModel);
 
     function buscarCEP() {
         setActiveLoading(true);
@@ -72,15 +62,7 @@ export default function SupplierRegister() {
             setMessage("Enter the Phone number");
         } else {
             registerSupplier({
-                CompanyName: supplier.CompanyName,
-                ContactName: supplier.ContactName,
-                ContactTitle: supplier.ContactTitle,
-                Address: supplier.Address,
-                City: supplier.City,
-                Region: supplier.Region,
-                PostalCode: supplier.PostalCode,
-                Country: supplier.Country,
-                Phone: supplier.Phone,
+                ...supplier,
                 CompanyId: route.params.email,
             });
             navigation.goBack();

@@ -7,6 +7,8 @@ import { mask } from 'remask';
 import { routeName } from "../../../routes/route_name";
 import CustomButton from "../../component/customButton";
 import styles from "./styles";
+
+
 export default function DadosPessoaisPJ({ navigation: { goBack } }) {
 
     const navigation = useNavigation();
