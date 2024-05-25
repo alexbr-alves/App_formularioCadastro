@@ -39,7 +39,6 @@ const RegisterProductViewModel = (email) => {
         }, [loadCategory, loadSupplier])
     )
 
-
     const checkImputEmpty = () => {
         if (product.ProductName === '') {
             setStatusError(strings.ProductName);

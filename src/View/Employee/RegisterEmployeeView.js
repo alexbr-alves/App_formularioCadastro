@@ -67,6 +67,7 @@ export default function RegisterEmployeeView() {
                     label={strings.LastName}
                     mode='outlined'
                     error={statusError === strings.LastName}
+                    mensagem={message}
                     onChangeText={LastName => setEmployee(prevState => ({ ...prevState, LastName }))}
                 />
 
@@ -75,6 +76,7 @@ export default function RegisterEmployeeView() {
                     label={strings.Title}
                     mode='outlined'
                     error={statusError === strings.Title}
+                    mensagem={message}
                     onChangeText={Title => setEmployee(prevState => ({ ...prevState, Title }))}
                 />
 
@@ -85,6 +87,7 @@ export default function RegisterEmployeeView() {
                     label={strings.BirthDate}
                     mode='outlined'
                     error={statusError === strings.BirthDate}
+                    mensagem={message}
                     onChangeText={BirthDate => setEmployee(prevState => ({ ...prevState, BirthDate: mask(BirthDate, ["99/99/9999"]) }))}
                 />
 
@@ -95,6 +98,7 @@ export default function RegisterEmployeeView() {
                     label={strings.HireDate}
                     mode='outlined'
                     error={statusError === strings.HireDate}
+                    mensagem={message}
                     onChangeText={HireDate => setEmployee(prevState => ({ ...prevState, HireDate: mask(HireDate, ["99/99/9999"]) }))}
                 />
 
@@ -108,6 +112,7 @@ export default function RegisterEmployeeView() {
                         label={strings.PostalCode}
                         mode='outlined'
                         error={statusError === strings.PostalCode}
+                        mensagem={message}
                         onChangeText={PostalCode => setEmployee({ ...employee, PostalCode: mask(PostalCode, ["99999-999"]) })}
                     />
                     {activeLoading ? <ActivityIndicator size={'small'} color={'#923CFF'} /> : null}
@@ -125,6 +130,7 @@ export default function RegisterEmployeeView() {
                     mode='outlined'
                     editable={false}
                     error={statusError === strings.Address}
+                    mensagem={message}
                     onChangeText={Address => setEmployee(prevState => ({ ...prevState, Address }))}
                 />
 
@@ -134,6 +140,7 @@ export default function RegisterEmployeeView() {
                     mode='outlined'
                     editable={false}
                     error={statusError === strings.City}
+                    mensagem={message}
                     onChangeText={City => setEmployee(prevState => ({ ...prevState, City }))}
                 />
 
@@ -143,6 +150,7 @@ export default function RegisterEmployeeView() {
                     mode='outlined'
                     editable={false}
                     error={statusError === strings.Region}
+                    mensagem={message}
                     onChangeText={Region => setEmployee(prevState => ({ ...prevState, Region }))}
                 />
 
@@ -152,6 +160,7 @@ export default function RegisterEmployeeView() {
                     mode='outlined'
                     editable={false}
                     error={statusError === strings.Country}
+                    mensagem={message}
                     onChangeText={Country => setEmployee(prevState => ({ ...prevState, Country }))}
                 />
 
@@ -162,6 +171,7 @@ export default function RegisterEmployeeView() {
                     label={"Home Phone"}
                     mode='outlined'
                     error={statusError === "HomePhone"}
+                    mensagem={message}
                     onChangeText={HomePhone => setEmployee(prevState => ({ ...prevState, HomePhone: mask(HomePhone, ["(99)99999-9999"]) }))}
                 />
 
@@ -171,6 +181,7 @@ export default function RegisterEmployeeView() {
                     label={"Extension"}
                     mode='outlined'
                     error={statusError === "Extension"}
+                    mensagem={message}
                     onChangeText={Extension => setEmployee(prevState => ({ ...prevState, Extension }))}
                 />
 

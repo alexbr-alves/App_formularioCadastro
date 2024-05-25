@@ -84,6 +84,7 @@ export default function RegisterProductView() {
                         label={strings.QuantityPerUnit}
                         mode='outlined'
                         error={statusError === strings.QuantityPerUnit}
+                        mensagem={mensagem}
                         onChangeText={QuantityPerUnit => setProduct(prevState => ({ ...prevState, QuantityPerUnit }))}
                     />
 
@@ -93,6 +94,7 @@ export default function RegisterProductView() {
                         label={strings.UnitPrice}
                         mode='outlined'
                         error={statusError === strings.UnitPrice}
+                        mensagem={mensagem}
                         onChangeText={UnitPrice => setProduct(prevState => ({ ...prevState, UnitPrice: mask(UnitPrice, "99999.99") }))}
                     />
 
@@ -102,6 +104,7 @@ export default function RegisterProductView() {
                         label={strings.UnitsInStock}
                         mode='outlined'
                         error={statusError === strings.UnitsInStock}
+                        mensagem={mensagem}
                         onChangeText={UnitsInStock => setProduct(prevState => ({ ...prevState, UnitsInStock }))}
                     />
 
@@ -111,6 +114,7 @@ export default function RegisterProductView() {
                         label={strings.UnitsOnOrder}
                         mode='outlined'
                         error={statusError === strings.UnitsOnOrder}
+                        mensagem={mensagem}
                         onChangeText={UnitsOnOrder => setProduct(prevState => ({ ...prevState, UnitsOnOrder }))}
                     />
 

@@ -1,5 +1,5 @@
-import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import styles from "../../Style/Supplier/ListSupplierStyle";
 
@@ -7,29 +7,16 @@ import arrowDown from "../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../assets/imagens/arrow_right.png";
 import CustomButton from "../../Component/customButton";
 import CustomToolbar from "../../Component/customToolbar";
-import { getSuppliers } from "../../Repository/databaseRepository";
 import { routeName } from "../../routes/route_name";
 import LimitText from "../../utils/limitText";
 
+import ListSupplierViewModel from "../../ViewModel/Supplier/ListSupplierViewModel";
+
 export default function ListSupplierView() {
-    const [fornecedores, setFornecedores] = useState([]);
     const navigation = useNavigation();
     const route = useRoute();
 
-    const loadSuppliers = useCallback(() => {
-        getSuppliers(route.params.email, (fornecedores) => {
-            setFornecedores(fornecedores);
-        });
-    }, [route.params.email]);
-
-    useEffect(() => {
-        loadSuppliers();
-    }, [loadSuppliers]);
-    useFocusEffect(
-        useCallback(() => {
-            loadSuppliers();
-        }, [loadSuppliers])
-    );
+    const { fornecedores } = ListSupplierViewModel(route.params.email)
 
     return (
         <View style={styles.container}>

@@ -1,67 +1,36 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import numeroCep from 'cep-promise';
-import React, { useState } from "react";
+
+import React from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { mask } from 'remask';
 import CustomButton from "../../Component/customButton";
 import CustomTextInput from "../../Component/customTextInput";
 import CustomToolbar from "../../Component/customToolbar";
-import { registerSupplier } from "../../Repository/databaseRepository";
 import styles from "../../Style/Supplier/RegisterSupplierStyle";
-import { SupplierModel } from "../../model/SupplierModel";
+import RegisterSupplierViewModel from "../../ViewModel/Supplier/RegisterSupplierViewModel";
+
 
 export default function RegisterSupplierView() {
     const navigation = useNavigation();
-    const [statusError, setStatusError] = useState('');
-    const [mensagem, setMensagem] = useState('');
-    const [activeLoading, setActiveLoading] = useState(false);
     const route = useRoute();
-    const [supplier, setSupplier] = useState(SupplierModel);
 
-    function buscarCEP() {
-        setActiveLoading(true);
-        setSupplier({ ...supplier, City: '', Region: '', Address: '', Country: '' });
-        if (supplier.PostalCode.length === 9) {
-            numeroCep(supplier.PostalCode)
-                .then(data => {
-                    setSupplier({
-                        ...supplier,
-                        City: data.city,
-                        Region: data.state,
-                        Address: data.street,
-                        Country: "Brasil"
-                    });
-                    setActiveLoading(false);
-                    setStatusError('');
-                    setMensagem('');
-                })
-                .catch(error => {
-                    setStatusError("PostalCode");
-                    setMensagem("CEP não encontrado");
-                    setActiveLoading(false);
-                });
-        } else {
-            setStatusError("PostalCode");
-            setMensagem("Insira um CEP válido");
-            setActiveLoading(false);
-        }
-    }
+    const {
+        strings,
+        checkImputEmpty,
+        register,
+        getCpf,
+        statusError,
+        message,
+        activeLoading,
+        supplier,
+        setSupplier
+    } = RegisterSupplierViewModel()
 
-    function checkError() {
-        if (supplier.CompanyName === '') {
-            setStatusError(tags.CompanyName);
-            setMessage("Enter the Company Name");
-        } else if (supplier.ContactName === '') {
-            setStatusError(tags.ContactName);
-            setMessage("Enter the Contact Name");
-        } else if (supplier.ContactTitle === '') {
-            setStatusError(tags.ContactTitle);
-            setMessage("Enter the Contact Title");
-        } else if (supplier.Phone === '') {
-            setStatusError(tags.Phone);
-            setMessage("Enter the Phone number");
-        } else {
-            registerSupplier({
+
+
+    function finishRegister() {
+        if (checkImputEmpty()) {
+            register({
                 CompanyName: supplier.CompanyName,
                 ContactName: supplier.ContactName,
                 ContactTitle: supplier.ContactTitle,
@@ -87,26 +56,28 @@ export default function RegisterSupplierView() {
             <ScrollView contentContainerStyle={styles.inputs}>
                 <CustomTextInput
                     value={supplier.CompanyName}
-                    label={tags.CompanyName}
+                    label={strings.CompanyName}
                     mode='outlined'
-                    error={statusError === tags.CompanyName}
-                    mensagem={mensagem}
+                    error={statusError === strings.CompanyName}
+                    mensagem={message}
                     onChangeText={CompanyName => setSupplier(prevState => ({ ...prevState, CompanyName }))}
                 />
 
                 <CustomTextInput
                     value={supplier.ContactName}
-                    label={tags.ContactName}
+                    label={strings.ContactName}
                     mode='outlined'
-                    error={statusError === tags.ContactName}
+                    error={statusError === strings.ContactName}
+                    mensagem={message}
                     onChangeText={ContactName => setSupplier(prevState => ({ ...prevState, ContactName }))}
                 />
 
                 <CustomTextInput
                     value={supplier.ContactTitle}
-                    label={tags.ContactTitle}
+                    label={strings.ContactTitle}
                     mode='outlined'
-                    error={statusError === tags.ContactTitle}
+                    error={statusError === strings.ContactTitle}
+                    mensagem={message}
                     onChangeText={ContactTitle => setSupplier(prevState => ({ ...prevState, ContactTitle }))}
                 />
 
@@ -117,9 +88,10 @@ export default function RegisterSupplierView() {
                         keyboardType={'numeric'}
                         maxLength={9}
                         value={supplier.PostalCode}
-                        label={tags.PostalCode}
+                        label={strings.PostalCode}
                         mode='outlined'
-                        error={statusError === tags.PostalCode}
+                        mensagem={message}
+                        error={statusError === strings.PostalCode}
                         onChangeText={PostalCode => setSupplier({ ...supplier, PostalCode: mask(PostalCode, ["99999-999"]) })}
                     />
                     {activeLoading ? <ActivityIndicator size={'small'} color={'#923CFF'} /> : null}
@@ -127,7 +99,7 @@ export default function RegisterSupplierView() {
                     <CustomButton
                         styleButton={styles.buscaCep__botao}
                         styleText={styles.buscaCep__text}
-                        onPress={() => buscarCEP()}
+                        onPress={() => getCpf()}
                         text={"Buscar"}
                     />
 
@@ -135,37 +107,41 @@ export default function RegisterSupplierView() {
 
                 <CustomTextInput
                     value={supplier.Address}
-                    label={tags.Address}
+                    label={strings.Address}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.Address}
+                    error={statusError === strings.Address}
+                    mensagem={message}
                     onChangeText={Address => setSupplier(prevState => ({ ...prevState, Address }))}
                 />
 
                 <CustomTextInput
                     value={supplier.City}
-                    label={tags.City}
+                    label={strings.City}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.City}
+                    error={statusError === strings.City}
+                    mensagem={message}
                     onChangeText={City => setSupplier(prevState => ({ ...prevState, City }))}
                 />
 
                 <CustomTextInput
                     value={supplier.Region}
-                    label={tags.Region}
+                    label={strings.Region}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.Region}
+                    error={statusError === strings.Region}
+                    mensagem={message}
                     onChangeText={Region => setSupplier(prevState => ({ ...prevState, Region }))}
                 />
 
                 <CustomTextInput
                     value={supplier.Country}
-                    label={tags.Country}
+                    label={strings.Country}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.Country}
+                    error={statusError === strings.Country}
+                    mensagem={message}
                     onChangeText={Country => setSupplier(prevState => ({ ...prevState, Country }))}
                 />
 
@@ -173,16 +149,17 @@ export default function RegisterSupplierView() {
                     keyboardType={'numeric'}
                     maxLength={15}
                     value={supplier.Phone}
-                    label={tags.Phone}
+                    label={strings.Phone}
                     mode='outlined'
-                    error={statusError === tags.Phone}
+                    error={statusError === strings.Phone}
+                    mensagem={message}
                     onChangeText={Phone => setSupplier(prevState => ({ ...prevState, Phone: mask(Phone, ["(99)99999-9999"]) }))}
                 />
 
                 <CustomButton
                     styleButton={styles.botao}
                     styleText={styles.botao__text}
-                    onPress={checkError}
+                    onPress={finishRegister}
                     text={"Registrar"}
                 />
 
@@ -191,14 +168,4 @@ export default function RegisterSupplierView() {
     )
 }
 
-const tags = {
-    CompanyName: "Company Name",
-    ContactName: "Contact Name",
-    ContactTitle: "Contact Title",
-    Address: "Address",
-    City: "City",
-    Region: "Region",
-    PostalCode: "Postal Code",
-    Country: "Country",
-    Phone: "Phone"
-}
+
