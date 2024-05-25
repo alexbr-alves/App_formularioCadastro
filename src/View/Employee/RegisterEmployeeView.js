@@ -1,70 +1,30 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import numeroCep from 'cep-promise';
-import React, { useState } from "react";
+import React from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { mask } from 'remask';
 import CustomButton from "../../Component/customButton";
 import CustomTextInput from "../../Component/customTextInput";
 import CustomToolbar from "../../Component/customToolbar";
-import { registerEmployee } from "../../Repository/databaseRepository";
 import styles from "../../Style/Employee/RegisterEmployeeStyle";
-import EmployeeModel from "../../model/EmployeeModel";
+import RegisterEmployeeViewModel from "../../ViewModel/Employee/RegisterEmployeeViewModel";
 
 export default function RegisterEmployeeView() {
     const navigation = useNavigation();
-    const [statusError, setStatusError] = useState('');
-    const [Mensagem, SetMensagem] = useState('');
-    const [activeLoading, setActiveLoading] = useState(false);
     const route = useRoute();
-    const [employee, setEmployee] = useState(EmployeeModel);
 
-    function buscarCEP() {
-        setActiveLoading(true)
-        setEmployee({ ...employee, City: '', Region: '', Address: '', Country: '' })
-        if (employee.PostalCode.length === 9) {
-            numeroCep(employee.PostalCode)
-                .then(data => {
-                    setEmployee({
-                        ...employee,
-                        City: data.city,
-                        Region: data.state,
-                        Address: data.street,
-                        Country: "Brasil"
-                    });
-                    setActiveLoading(false)
-                    setStatusError('')
-                    SetMensagem('')
-                })
-        } else {
-            setStatusError("PostalCode")
-            SetMensagem("Enter Postal Code")
-            setActiveLoading(false)
-        }
-    }
+    const {
+        getCep,
+        registerEmployee,
+        checkImputEmpty,
+        employee, setEmployee,
+        statusError,
+        message,
+        activeLoading,
+        strings } = RegisterEmployeeViewModel();
+
 
     function checkError() {
-        if (employee.FirstName === '') {
-            setStatusError(tags.FirstName)
-            SetMensagem("Enter the First name")
-        } else if (employee.LastName === '') {
-            setStatusError(tags.LastName)
-            SetMensagem("Enter the Last name")
-        } else if (employee.Title === '') {
-            setStatusError(tags.Title)
-            SetMensagem("Title")
-        } else if (employee.BirthDate === '') {
-            setStatusError(tags.BirthDate)
-            SetMensagem("Enter the Birth date")
-        } else if (employee.HireDate === '') {
-            setStatusError(tags.HireDate)
-            SetMensagem("Enter the Hire date")
-        } else if (employee.HomePhone === '') {
-            setStatusError(tags.HomePhone)
-            SetMensagem("Enter the Home phone")
-        } else if (employee.Extension === '') {
-            setStatusError(tags.Extension)
-            SetMensagem("Enter the Extension")
-        } else {
+        if (checkImputEmpty()) {
             registerEmployee({
                 CompanyId: route.params.email,
                 LastName: employee.LastName,
@@ -95,26 +55,26 @@ export default function RegisterEmployeeView() {
 
                 <CustomTextInput
                     value={employee.FirstName}
-                    label={tags.FirstName}
+                    label={strings.FirstName}
                     mode='outlined'
-                    error={statusError === tags.FirstName}
-                    mensagem={Mensagem}
+                    error={statusError === strings.FirstName}
+                    mensagem={message}
                     onChangeText={FirstName => setEmployee(prevState => ({ ...prevState, FirstName }))}
                 />
 
                 <CustomTextInput
                     value={employee.LastName}
-                    label={tags.LastName}
+                    label={strings.LastName}
                     mode='outlined'
-                    error={statusError === tags.LastName}
+                    error={statusError === strings.LastName}
                     onChangeText={LastName => setEmployee(prevState => ({ ...prevState, LastName }))}
                 />
 
                 <CustomTextInput
                     value={employee.Title}
-                    label={tags.Title}
+                    label={strings.Title}
                     mode='outlined'
-                    error={statusError === tags.Title}
+                    error={statusError === strings.Title}
                     onChangeText={Title => setEmployee(prevState => ({ ...prevState, Title }))}
                 />
 
@@ -122,9 +82,9 @@ export default function RegisterEmployeeView() {
                     keyboardType={'numeric'}
                     maxLength={10}
                     value={employee.BirthDate}
-                    label={tags.BirthDate}
+                    label={strings.BirthDate}
                     mode='outlined'
-                    error={statusError === tags.BirthDate}
+                    error={statusError === strings.BirthDate}
                     onChangeText={BirthDate => setEmployee(prevState => ({ ...prevState, BirthDate: mask(BirthDate, ["99/99/9999"]) }))}
                 />
 
@@ -132,9 +92,9 @@ export default function RegisterEmployeeView() {
                     keyboardType={'numeric'}
                     maxLength={10}
                     value={employee.HireDate}
-                    label={tags.HireDate}
+                    label={strings.HireDate}
                     mode='outlined'
-                    error={statusError === tags.HireDate}
+                    error={statusError === strings.HireDate}
                     onChangeText={HireDate => setEmployee(prevState => ({ ...prevState, HireDate: mask(HireDate, ["99/99/9999"]) }))}
                 />
 
@@ -145,15 +105,15 @@ export default function RegisterEmployeeView() {
                         keyboardType={'numeric'}
                         maxLength={9}
                         value={employee.PostalCode}
-                        label={tags.PostalCode}
+                        label={strings.PostalCode}
                         mode='outlined'
-                        error={statusError === tags.PostalCode}
+                        error={statusError === strings.PostalCode}
                         onChangeText={PostalCode => setEmployee({ ...employee, PostalCode: mask(PostalCode, ["99999-999"]) })}
                     />
                     {activeLoading ? <ActivityIndicator size={'small'} color={'#923CFF'} /> : null}
                     <CustomButton
                         styleButton={styles.buscaCep__botao}
-                        onPress={() => buscarCEP()}
+                        onPress={() => getCep()}
                         styleText={styles.buscaCep__text}
                         text={"Buscar"}
                     />
@@ -161,37 +121,37 @@ export default function RegisterEmployeeView() {
 
                 <CustomTextInput
                     value={employee.Address}
-                    label={tags.Address}
+                    label={strings.Address}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.Address}
+                    error={statusError === strings.Address}
                     onChangeText={Address => setEmployee(prevState => ({ ...prevState, Address }))}
                 />
 
                 <CustomTextInput
                     value={employee.City}
-                    label={tags.City}
+                    label={strings.City}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.City}
+                    error={statusError === strings.City}
                     onChangeText={City => setEmployee(prevState => ({ ...prevState, City }))}
                 />
 
                 <CustomTextInput
                     value={employee.Region}
-                    label={tags.Region}
+                    label={strings.Region}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.Region}
+                    error={statusError === strings.Region}
                     onChangeText={Region => setEmployee(prevState => ({ ...prevState, Region }))}
                 />
 
                 <CustomTextInput
                     value={employee.Country}
-                    label={tags.Country}
+                    label={strings.Country}
                     mode='outlined'
                     editable={false}
-                    error={statusError === tags.Country}
+                    error={statusError === strings.Country}
                     onChangeText={Country => setEmployee(prevState => ({ ...prevState, Country }))}
                 />
 
@@ -225,18 +185,5 @@ export default function RegisterEmployeeView() {
     )
 }
 
-const tags = {
-    FirstName: "First name",
-    LastName: "Last name",
-    Title: "Title",
-    BirthDate: "Birth date",
-    HireDate: "Hire date",
-    Address: "Address",
-    City: "City",
-    Region: "Region",
-    PostalCode: "Postal code",
-    Country: "Country",
-    HomePhone: "Home hhone",
-    Extension: "Extension"
-}
+
 

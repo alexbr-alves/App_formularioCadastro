@@ -11,8 +11,8 @@ export const registerCompanyRepository = (user) => registerCompanyDB(user);
 export const login = (email, senha, callback) => loginDB(email, senha, callback);
 export const getUserRepository = (email, callback) => getUserDB(email, callback);
 
-export const registerEmployee = (employee) => registerEmployeeDB(employee);
-export const getEmployees = (companyId, callback) => getEmployeesDB(companyId, callback);
+export const registerEmployeeRepository = (employee) => registerEmployeeDB(employee);
+export const getEmployeesRepository = (companyId, callback) => getEmployeesDB(companyId, callback);
 
 export const registerProduct = (product) => registerProductDB(product);
 export const getProducts = (companyId, callback) => getProductsDB(companyId, callback);

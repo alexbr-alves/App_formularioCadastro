@@ -1,33 +1,24 @@
-import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import arrowDown from "../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../assets/imagens/arrow_right.png";
 import CustomButton from "../../Component/customButton";
 import CustomToolbar from "../../Component/customToolbar";
-import { getEmployees } from "../../Repository/databaseRepository";
 import styles from "../../Style/Employee/ListEmployeeStyle";
+import ListEmployeeViewModel from "../../ViewModel/Employee/ListEmployeeViewModel";
 import { routeName } from "../../routes/route_name";
 
 export default function ListEmployeeView() {
-    const [funcionarios, setFuncionarios] = useState([]);
     const navigation = useNavigation();
     const route = useRoute();
 
-    const loadEmployees = useCallback(() => {
-        getEmployees(route.params.email, (funcionarios) => {
-            setFuncionarios(funcionarios);
-        });
-    }, [route.params.email]);
-    useEffect(() => {
-        loadEmployees();
-    }, [loadEmployees]);
+    const {
+        funcionarios,
+        fetchData
+    } = ListEmployeeViewModel()
 
-    useFocusEffect(
-        useCallback(() => {
-            loadEmployees();
-        }, [loadEmployees])
-    );
+    fetchData(route.params.email)
 
     return (
         <View style={styles.container}>
