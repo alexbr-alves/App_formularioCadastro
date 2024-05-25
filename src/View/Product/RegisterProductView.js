@@ -114,6 +114,7 @@ export default function RegisterProductView() {
                     </View>
 
                     <CustomTextInput
+                        keyboardType={'numeric'}
                         value={product.QuantityPerUnit}
                         label={tags.QuantityPerUnit}
                         mode='outlined'

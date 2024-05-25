@@ -1,4 +1,4 @@
-import { registerEmployee } from "../Repository/databaseRepository";
+import { registerEmployeeRepository } from "../Repository/databaseRepository";
 
 export default function EmployeeMock({ id }) {
 
@@ -161,15 +161,15 @@ export default function EmployeeMock({ id }) {
         HomePhone: '(84) 9012-3456',
         Extension: '112'
     };
-    registerEmployee(funcionario1);
-    registerEmployee(funcionario2);
-    registerEmployee(funcionario3);
-    registerEmployee(funcionario4);
-    registerEmployee(funcionario5);
-    registerEmployee(funcionario6);
-    registerEmployee(funcionario7);
-    registerEmployee(funcionario8);
-    registerEmployee(funcionario9);
-    registerEmployee(funcionario10);
+    registerEmployeeRepository(funcionario1);
+    registerEmployeeRepository(funcionario2);
+    registerEmployeeRepository(funcionario3);
+    registerEmployeeRepository(funcionario4);
+    registerEmployeeRepository(funcionario5);
+    registerEmployeeRepository(funcionario6);
+    registerEmployeeRepository(funcionario7);
+    registerEmployeeRepository(funcionario8);
+    registerEmployeeRepository(funcionario9);
+    registerEmployeeRepository(funcionario10);
 }
 

@@ -22,8 +22,8 @@ export const registerCategoryDB = (category) => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'SELECT * FROM categories WHERE CompanyId = ? AND CategoryName = ?',
-                [category.CategoryName, category.CompanyId],
+                'SELECT * FROM categories WHERE CompanyId = ? AND CategoryName = ? AND Description = ?',
+                [category.CompanyId, category.CategoryName, category.Description],
                 (_, { rows }) => {
                     if (rows.length > 0) {
                         console.log('Categoria já cadastrada!');
