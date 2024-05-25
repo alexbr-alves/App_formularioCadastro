@@ -1,76 +1,41 @@
 import { Picker } from '@react-native-picker/picker';
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 
-import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { mask } from 'remask';
 
 import CustomButton from '../../Component/customButton';
 import CustomTextInput from "../../Component/customTextInput";
 import CustomToolbar from "../../Component/customToolbar";
 
-import {
-    getCategories,
-    getSuppliers,
-    registerProduct
-} from "../../Repository/databaseRepository";
-
 import styles from "../../Style/Product/RegisterProductStyle";
-import { ProductModel } from '../../model/productModel';
 import CustonModal from "../RegisterCategoryView";
+
+import RegisterProductViewModel from "../../ViewModel/Product/RegisterProductViewModel";
 
 export default function RegisterProductView() {
     const navigation = useNavigation();
-    const [statusError, setStatusError] = useState('');
-    const [mensagem, setMensagem] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
     const route = useRoute();
-    const [supplier, setSupplier] = useState([])
-    const [category, setCategory] = useState([])
-    const [product, setProduct] = useState(ProductModel);
 
-    const loadCategory = useCallback(() => {
-        getCategories(route.params.email, (category) => {
-            setCategory(category)
-        })
-    }, [route.params.email]);
-
-    const loadSupplier = useCallback(() => {
-        getSuppliers(route.params.email, (supplier) => {
-            setSupplier(supplier)
-        })
-    }, [route.params.email])
-
-    useEffect(() => {
-        loadCategory()
-        loadSupplier()
-    }, [loadCategory, loadSupplier]);
-
-    useFocusEffect(
-        useCallback(() => {
-            loadCategory()
-            loadSupplier()
-        }, [loadCategory, loadSupplier])
-    )
+    const {
+        register,
+        checkImputEmpty,
+        strings,
+        statusError,
+        mensagem,
+        modalVisible,
+        setModalVisible,
+        supplier,
+        category,
+        product,
+        setProduct,
+        loadCategory,
+    } = RegisterProductViewModel(route.params.email);
 
     function checkError() {
-        if (product.ProductName === '') {
-            setStatusError(tags.ProductName);
-            setMensagem("Enter the Product Name");
-        } else if (product.SupplierID === '') {
-            setStatusError(tags.SupplierID);
-            setMensagem("Enter the Supplier ID");
-        } else if (product.CategoryID === '') {
-            setStatusError(tags.CategoryID);
-            setMensagem("Enter the Category ID");
-        } else if (product.QuantityPerUnit === '') {
-            setStatusError(tags.QuantityPerUnit);
-            setMensagem("Enter the Quantity Per Unit");
-        } else if (product.UnitPrice === '') {
-            setStatusError(tags.UnitPrice);
-            setMensagem("Enter the Unit Price");
-        } else {
-            registerProduct({
+        if (checkImputEmpty()) {
+            register({
                 ProductName: product.ProductName,
                 SupplierID: product.SupplierID,
                 CategoryID: product.CategoryID,
@@ -96,9 +61,9 @@ export default function RegisterProductView() {
 
                     <CustomTextInput
                         value={product.ProductName}
-                        label={tags.ProductName}
+                        label={strings.ProductName}
                         mode='outlined'
-                        error={statusError === tags.ProductName}
+                        error={statusError === strings.ProductName}
                         mensagem={mensagem}
                         onChangeText={ProductName => setProduct(prevState => ({ ...prevState, ProductName }))}
                     />
@@ -116,36 +81,36 @@ export default function RegisterProductView() {
                     <CustomTextInput
                         keyboardType={'numeric'}
                         value={product.QuantityPerUnit}
-                        label={tags.QuantityPerUnit}
+                        label={strings.QuantityPerUnit}
                         mode='outlined'
-                        error={statusError === tags.QuantityPerUnit}
+                        error={statusError === strings.QuantityPerUnit}
                         onChangeText={QuantityPerUnit => setProduct(prevState => ({ ...prevState, QuantityPerUnit }))}
                     />
 
                     <CustomTextInput
                         keyboardType={'numeric'}
                         value={product.UnitPrice}
-                        label={tags.UnitPrice}
+                        label={strings.UnitPrice}
                         mode='outlined'
-                        error={statusError === tags.UnitPrice}
+                        error={statusError === strings.UnitPrice}
                         onChangeText={UnitPrice => setProduct(prevState => ({ ...prevState, UnitPrice: mask(UnitPrice, "99999.99") }))}
                     />
 
                     <CustomTextInput
                         keyboardType={'numeric'}
                         value={product.UnitsInStock}
-                        label={tags.UnitsInStock}
+                        label={strings.UnitsInStock}
                         mode='outlined'
-                        error={statusError === tags.UnitsInStock}
+                        error={statusError === strings.UnitsInStock}
                         onChangeText={UnitsInStock => setProduct(prevState => ({ ...prevState, UnitsInStock }))}
                     />
 
                     <CustomTextInput
                         keyboardType={'numeric'}
                         value={product.UnitsOnOrder}
-                        label={tags.UnitsOnOrder}
+                        label={strings.UnitsOnOrder}
                         mode='outlined'
-                        error={statusError === tags.UnitsOnOrder}
+                        error={statusError === strings.UnitsOnOrder}
                         onChangeText={UnitsOnOrder => setProduct(prevState => ({ ...prevState, UnitsOnOrder }))}
                     />
 
@@ -159,15 +124,14 @@ export default function RegisterProductView() {
                                 ))}
                             </Picker>
                         </View>
+
                         <CustomButton
                             styleButton={styles.newCategory__botao}
                             styleText={styles.newCategory__text}
                             onPress={() => setModalVisible(true)}
                             text={"Add"}
                         />
-
                     </View>
-
 
                     <CustomButton
                         styleButton={styles.botao}
@@ -178,7 +142,6 @@ export default function RegisterProductView() {
 
                 </ScrollView>
             </KeyboardAvoidingView>
-
             <CustonModal
                 onLoad={loadCategory}
                 id={route.params.email}
@@ -188,12 +151,3 @@ export default function RegisterProductView() {
     )
 }
 
-const tags = {
-    ProductName: "Product Name",
-    SupplierID: "Supplier ID",
-    CategoryID: "Category ID",
-    QuantityPerUnit: "Quantity Per Unit",
-    UnitPrice: "Unit Price",
-    UnitsInStock: "Units In Stock",
-    UnitsOnOrder: "Units On Order"
-}

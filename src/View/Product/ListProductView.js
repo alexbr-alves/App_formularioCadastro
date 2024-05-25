@@ -1,54 +1,27 @@
-import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import styles from "../../Style/Product/ListProductStyle";
-
 import arrowDown from "../../../assets/imagens/arrow_down.png";
 import arrowRight from "../../../assets/imagens/arrow_right.png";
 import CustomButton from "../../Component/customButton";
 import CustomToolbar from "../../Component/customToolbar";
 import CustomBoldText from "../../Component/custonBoldText";
-import { getCategories, getProducts, getSuppliers } from "../../Repository/databaseRepository";
+import styles from "../../Style/Product/ListProductStyle";
+import ListProductViewModel from "../../ViewModel/Product/ListProductViewModel";
 import { routeName } from "../../routes/route_name";
 
 export default function ListProductView() {
-    const [products, setProducts] = useState([]);
     const navigation = useNavigation();
-    const [supplier, setSupplier] = useState([])
-    const [categories, setCategories] = useState([])
     const route = useRoute();
 
-    const loadProducts = useCallback(() => {
-        getProducts(route.params.email, (products) => {
-            setProducts(products);
-        });
-    }, [route.params.email]);
+    const {
+        fetchData,
+        products,
+        supplier,
+        categories
+    } = ListProductViewModel();
 
-    const loadSupplier = useCallback(() => {
-        getSuppliers(route.params.email, (supplier) => {
-            setSupplier(supplier);
-        });
-    }, [route.params.email]);
-
-    const loadCategory = useCallback(() => {
-        getCategories(route.params.email, (categories) => {
-            setCategories(categories)
-        }, [route.params.email])
-    })
-
-    useEffect(() => {
-        loadCategory()
-        loadSupplier()
-        loadProducts();
-    }, [loadProducts]);
-
-    useFocusEffect(
-        useCallback(() => {
-            loadSupplier()
-            loadCategory()
-            loadProducts()
-        }, [loadProducts])
-    );
+    fetchData(route.params.email)
 
     return (
         <View style={styles.container}>
