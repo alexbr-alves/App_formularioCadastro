@@ -62,8 +62,16 @@ export default function RegisterSupplierView() {
             setMessage("Enter the Phone number");
         } else {
             registerSupplier({
-                ...supplier,
-                CompanyId: route.params.email,
+                CompanyName: supplier.CompanyName,
+                ContactName: supplier.ContactName,
+                ContactTitle: supplier.ContactTitle,
+                Address: supplier.Address,
+                City: supplier.City,
+                Region: supplier.Region,
+                PostalCode: supplier.PostalCode,
+                Country: supplier.Country,
+                Phone: supplier.Phone,
+                CompanyId: route.params.email
             });
             navigation.goBack();
         }

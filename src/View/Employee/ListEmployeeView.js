@@ -7,7 +7,6 @@ import CustomButton from "../../Component/customButton";
 import CustomToolbar from "../../Component/customToolbar";
 import { getEmployees } from "../../Repository/databaseRepository";
 import styles from "../../Style/Employee/ListEmployeeStyle";
-import EmployeeMock from "../../mock/EmployeeMock";
 import { routeName } from "../../routes/route_name";
 
 export default function ListEmployeeView() {
@@ -20,9 +19,7 @@ export default function ListEmployeeView() {
             setFuncionarios(funcionarios);
         });
     }, [route.params.email]);
-
     useEffect(() => {
-        EmployeeMock()
         loadEmployees();
     }, [loadEmployees]);
 

@@ -8,7 +8,6 @@ import { mask } from 'remask';
 import CustomButton from '../../Component/customButton';
 import CustomTextInput from "../../Component/customTextInput";
 import CustomToolbar from "../../Component/customToolbar";
-import CategoryMock from "../../mock/CategoryMock";
 
 import {
     getCategories,
@@ -43,7 +42,6 @@ export default function RegisterProductView() {
     }, [route.params.email])
 
     useEffect(() => {
-        CategoryMock()
         loadCategory()
         loadSupplier()
     }, [loadCategory, loadSupplier]);
@@ -73,7 +71,13 @@ export default function RegisterProductView() {
             setMensagem("Enter the Unit Price");
         } else {
             registerProduct({
-                ...product,
+                ProductName: product.ProductName,
+                SupplierID: product.SupplierID,
+                CategoryID: product.CategoryID,
+                QuantityPerUnit: product.QuantityPerUnit,
+                UnitPrice: product.UnitPrice,
+                UnitsInStock: product.UnitsInStock,
+                UnitsOnOrder: product.UnitsOnOrder,
                 CompanyId: route.params.email
             });
             navigation.goBack();

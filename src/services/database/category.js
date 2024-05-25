@@ -22,7 +22,7 @@ export const registerCategoryDB = (category) => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'SELECT * FROM categories WHERE CategoryName = ? AND CompanyId = ?',
+                'SELECT * FROM categories WHERE CompanyId = ? AND CategoryName = ?',
                 [category.CategoryName, category.CompanyId],
                 (_, { rows }) => {
                     if (rows.length > 0) {

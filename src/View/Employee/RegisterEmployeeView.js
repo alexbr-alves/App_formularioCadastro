@@ -66,7 +66,18 @@ export default function RegisterEmployeeView() {
         } else {
             registerEmployee({
                 CompanyId: route.params.email,
-                ...employee
+                LastName: employee.LastName,
+                FirstName: employee.FirstName,
+                Title: employee.Title,
+                BirthDate: employee.BirthDate,
+                HireDate: employee.HireDate,
+                Address: employee.Address,
+                City: employee.City,
+                Region: employee.Region,
+                PostalCode: employee.PostalCode,
+                Country: employee.Country,
+                HomePhone: employee.HomePhone,
+                Extension: employee.Extension
             });
             navigation.goBack()
         }
