@@ -7,9 +7,9 @@ import { getSuppliersDB, registerSupplierDB } from "../services/database/supplie
 export const getCategories = (companyId, callback) => getCategoriesDB(companyId, callback);
 export const registerCategory = (category) => registerCategoryDB(category);
 
-export const registerCompany = (user) => registerCompanyDB(user);
+export const registerCompanyRepository = (user) => registerCompanyDB(user);
 export const login = (email, senha, callback) => loginDB(email, senha, callback);
-export const getUser = (email, callback) => getUserDB(email, callback);
+export const getUserRepository = (email, callback) => getUserDB(email, callback);
 
 export const registerEmployee = (employee) => registerEmployeeDB(employee);
 export const getEmployees = (companyId, callback) => getEmployeesDB(companyId, callback);

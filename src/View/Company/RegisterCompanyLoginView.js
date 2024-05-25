@@ -1,38 +1,32 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { ScrollView, View } from "react-native";
 import { HelperText, TextInput } from "react-native-paper";
-import IconeGoBack from 'react-native-vector-icons/Ionicons';
 import CustomButton from "../../Component/customButton";
-import { registerCompany } from "../../Repository/databaseRepository";
+import CustonToolbar from "../../Component/customToolbar";
 import styles from "../../Style/Company/RegisterCompanyLoginStyle";
+import RegisterCompanyLoginViewModel from "../../ViewModel/Company/RegisterCompanyLoginViewModel";
 
-export default function RegisterCompanyLoginView({ navigation: { goBack } }) {
+export default function RegisterCompanyLoginView() {
     const navigation = useNavigation();
     const route = useRoute()
-    const [secureMode, setSecureMode] = useState(true);
-    const [secureMode2, setSecureMode2] = useState(true);
-    const [statusError, setStatusError] = useState('');
-    const [Mensagem, SetMensagem] = useState('');
 
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const {
+        registerCompany,
+        secureMode, setSecureMode,
+        secureMode2, setSecureMode2,
+        statusError,
+        message,
+        email, setEmail,
+        senha, setSenha,
+        confirmarSenha, setConfirmarSenha,
+        strings, checkImputEmpty,
+    } = RegisterCompanyLoginViewModel()
 
-    function MensagenError() {
-        if (email === '') {
-            setStatusError("Email")
-            SetMensagem("Digite o seu e-mail")
-        } else if (senha === '') {
-            setStatusError("Senha")
-            SetMensagem("Digite a sua senha")
-        } else if (confirmarSenha === '') {
-            setStatusError("ConfirmarSenha")
-            SetMensagem("Repita a sua senha")
-        } else if (confirmarSenha !== senha) {
-            setStatusError("ConfirmarSenha")
-            SetMensagem("As senhas não correspondem")
-        } else {
+
+
+    const finish = () => {
+        if (checkImputEmpty()) {
             registerCompany({
                 CompanyName: route.params.registrationData.CompanyName,
                 ContactName: route.params.registrationData.ContactName,
@@ -54,30 +48,24 @@ export default function RegisterCompanyLoginView({ navigation: { goBack } }) {
 
     return (
         <ScrollView style={styles.container}>
-
-            <TouchableOpacity style={styles.iconeBack} onPress={() => goBack()}>
-                <IconeGoBack name="arrow-back" size={35} />
-            </TouchableOpacity>
-            <Text style={styles.titulo}>Preencha as informações abaixo</Text>
-
+            <CustonToolbar titulo={strings.registerLoginTitle} />
             <View style={styles.espaco__input}>
-                <Text style={styles.tituloCategoria}>Dados para login</Text>
                 <TextInput
                     value={email}
                     textColor='#923CFF'
                     style={styles.input}
-                    label={'Email'}
+                    label={strings.emailLabel}
                     mode="outlined"
                     onChangeText={email => setEmail(email)}
-                    error={statusError == "Email"}
+                    error={statusError === strings.emailLabel}
                 />
-                {statusError == "Email" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === strings.emailLabel && <HelperText type="error" visible={statusError}>{message}</HelperText>}
 
                 <TextInput
                     value={senha}
                     textColor='#923CFF'
                     style={styles.input}
-                    label={"Senha"}
+                    label={strings.passwordLabel}
                     mode="outlined"
                     secureTextEntry={secureMode}
                     right={<TextInput.Icon
@@ -85,17 +73,15 @@ export default function RegisterCompanyLoginView({ navigation: { goBack } }) {
                         onPress={() => setSecureMode(!secureMode)}
                     />}
                     onChangeText={senha => setSenha(senha)}
-                    error={statusError == "Senha"}
+                    error={statusError === strings.passwordLabel}
                 />
-                {statusError == "Senha" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
-
-
+                {statusError === strings.passwordLabel && <HelperText type="error" visible={statusError}>{message}</HelperText>}
 
                 <TextInput
                     value={confirmarSenha}
                     textColor='#923CFF'
                     style={styles.input}
-                    label={"Confirmar senha"}
+                    label={strings.confirmPasswordLabel}
                     mode="outlined"
                     secureTextEntry={secureMode2}
                     right={<TextInput.Icon
@@ -103,19 +89,18 @@ export default function RegisterCompanyLoginView({ navigation: { goBack } }) {
                         onPress={() => setSecureMode2(!secureMode2)}
                     />}
                     onChangeText={confirmarSenha => setConfirmarSenha(confirmarSenha)}
-                    error={statusError == "ConfirmarSenha"}
+                    error={statusError === strings.confirmPasswordLabel}
                 />
-                {statusError == "ConfirmarSenha" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === strings.confirmPasswordLabel && <HelperText type="error" visible={statusError}>{message}</HelperText>}
 
             </View>
 
             <CustomButton
                 styleButton={styles.botao}
                 styleText={styles.botao__text}
-                onPress={MensagenError}
-                text={"Finalizar"}
+                onPress={finish}
+                text={strings.finishButton}
             />
-
         </ScrollView>
     )
 }

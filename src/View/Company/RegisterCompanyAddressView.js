@@ -1,88 +1,48 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import numeroCep from 'cep-promise';
-import React, { useState } from "react";
-import { ActivityIndicator, KeyboardAvoidingView, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { ActivityIndicator, KeyboardAvoidingView, View } from "react-native";
 import { HelperText, TextInput } from "react-native-paper";
-import IconeGoBack from 'react-native-vector-icons/Ionicons';
 import { mask } from 'remask';
 import CustomButton from "../../Component/customButton";
+import CustomTextInput from "../../Component/customTextInput";
+import CustomToolbar from "../../Component/customToolbar";
 import styles from "../../Style/Company/RegisterCompanyAddressStyle";
-import { CompanyAddressModel } from "../../model/CompanyModal";
+import RegisterCompanyAddressViewModel from "../../ViewModel/Company/RegisterCompanyAddressViewModel";
 import { routeName } from "../../routes/route_name";
 
 export default function RegisterCompanyAddressView({ navigation: { goBack } }) {
     const route = useRoute();
     const navigation = useNavigation();
-    const [statusError, setStatusError] = useState('');
-    const [Mensagem, SetMensagem] = useState('');
-    const [activeLoading, setActiveLoading] = useState(false);
-    const [addressData, setAddressData] = useState(CompanyAddressModel)
 
-    function MensagenError() {
-        if (addressData.PostalCode === '') {
-            setStatusError("PostalCode")
-            SetMensagem("Enter Postal Code")
-        } else if (addressData.City === '') {
-            setStatusError("City")
-            SetMensagem("Enter City")
-        } else if (addressData.Region === '') {
-            setStatusError("Region")
-            SetMensagem("Enter Region")
-        } else if (addressData.Address === '') {
-            setStatusError("Address")
-            SetMensagem("Enter Address")
-        } else if (addressData.Number === '') {
-            setStatusError("Number")
-            SetMensagem("Enter Number")
-        } else {
+    const {
+        statusError,
+        message,
+        activeLoading,
+        addressData,
+        setAddressData,
+        strings,
+        checkimputEmpty,
+        getCPF
+    } = RegisterCompanyAddressViewModel()
+
+
+    const HandleNext = () => {
+        if (checkimputEmpty()) {
             navigation.navigate(routeName.create_login, {
                 registrationData: route.params.registrationData,
                 addressData
             })
-
-
         }
     }
 
 
-
-    function buscarCEP() {
-        setActiveLoading(true)
-        setAddressData({ ...addressData, City: '', Region: '', Address: '' })
-        if (addressData.PostalCode.length === 9) {
-            numeroCep(addressData.PostalCode)
-                .then(data => {
-                    setAddressData({
-                        ...addressData,
-                        City: data.city,
-                        Region: data.state,
-                        Address: data.street
-                    });
-                    setActiveLoading(false)
-                    setStatusError('')
-                    SetMensagem('')
-                })
-        } else {
-            setStatusError("PostalCode")
-            SetMensagem("Enter Postal Code")
-            setActiveLoading(false)
-        }
-
-    }
     return (
         <KeyboardAvoidingView behavior={"height"}
             keyboardVerticalOffset={500} style={styles.container}>
 
-            <TouchableOpacity style={styles.iconeBack} onPress={() => goBack()}>
-                <IconeGoBack name="arrow-back" size={35} />
-            </TouchableOpacity>
-
-            <Text style={styles.titulo}>Preencha as informações abaixo</Text>
-
+            <CustomToolbar titulo={strings.title} />
 
             <View style={styles.espaco__input}>
-
-                <Text style={styles.tituloCategoria}>Data Address</Text>
 
                 <View style={styles.buscaCPF}>
                     <TextInput
@@ -91,80 +51,64 @@ export default function RegisterCompanyAddressView({ navigation: { goBack } }) {
                         keyboardType={'numeric'}
                         maxLength={9}
                         value={addressData.PostalCode}
-                        label={"Postal Code"}
+                        label={strings.postalCodeLabel}
                         mode='outlined'
-                        error={statusError === "PostalCode"}
-                        onChangeText={PostalCode => setAddressData({ ...addressData, PostalCode: mask(PostalCode, ["99999-999"]) })}
+                        error={statusError === strings.postalCodeLabel}
+                        onChangeText={PostalCode => setAddressData({ ...addressData, PostalCode: mask(PostalCode, [strings.cepMask]) })}
                     />
                     {activeLoading ? <ActivityIndicator size={'small'} color={'#923CFF'} /> : null}
                     <CustomButton
                         styleButton={styles.buscaCPF__botao}
                         styleText={styles.buscaCPF__text}
-                        onPress={() => buscarCEP()}
-                        text={"Buscar"}
+                        onPress={() => getCPF()}
+                        text={strings.searchButtonText}
                     />
-
                 </View>
-                {statusError === "PostalCode" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
+                {statusError === strings.postalCodeLabel && <HelperText type="error" visible={statusError}>{message}</HelperText>}
 
-
-                <TextInput
-                    textColor='#923CFF'
-                    style={styles.input}
+                <CustomTextInput
                     value={addressData.City}
-                    label={"City"}
+                    label={strings.cityLabel}
                     mode='outlined'
-                    error={statusError === "City"}
-                    onChangeText={City => setAddressData({ ...addressData, City })}
+                    error={statusError === strings.cityLabel}
+                    mensagem={message}
+                    onChangeText={City => setAddressData(prevState => ({ ...prevState, City }))}
                 />
-                {statusError === 'City' && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-
-
-                <TextInput
-                    textColor='#923CFF'
-                    style={styles.input}
+                <CustomTextInput
                     value={addressData.Region}
-                    label={"Region"}
+                    label={strings.regionLabel}
                     mode='outlined'
-                    error={statusError === "Region"}
-                    onChangeText={Region => setAddressData({ ...addressData, Region })}
+                    error={statusError === strings.regionLabel}
+                    mensagem={message}
+                    onChangeText={Region => setAddressData(prevState => ({ ...prevState, Region }))}
                 />
-                {statusError === "Region" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-
-
-                <TextInput
-                    textColor='#923CFF'
-                    style={styles.input}
+                <CustomTextInput
                     value={addressData.Address}
-                    label={"Address"}
+                    label={strings.addressLabel}
                     mode='outlined'
-                    error={statusError === "Address"}
-                    onChangeText={Address => setAddressData({ ...addressData, Address })}
+                    error={statusError === strings.addressLabel}
+                    mensagem={message}
+                    onChangeText={Address => setAddressData(prevState => ({ ...prevState, Address }))}
                 />
-                {statusError === "Address" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
-
-
-                <TextInput
-                    textColor='#923CFF'
-                    style={styles.input}
-                    keyboardType={'number-pad'}
+                <CustomTextInput
                     value={addressData.Number}
-                    label={"Number"}
+                    label={strings.numberLabel}
                     mode='outlined'
-                    error={statusError === "Number"}
-                    onChangeText={Number => setAddressData({ ...addressData, Number })}
+                    keyboardType={"numeric"}
+                    error={statusError === strings.numberLabel}
+                    mensagem={message}
+                    onChangeText={Number => setAddressData(prevState => ({ ...prevState, Number }))}
                 />
-                {statusError === "Number" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
             </View>
 
             <CustomButton
                 styleButton={styles.botao}
                 styleText={styles.botao__text}
-                onPress={MensagenError}
-                text={"Próximo"}
+                onPress={HandleNext}
+                text={strings.nextButtonText}
             />
 
         </KeyboardAvoidingView>

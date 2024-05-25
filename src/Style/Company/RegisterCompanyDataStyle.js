@@ -3,18 +3,12 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
         flex: 3,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingTop: 50
     },
     iconeBack: {
         marginTop: 50,
         marginLeft: 20
-    },
-    titulo: {
-        marginTop: 10,
-        alignSelf: 'center',
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#923CFF'
     },
     tituloCategoria: {
         marginTop: 20,

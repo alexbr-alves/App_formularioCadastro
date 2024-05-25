@@ -1,21 +1,16 @@
 import { useRoute } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Text, View } from "react-native";
 import CustomToolbar from "../../Component/customToolbar";
-import { getUser } from "../../Repository/databaseRepository";
 import styles from "../../Style/Company/CompanyDataStyle";
+import CompanyDataViewModel from "../../ViewModel/Company/CompanyDataViewModel";
 
 
 export default function CompanyDataView() {
-    const [company, setCompany] = useState('');
     const route = useRoute();
+    const { fetchData, company } = CompanyDataViewModel();
 
-
-    useEffect(() => {
-        getUser(route.params.email, (user) => {
-            setCompany(user);
-        });
-    }, [route.params.email]);
+    fetchData(route.params.email)
 
     return (
         <View style={styles.container}>

@@ -1,98 +1,80 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { HelperText, TextInput } from "react-native-paper";
-import IconeGoBack from 'react-native-vector-icons/Ionicons';
-import { mask } from 'remask';
+import React from "react";
+import { View } from "react-native";
 import CustomButton from "../../Component/customButton";
+import CustomTextInput from "../../Component/customTextInput";
+import CustomToolbar from "../../Component/customToolbar";
 import styles from "../../Style/Company/RegisterCompanyDataStyle";
-import { CompanyDataModel } from "../../model/CompanyModal";
+import RegisterCompanyDataViewModel from "../../ViewModel/Company/RegisterCompanyDataViewModel";
 import { routeName } from "../../routes/route_name";
 
 
 export default function RegisterCompanyDataView({ navigation: { goBack } }) {
-
     const navigation = useNavigation();
-    const [statusError, setStatusError] = useState('');
-    const [Mensagem, SetMensagem] = useState('');
-    const [registrationData, setRegistrationData] = useState(CompanyDataModel)
+    const { statusError,
+        message,
+        strings,
+        registrationData,
+        setRegistrationData,
+        checkInputEmpty } = RegisterCompanyDataViewModel();
 
 
-    function MensagenError() {
-        if (registrationData.CompanyName === '') {
-            setStatusError("CompanyName")
-            SetMensagem("Enter Company Name")
-        } else if (registrationData.ContactName === '') {
-            setStatusError("ContactName")
-            SetMensagem("Enter ContactName")
-        } else if (registrationData.phoneNumber === '') {
-            setStatusError("phoneNumber")
-            SetMensagem("Enter Phone Number")
-        } else if (registrationData.ContactTitle === '') {
-            setStatusError("ContactTitle")
-            SetMensagem("Enter Contact title")
-        } else {
+    const handleNext = () => {
+        if (checkInputEmpty()) {
             navigation.navigate(routeName.register_company_address, { registrationData })
         }
     }
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.iconeBack} onPress={() => goBack()}>
-                <IconeGoBack name="arrow-back" size={35} />
-            </TouchableOpacity>
-            <Text style={styles.titulo}>Preencha as informações abaixo</Text>
+            <CustomToolbar titulo={strings.title} />
             <View style={styles.espaco__input}>
-                <Text style={styles.tituloCategoria}>Registration Data</Text>
-                <TextInput
+
+                <CustomTextInput
                     value={registrationData.CompanyName}
-                    label={"Company name"}
+                    label={strings.companyNameLabel}
                     mode='outlined'
-                    error={statusError === "CompanyName"}
+                    error={statusError === strings.companyNameLabel}
+                    mensagem={message}
                     onChangeText={CompanyName => setRegistrationData(prevState => ({ ...prevState, CompanyName }))}
                 />
-                {statusError === "CompanyName" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-
-                <TextInput
+                <CustomTextInput
                     value={registrationData.ContactName}
-                    label={"Contact name"}
+                    label={strings.contactNameLabel}
                     mode='outlined'
-                    error={statusError === "ContactName"}
+                    error={statusError === strings.contactNameLabel}
+                    mensagem={message}
                     onChangeText={ContactName => setRegistrationData(prevState => ({ ...prevState, ContactName }))}
                 />
-                {statusError === "ContactName" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
-                    maxLength={18}
+                <CustomTextInput
                     value={registrationData.ContactTitle}
-                    label={"Contact Title"}
+                    label={strings.contactTitleLabel}
                     mode='outlined'
-                    error={statusError === "ContactTitle"}
+                    error={statusError === strings.contactTitleLabel}
+                    mensagem={message}
                     onChangeText={ContactTitle => setRegistrationData(prevState => ({ ...prevState, ContactTitle }))}
                 />
-                {statusError === "ContactTitle" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
 
-                <TextInput
-                    keyboardType={'numeric'}
-                    maxLength={15}
+                <CustomTextInput
                     value={registrationData.phoneNumber}
-                    label={"Phone Number"}
+                    label={strings.phoneNumberLabel}
                     mode='outlined'
-                    error={statusError === "phoneNumber"}
-                    onChangeText={phoneNumber => setRegistrationData(prevState => ({ ...prevState, phoneNumber: mask(phoneNumber, ["(99)99999-9999"]) }))}
+                    keyboardType={"numeric"}
+                    error={statusError === strings.phoneNumberLabel}
+                    mensagem={message}
+                    onChangeText={phoneNumber => setRegistrationData(prevState => ({ ...prevState, phoneNumber }))}
                 />
-                {statusError === "phoneNumber" && <HelperText type="error" visible={statusError}>{Mensagem}</HelperText>}
-
             </View>
 
             <CustomButton
                 styleButton={styles.botao}
                 styleText={styles.botao__text}
-                onPress={MensagenError}
-                text={"Próximo"}
+                onPress={handleNext}
+                text={strings.nextButton}
             />
-
         </View>
+
     )
 }

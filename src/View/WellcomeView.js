@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { HelperText, TextInput } from "react-native-paper";
-import { login, registerCompany } from "../Repository/databaseRepository";
+import { login, registerCompanyRepository } from "../Repository/databaseRepository";
 
 import { routeName } from "../routes/route_name";
 
@@ -33,7 +33,7 @@ export default function WelcomeView() {
     };
 
     useEffect(() => {
-        registerCompany(usuarioTeste);
+        registerCompanyRepository(usuarioTeste);
     }, []);
 
     function Logar() {
