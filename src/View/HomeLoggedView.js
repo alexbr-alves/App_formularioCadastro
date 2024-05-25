@@ -1,15 +1,30 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, View } from "react-native";
 import styles from '../Style/HomeLoggedStyle';
 
 import image from "../../assets/imagens/image_team.png";
 import CustomButton from "../Component/customButton";
+import CategoryMock from "../mock/CategoryMock";
+import EmployeeMock from "../mock/EmployeeMock";
+import ProductMock from "../mock/ProductMock";
+import SupplierMock from "../mock/SupplierMock";
+
 import { routeName } from "../routes/route_name";
 
 export default function HomeLoggedView() {
     const route = useRoute();
     const navigation = useNavigation();
+
+    useEffect(() => {
+        const email = route.params.email;
+        ProductMock({ id: email })
+        SupplierMock({ id: email })
+        CategoryMock({ id: email })
+        EmployeeMock({ id: email });
+    }, [route.params.email]);
+
+    console.log(route.params.email)
 
     return (
         <View style={styles.container}>

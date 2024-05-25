@@ -1,8 +1,9 @@
 import { registerEmployee } from "../Repository/databaseRepository";
 
-export default function EmployeeMock() {
+export default function EmployeeMock({ id }) {
+
     const funcionario1 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Ferreira',
         FirstName: 'Lucas',
         Title: 'Analista de Recursos Humanos',
@@ -18,7 +19,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario2 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Costa',
         FirstName: 'Ana',
         Title: 'Gerente de Vendas',
@@ -34,7 +35,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario3 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Oliveira',
         FirstName: 'Rafael',
         Title: 'Desenvolvedor Front-End',
@@ -50,7 +51,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario4 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Martins',
         FirstName: 'Camila',
         Title: 'Analista Financeiro',
@@ -66,7 +67,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario5 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Pereira',
         FirstName: 'Juliana',
         Title: 'Especialista em RH',
@@ -82,7 +83,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario6 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Gomes',
         FirstName: 'Carlos',
         Title: 'Engenheiro de Produção',
@@ -98,7 +99,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario7 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Rodrigues',
         FirstName: 'Fernanda',
         Title: 'Analista de Qualidade',
@@ -114,7 +115,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario8 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Almeida',
         FirstName: 'Pedro',
         Title: 'Designer Gráfico',
@@ -130,7 +131,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario9 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Carvalho',
         FirstName: 'Mariana',
         Title: 'Analista de Sistemas',
@@ -146,7 +147,7 @@ export default function EmployeeMock() {
     };
 
     const funcionario10 = {
-        CompanyId: 'Q',
+        CompanyId: id,
         LastName: 'Lima',
         FirstName: 'Aline',
         Title: 'Coordenadora de Projetos',

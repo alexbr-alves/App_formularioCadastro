@@ -8,7 +8,6 @@ import arrowRight from "../../../assets/imagens/arrow_right.png";
 import CustomButton from "../../Component/customButton";
 import CustomToolbar from "../../Component/customToolbar";
 import { getSuppliers } from "../../Repository/databaseRepository";
-import SupplierMock from "../../mock/SupplierMock";
 import { routeName } from "../../routes/route_name";
 import LimitText from "../../utils/limitText";
 
@@ -24,10 +23,8 @@ export default function ListSupplierView() {
     }, [route.params.email]);
 
     useEffect(() => {
-        SupplierMock()
         loadSuppliers();
     }, [loadSuppliers]);
-
     useFocusEffect(
         useCallback(() => {
             loadSuppliers();

@@ -9,7 +9,6 @@ import CustomButton from "../../Component/customButton";
 import CustomToolbar from "../../Component/customToolbar";
 import CustomBoldText from "../../Component/custonBoldText";
 import { getCategories, getProducts, getSuppliers } from "../../Repository/databaseRepository";
-import ProductMock from "../../mock/ProductMock";
 import { routeName } from "../../routes/route_name";
 
 export default function ListProductView() {
@@ -38,7 +37,6 @@ export default function ListProductView() {
     })
 
     useEffect(() => {
-        ProductMock()
         loadCategory()
         loadSupplier()
         loadProducts();

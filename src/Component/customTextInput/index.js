@@ -9,6 +9,7 @@ class CustomTextInput extends React.Component {
     return (
       <View>
         <TextInput
+          textColor='#923CFF'
           value={value}
           label={label}
           mode={mode}

@@ -17,8 +17,8 @@ export const registerEmployeeDB = (employee) => {
     db.transaction(
         tx => {
             tx.executeSql(
-                'SELECT * FROM employees WHERE FirstName = ? AND LastName = ? AND Title = ?',
-                [employee.FirstName, employee.LastName, employee.Title],
+                'SELECT * FROM employees WHERE CompanyId = ? AND FirstName = ? AND LastName = ? AND Title = ?',
+                [employee.CompanyId, employee.FirstName, employee.LastName, employee.Title],
                 (_, { rows }) => {
                     if (rows.length > 0) {
                         console.log('Funcionário já cadastrado!');
@@ -68,6 +68,9 @@ export const getEmployeesDB = (companyId, callback) => {
                         employees.push(rows.item(i));
                     }
                     callback(employees);
+                    if (employees.length === 0) {
+                        console.log("Não existe funcionario associado a compania")
+                    }
                 }
             );
         },

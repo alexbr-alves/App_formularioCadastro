@@ -2,11 +2,6 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { HelperText, TextInput } from "react-native-paper";
-import CategoryMock from "../mock/CategoryMock";
-import EmployeeMock from "../mock/EmployeeMock";
-import ProductMock from "../mock/ProductMock";
-import SupplierMock from "../mock/SupplierMock";
-
 import { login, registerCompany } from "../Repository/databaseRepository";
 
 import { routeName } from "../routes/route_name";
@@ -38,10 +33,6 @@ export default function WelcomeView() {
     };
 
     useEffect(() => {
-        ProductMock()
-        SupplierMock()
-        CategoryMock()
-        EmployeeMock()
         registerCompany(usuarioTeste);
     }, []);
 
