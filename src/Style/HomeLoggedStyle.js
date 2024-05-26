@@ -10,6 +10,11 @@ export default StyleSheet.create({
     container_botao: {
         marginTop: 100
     },
+    indicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     image: {
         height: 320,
         width: 300,

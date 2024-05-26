@@ -1,29 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import { Modal } from 'react-native-paper';
 import CustomButton from "../Component/customButton";
 import CustomTextInput from "../Component/customTextInput";
-import { registerCategory } from "../Repository/databaseRepository";
 import styles from "../Style/RegisterCategoryStyle";
 
-export default function RegisterCategoryView({ state, setState, id, onLoad }) {
-    const [statusError, setStatusError] = useState('');
-    const [mensagem, setMensagem] = useState('');
-    const [category, setCategory] = useState({
-        CategoryName: '',
-        Description: '',
-        CompanyId: ''
-    })
+import RegisterCategoryViewModel from "../ViewModel/RegisterCategoryViewModel";
 
-    function checkError() {
-        if (category.CategoryName === '') {
-            setStatusError(tags.CategoryName)
-            setMensagem("Enter to Category Name")
-        } else if (category.Description === '') {
-            setStatusError(tags.Description)
-            setMensagem("Enter to Descriptione")
-        } else {
-            registerCategory({
+export default function RegisterCategoryView({ state, setState, id, onLoad }) {
+
+    const {
+        strings,
+        register,
+        statusError,
+        category, setCategory,
+        message,
+        checkInputEmpty
+    } = RegisterCategoryViewModel()
+
+    function finish() {
+        if (checkInputEmpty()) {
+            register({
                 CategoryName: category.CategoryName,
                 Description: category.Description,
                 CompanyId: id
@@ -38,35 +35,30 @@ export default function RegisterCategoryView({ state, setState, id, onLoad }) {
 
                 <CustomTextInput
                     value={category.CategoryName}
-                    label={tags.CategoryName}
+                    label={strings.CategoryName}
                     mode='outlined'
-                    error={statusError === tags.CategoryName}
-                    mensagem={mensagem}
+                    error={statusError === strings.CategoryName}
+                    message={message}
                     onChangeText={CategoryName => setCategory(prevState => ({ ...prevState, CategoryName }))}
                 />
 
                 <CustomTextInput
                     value={category.Description}
-                    label={tags.Description}
+                    label={strings.Description}
                     mode='outlined'
-                    error={statusError === tags.Description}
-                    mensagem={mensagem}
+                    error={statusError === strings.Description}
+                    message={message}
                     onChangeText={Description => setCategory(prevState => ({ ...prevState, Description }))}
                 />
 
                 <CustomButton
                     styleButton={styles.botao}
                     styleText={styles.botao__text}
-                    onPress={checkError}
+                    onPress={finish}
                     text={"Register"}
                 />
 
             </View>
         </Modal>
     )
-}
-
-const tags = {
-    CategoryName: "Category name",
-    Description: "Description"
 }
