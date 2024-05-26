@@ -17,13 +17,13 @@ const createTableCattegories = () => {
     });
 };
 
-export const registerCategory = (category) => {
+export const registerCategoryDB = (category) => {
     createTableCattegories()
     db.transaction(
         tx => {
             tx.executeSql(
-                'SELECT * FROM categories WHERE CategoryName = ? AND CompanyId = ?',
-                [category.CategoryName, category.CompanyId],
+                'SELECT * FROM categories WHERE CompanyId = ? AND CategoryName = ? AND Description = ?',
+                [category.CompanyId, category.CategoryName, category.Description],
                 (_, { rows }) => {
                     if (rows.length > 0) {
                         console.log('Categoria já cadastrada!');
@@ -51,7 +51,7 @@ export const registerCategory = (category) => {
     );
 };
 
-export const getCategories = (companyId, callback) => {
+export const getCategoriesDB = (companyId, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(

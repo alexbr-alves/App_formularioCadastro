@@ -22,7 +22,7 @@ const createTableProducts = () => {
     });
 };
 
-export const registerProduct = (product) => {
+export const registerProductDB = (product) => {
     createTableProducts()
     db.transaction(
         tx => {
@@ -61,7 +61,7 @@ export const registerProduct = (product) => {
     );
 };
 
-export const getProducts = (companyId, callback) => {
+export const getProductsDB = (companyId, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(

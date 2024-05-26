@@ -12,13 +12,13 @@ const createTableSuppliers = () => {
     });
 };
 
-export const registerSupplier = (supplier) => {
+export const registerSupplierDB = (supplier) => {
     createTableSuppliers()
     db.transaction(
         tx => {
             tx.executeSql(
-                'SELECT * FROM suppliers WHERE CompanyName = ? AND ContactName = ? AND ContactTitle = ?',
-                [supplier.CompanyName, supplier.ContactName, supplier.ContactTitle],
+                'SELECT * FROM suppliers WHERE CompanyId = ? AND CompanyName = ? AND ContactName = ? AND ContactTitle = ?',
+                [supplier.CompanyId, supplier.CompanyName, supplier.ContactName, supplier.ContactTitle],
                 (_, { rows }) => {
                     if (rows.length > 0) {
                         console.log('Fornecedor já cadastrado!');
@@ -54,7 +54,7 @@ export const registerSupplier = (supplier) => {
     );
 };
 
-export const getSuppliers = (companyId, callback) => {
+export const getSuppliersDB = (companyId, callback) => {
     db.transaction(
         tx => {
             tx.executeSql(
