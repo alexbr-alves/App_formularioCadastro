@@ -35,7 +35,7 @@ export default function ListEmployeeView() {
             <FlatList
                 style={styles.flatlist}
                 data={funcionarios}
-                keyExtractor={(item) => item.EmployeeId.toString()}
+                keyExtractor={(item) => parseInt(item.EmployeeId)}
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} onLongPress={handleLongPress} />
                 )}
@@ -57,7 +57,7 @@ export default function ListEmployeeView() {
             <>
                 <TouchableOpacity
                     style={styles.container_flatlist}
-                    key={item.EmployeeId.toString()}
+                    key={parseInt(item.EmployeeId)}
                     onLongPress={() => onLongPress(item.EmployeeId)}
                     onPress={() => handlePress(item.EmployeeId)}
                 >

@@ -71,7 +71,7 @@ export default function RegisterProductView() {
                     <View style={styles.pickerInput_supplier}>
                         <ModalSelector
                             data={supplier.map((item) => ({
-                                key: item.SupplierID.toString(),
+                                key: parseInt(item.SupplierID),
                                 label: item.CompanyName,
                             }))}
                             initValue={product.SupplierName}
@@ -127,7 +127,7 @@ export default function RegisterProductView() {
                                     flexDirection: 'column', justifyContent: 'center', height: '100%'
                                 }}
                                 data={category.map((item) => ({
-                                    key: item.CategoryID.toString(),
+                                    key: parseInt(item.CategoryID),
                                     label: item.CategoryName,
                                 }))}
                                 initValue={product.CategoryName}
