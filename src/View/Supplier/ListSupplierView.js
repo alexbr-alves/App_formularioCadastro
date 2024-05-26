@@ -39,7 +39,7 @@ export default function ListSupplierView() {
             <FlatList
                 style={styles.flatlist}
                 data={fornecedores}
-                keyExtractor={(item) => item.SupplierID.toString()}
+                keyExtractor={(item) => parseInt(item.SupplierID)}
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} onLongPress={handleLongPress} />
                 )}
@@ -59,7 +59,7 @@ export default function ListSupplierView() {
             <>
                 <TouchableOpacity
                     style={styles.container_flatlist}
-                    key={item.SupplierID.toString()}
+                    key={parseInt(item.SupplierID)}
                     onPress={() => handlePress(item.SupplierID)}
                     onLongPress={() => onLongPress(item.SupplierID)}
                 >

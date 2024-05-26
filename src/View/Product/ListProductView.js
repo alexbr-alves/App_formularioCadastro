@@ -44,7 +44,7 @@ export default function ListProductView() {
                 style={styles.flatlist}
                 data={products}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.ProductID.toString()}
+                keyExtractor={(item) => parseInt(item.ProductID)}
                 renderItem={({ item }) => (
                     <FlatlistComponent item={item} onLongPress={handleLongPress} />
                 )}
@@ -64,7 +64,7 @@ export default function ListProductView() {
             <>
                 <TouchableOpacity
                     style={styles.container_flatlist}
-                    key={item.ProductID.toString()}
+                    key={parseInt(item.ProductID)}
                     onPress={() => handlePress(item.ProductID)}
                     onLongPress={() => onLongPress(item.ProductID)}
                 >
