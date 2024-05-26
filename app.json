@@ -1,13 +1,6 @@
 {
   "expo": {
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
-        }
-      ]
-    ],
+    "plugins": [],
     "name": "teste_ideia",
     "slug": "teste_ideia",
     "version": "1.0.0",

@@ -1,6 +1,6 @@
-import { Picker } from '@react-native-picker/picker';
 import React from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import ModalSelector from 'react-native-modal-selector';
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { mask } from 'remask';
@@ -69,13 +69,15 @@ export default function RegisterProductView() {
                     />
 
                     <View style={styles.pickerInput_supplier}>
-                        <Picker
-                            selectedValue={product.SupplierID}
-                            onValueChange={SupplierID => setProduct(prevState => ({ ...prevState, SupplierID }))}>
-                            {supplier.map((item, index) => (
-                                <Picker.Item key={index} label={item.CompanyName} value={item.SupplierID} />
-                            ))}
-                        </Picker>
+                        <ModalSelector
+                            data={supplier.map((item) => ({
+                                key: item.SupplierID.toString(),
+                                label: item.CompanyName,
+                            }))}
+                            initValue={product.SupplierName}
+                            initValueTextStyle={{ color: 'black', textAlign: 'left', marginLeft: 5 }}
+                            onChange={(option) => setProduct({ ...product, SupplierID: parseInt(option.key), SupplierName: option.label })}
+                        />
                     </View>
 
                     <CustomTextInput
@@ -120,13 +122,18 @@ export default function RegisterProductView() {
 
                     <View style={styles.category}>
                         <View style={styles.pickerInput}>
-                            <Picker
-                                selectedValue={product.CategoryID}
-                                onValueChange={CategoryID => setProduct(prevState => ({ ...prevState, CategoryID }))}>
-                                {category.map((item, index) => (
-                                    <Picker.Item key={index} label={item.CategoryName} value={item.CategoryID} />
-                                ))}
-                            </Picker>
+                            <ModalSelector
+                                style={{
+                                    flexDirection: 'column', justifyContent: 'center', height: '100%'
+                                }}
+                                data={category.map((item) => ({
+                                    key: item.CategoryID.toString(),
+                                    label: item.CategoryName,
+                                }))}
+                                initValue={product.CategoryName}
+                                initValueTextStyle={{ color: 'black', textAlign: 'left', marginLeft: 5 }}
+                                onChange={(option) => setProduct({ ...product, CategoryID: parseInt(option.key), CategoryName: option.label })}
+                            />
                         </View>
 
                         <CustomButton
@@ -145,7 +152,7 @@ export default function RegisterProductView() {
                     />
 
                 </ScrollView>
-            </KeyboardAvoidingView>
+            </KeyboardAvoidingView >
             <CustonModal
                 onLoad={loadCategory}
                 id={route.params.email}
