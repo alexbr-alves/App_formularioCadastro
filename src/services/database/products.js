@@ -79,3 +79,22 @@ export const getProductsDB = (companyId, callback) => {
         error => console.error('Erro ao obter produtos do fornecedor:', error)
     );
 };
+
+export const deleteProductDB = (ProductID) => {
+    db.transaction(
+        tx => {
+            tx.executeSql(
+                'DELETE FROM products WHERE ProductID = ?',
+                [ProductID],
+                (_, { rowsAffected }) => {
+                    if (rowsAffected > 0) {
+                        console.log('Product deletado com sucesso!');
+                    } else {
+                        console.log('Erro: Product não encontrado.');
+                    }
+                }
+            );
+        },
+        error => console.error('Erro ao deletar Product:', error)
+    );
+};

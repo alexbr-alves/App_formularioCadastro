@@ -15,10 +15,12 @@ export default function ListEmployeeView() {
 
     const {
         funcionarios,
-        fetchData
-    } = ListEmployeeViewModel()
+        Dialog
+    } = ListEmployeeViewModel(route.params.email)
 
-    fetchData(route.params.email)
+    const handleLongPress = (employeeId) => {
+        Dialog(employeeId)
+    };
 
     return (
         <View style={styles.container}>
@@ -35,14 +37,16 @@ export default function ListEmployeeView() {
                 data={funcionarios}
                 keyExtractor={(item) => item.EmployeeId.toString()}
                 renderItem={({ item }) => (
-                    <FlatlistComponent item={item} />
+                    <FlatlistComponent item={item} onLongPress={handleLongPress} />
                 )}
                 ListFooterComponent={<View style={{ height: 100 }} />}
             />
         </View>
     );
 
-    function FlatlistComponent({ item }) {
+
+
+    function FlatlistComponent({ item, onLongPress }) {
         const [expandedItemId, setExpandedItemId] = useState(null);
 
         const handlePress = (itemId) => {
@@ -54,11 +58,11 @@ export default function ListEmployeeView() {
                 <TouchableOpacity
                     style={styles.container_flatlist}
                     key={item.EmployeeId.toString()}
+                    onLongPress={() => onLongPress(item.EmployeeId)}
                     onPress={() => handlePress(item.EmployeeId)}
                 >
                     <Image style={styles.container_flatlist_icon} source={expandedItemId === item.EmployeeId ? arrowDown : arrowRight} />
                     <Text style={styles.container_flatlist_name}>{item.FirstName}</Text>
-
                 </TouchableOpacity>
                 {expandedItemId === item.EmployeeId && (
                     <ExpandedComponent item={item} />

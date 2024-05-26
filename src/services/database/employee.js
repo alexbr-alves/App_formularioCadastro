@@ -77,3 +77,22 @@ export const getEmployeesDB = (companyId, callback) => {
         error => console.error('Erro ao obter funcionários da empresa:', error)
     );
 };
+
+export const deleteEmployeeDB = (employeeId) => {
+    db.transaction(
+        tx => {
+            tx.executeSql(
+                'DELETE FROM employees WHERE EmployeeId = ?',
+                [employeeId],
+                (_, { rowsAffected }) => {
+                    if (rowsAffected > 0) {
+                        console.log('Funcionário deletado com sucesso!');
+                    } else {
+                        console.log('Erro: Funcionário não encontrado.');
+                    }
+                }
+            );
+        },
+        error => console.error('Erro ao deletar funcionário:', error)
+    );
+};
