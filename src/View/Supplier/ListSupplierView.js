@@ -16,7 +16,14 @@ export default function ListSupplierView() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const { fornecedores } = ListSupplierViewModel(route.params.email)
+    const {
+        Dialog,
+        fornecedores
+    } = ListSupplierViewModel(route.params.email)
+
+    const handleLongPress = (employeeId) => {
+        Dialog(employeeId)
+    };
 
     return (
         <View style={styles.container}>
@@ -34,14 +41,14 @@ export default function ListSupplierView() {
                 data={fornecedores}
                 keyExtractor={(item) => item.SupplierID.toString()}
                 renderItem={({ item }) => (
-                    <FlatlistComponent item={item} />
+                    <FlatlistComponent item={item} onLongPress={handleLongPress} />
                 )}
                 ListFooterComponent={<View style={{ height: 100 }} />}
             />
         </View>
     );
 
-    function FlatlistComponent({ item }) {
+    function FlatlistComponent({ item, onLongPress }) {
         const [expandedItemId, setExpandedItemId] = useState(null);
 
         const handlePress = (itemId) => {
@@ -54,6 +61,7 @@ export default function ListSupplierView() {
                     style={styles.container_flatlist}
                     key={item.SupplierID.toString()}
                     onPress={() => handlePress(item.SupplierID)}
+                    onLongPress={() => onLongPress(item.SupplierID)}
                 >
                     <Image style={styles.container_flatlist_icon} source={expandedItemId === item.SupplierID ? arrowDown : arrowRight} />
                     <Text style={styles.container_flatlist_name}>{LimitText(item.CompanyName, 22)}</Text>

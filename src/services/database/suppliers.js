@@ -72,3 +72,22 @@ export const getSuppliersDB = (companyId, callback) => {
         error => console.error('Erro ao obter fornecedores da empresa:', error)
     );
 };
+
+export const deleteSupplierDB = (SupplierID) => {
+    db.transaction(
+        tx => {
+            tx.executeSql(
+                'DELETE FROM suppliers WHERE SupplierID = ?',
+                [SupplierID],
+                (_, { rowsAffected }) => {
+                    if (rowsAffected > 0) {
+                        console.log('Fornecedor deletado com sucesso!');
+                    } else {
+                        console.log('Erro: Fornecedor não encontrado.');
+                    }
+                }
+            );
+        },
+        error => console.error('Erro ao deletar fornecedor:', error)
+    );
+};

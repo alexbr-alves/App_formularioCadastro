@@ -15,13 +15,15 @@ export default function ListProductView() {
     const route = useRoute();
 
     const {
-        fetchData,
+        Dialog,
         products,
         supplier,
         categories
-    } = ListProductViewModel();
+    } = ListProductViewModel(route.params.email);
 
-    fetchData(route.params.email)
+    const handleLongPress = (employeeId) => {
+        Dialog(employeeId)
+    };
 
     return (
         <View style={styles.container}>
@@ -44,14 +46,14 @@ export default function ListProductView() {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.ProductID.toString()}
                 renderItem={({ item }) => (
-                    <FlatlistComponent item={item} />
+                    <FlatlistComponent item={item} onLongPress={handleLongPress} />
                 )}
                 ListFooterComponent={<View style={{ height: 100 }} />}
             />
         </View>
     );
 
-    function FlatlistComponent({ item }) {
+    function FlatlistComponent({ item, onLongPress }) {
         const [expandedItemId, setExpandedItemId] = useState(null);
 
         const handlePress = (itemId) => {
@@ -64,6 +66,7 @@ export default function ListProductView() {
                     style={styles.container_flatlist}
                     key={item.ProductID.toString()}
                     onPress={() => handlePress(item.ProductID)}
+                    onLongPress={() => onLongPress(item.ProductID)}
                 >
                     <Image style={styles.container_flatlist_icon} source={expandedItemId === item.ProductID ? arrowDown : arrowRight} />
                     <Text style={styles.container_flatlist_name}>{item.ProductName}</Text>
